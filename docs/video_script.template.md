@@ -7,6 +7,7 @@ Two presenters: **P1** (clinical story and demo) and **P2** (technical). Slide n
 - Run the app (`docker compose up`, or API + `npm run dev`) and open the dashboard at 1440 px width.
 - Set the demo clock to **Day 1 · 06:30**.
 - Record the screen at 1080p; keep slides and dashboard in the same browser profile.
+- **Timing:** the narration is about 14 minutes at a natural pace and the demo is 7–8 minutes. The brief requires at least 20 minutes, so time a rehearsal. If it runs short, extend the demo: replay a full day at 15 min/s on the panel, open the Wearables and Clinical record tabs, try two more what-ifs (jowar roti instead of rice; a 4.5 h night), and walk through the Model evidence page.
 
 ---
 

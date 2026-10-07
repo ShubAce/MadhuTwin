@@ -111,7 +111,7 @@ async function main() {
 
   // 2 · Problem
   s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Opening" });
-  addTitle(s, "Diabetes care in India is reactive; the risk lives between visits");
+  addTitle(s, "Diabetes care in India is reactive");
   stat(s, 0.5, 1.7, 3.6, "101 million", "adults in India live with diabetes");
   stat(s, 0.5, 3.4, 3.6, "136 million", "more have prediabetes");
   s.addText("Source: ICMR-INDIAB, Lancet Diabetes & Endocrinology 2023", { x: 0.5, y: 5.0, w: 3.8, h: 0.4, fontSize: 11, color: MUTED, margin: 0, isTextBox: true });
@@ -169,7 +169,7 @@ async function main() {
 
   // 6 · Synthetic cohort
   s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Data" });
-  addTitle(s, "A synthetic Indian cohort whose two streams are causally linked");
+  addTitle(s, "Synthetic Indian cohort, causally linked streams");
   img(s, "synthetic_realism.png", 0.5, 1.35, 7.6, 2.6);
   bullets(s, [
     "Status mix, South-Asian BMI phenotype, comorbidities and prescribing calibrated to Indian clinics: premixed 30/70 insulin, gliclazide, teneligliptin",
@@ -184,7 +184,7 @@ async function main() {
   // 7 · MODEL
   sec("Model · Sync · Simulate");
   s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Model · Sync · Simulate" });
-  addTitle(s, "MODEL: personal twins recover known physiology from glucose data");
+  addTitle(s, "MODEL: twins recover real physiology from CGM");
   triad(s, "MODEL");
   img(s, "twin_validity.png", 0.5, 1.35, 8.4, 3.6);
   stat(s, 9.3, 1.5, 3.6, `${f1(fitPrior)} → ${f1(fitPers)}`, "mg/dL twin error, EHR prior → personalised (45 real people, 1–4 h windows)");
@@ -206,7 +206,7 @@ async function main() {
 
   // 9 · TwinNet
   s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Model · Sync · Simulate" });
-  addTitle(s, "SIMULATE + learn: TwinNet fuses both streams with the twin");
+  addTitle(s, "SIMULATE: TwinNet fuses both streams with the twin");
   triad(s, "SIMULATE");
   const box = (x, y, w, h, t, fill, color = "222833") => {
     s.addShape("roundRect", { x, y, w, h, rectRadius: 0.08, fill: { color: fill }, line: { color: fill } });
@@ -254,7 +254,7 @@ async function main() {
 
   // 12 · Ablation
   s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Results" });
-  addTitle(s, "Fusing both streams matters, and the twin adds the most");
+  addTitle(s, "Fusing both streams matters; the twin adds most");
   img(s, "ablation_streams.png", 0.5, 1.35, 7.8, 4.6);
   const abl = syn.ablation_gbm;
   const first = abl[0], last = abl[abl.length - 1], noPhys = abl[abl.length - 2];
@@ -292,7 +292,7 @@ async function main() {
   // 14 · CGM-light
   if (light) {
     s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Results" });
-    addTitle(s, "CGM-light: one week of CGM, then fingersticks and a smartwatch", "An affordability mode for India: the twin keeps estimating continuous glucose after the sensor comes off");
+    addTitle(s, "CGM-light: one week of CGM, then fingersticks", "An affordability mode for India: the twin keeps estimating continuous glucose after the sensor comes off");
     stat(s, 0.5, 1.9, 3.9, `${f1(light.twin.mard)}%`, `twin MARD vs true glucose (carry-forward fingersticks: ${f1(light.carry_forward.mard)}%)`);
     stat(s, 4.7, 1.9, 3.9, `${f0(light.twin.within_20pct)}%`, `of twin estimates within 20% of true glucose (carry-forward: ${f0(light.carry_forward.within_20pct)}%)`);
     stat(s, 8.9, 1.9, 3.9, `±${f1(light.twin.tir_abs_error_pp)} pp`, `error in weekly time-in-range (fingersticks alone: ±${f1(light.fingersticks_only_tir_abs_error_pp)} pp)`);
@@ -303,23 +303,23 @@ async function main() {
   // 15–17 · Dashboard
   sec("Dashboard");
   s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Dashboard" });
-  addTitle(s, "The doctor's view: a risk-ranked remote-monitoring panel");
+  addTitle(s, "The doctor's view: a risk-ranked panel");
   img(s, "panel_light.png", 0.5, 1.3, 12.3, 5.6);
   s.addNotes("Every patient on the panel is a live twin. Current lows first, then predicted lows, patients already high, and predicted new spikes. Status always uses an icon and a label, never colour alone.");
   s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Dashboard" });
-  addTitle(s, "The virtual patient: forecast, reasons and learned physiology");
-  img(s, "patient_light.png", 0.5, 1.3, 12.3, 5.6);
+  addTitle(s, "Virtual patient: forecast, reasons, physiology");
+  img(s, "patient_crop.png", 0.5, 1.3, 12.3, 5.6);
   s.addNotes("The glucose chart shows 24 hours of CGM, the 2-hour forecast cone and the physics twin's projection, with meals, medication and sleep lanes below. The risk card explains the alert. The virtual-patient panel turns fitted parameters into organ-level physiology a clinician recognises.");
   s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Dashboard" });
-  addTitle(s, "What-if on the patient's own twin, and a companion in their language");
-  img(s, "whatif_light.png", 0.5, 1.3, 8.9, 5.6);
+  addTitle(s, "What-if on their twin, nudges in their language");
+  img(s, "whatif_crop.png", 0.5, 1.3, 8.9, 5.6);
   img(s, "companion_hi.png", 9.7, 1.3, 3.1, 5.6);
   s.addNotes("The doctor tests a meal swap or a walk on this patient's twin and sees the predicted peak change. Personal meal ranking shows which Indian meals suit this body. The patient companion delivers simple nudges in Hindi, Kannada or English.");
 
   // 18 · Responsible AI
   sec("Responsible by design");
   s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Responsible by design" });
-  addTitle(s, "Responsible by design: privacy, interoperability, explainability");
+  addTitle(s, "Responsible by design");
   const rows = [
     ["DPDP Act 2023", "Consent artefacts, purpose limitation, data minimisation, purpose-tagged audit trail; synthetic and de-identified data only"],
     ["ABDM-ready interoperability", "FHIR R4 with SNOMED CT, LOINC, WHO ATC; CGM as SampledData; the forecast exported as a RiskAssessment"],

@@ -16,6 +16,10 @@ MadhuTwin builds a living virtual replica of a person with type 2 diabetes. It f
 | Evaluation report | [`docs/evaluation_report.md`](docs/evaluation_report.md) |
 | Model card · Privacy (DPDP) | [`docs/model_card.md`](docs/model_card.md) · [`docs/dpdp_compliance.md`](docs/dpdp_compliance.md) |
 
+![The doctor's view of a virtual patient: 24-hour CGM, 2-hour forecast cone, alert with reasons, twin insights](docs/screenshots/patient_crop.png)
+
+![Architecture](docs/figures/architecture.png)
+
 ---
 
 ## 1. Team details
