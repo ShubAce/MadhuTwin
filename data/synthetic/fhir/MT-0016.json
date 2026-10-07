@@ -1,0 +1,2722 @@
+{
+ "resourceType": "Bundle",
+ "id": "d3dc8c9e-d7a3-5e83-ae28-24319156ffdf",
+ "meta": {
+  "tag": [
+   {
+    "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+    "code": "HTEST",
+    "display": "test health data"
+   }
+  ]
+ },
+ "type": "collection",
+ "timestamp": "2026-09-01T09:00:00+05:30",
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:be79ae08-aa3e-5fbb-86ff-7838e106c31b",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "be79ae08-aa3e-5fbb-86ff-7838e106c31b",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "identifier": [
+     {
+      "system": "https://madhutwin.dev/fhir/sid/synthetic-patient",
+      "value": "MT-0016"
+     }
+    ],
+    "name": [
+     {
+      "use": "official",
+      "family": "Bansal",
+      "given": [
+       "Komal"
+      ]
+     }
+    ],
+    "gender": "female",
+    "birthDate": "1989-02-23",
+    "address": [
+     {
+      "city": "Chandigarh",
+      "state": "Chandigarh",
+      "country": "IN"
+     }
+    ],
+    "communication": [
+     {
+      "language": {
+       "coding": [
+        {
+         "system": "urn:ietf:bcp:47",
+         "code": "hi"
+        }
+       ],
+       "text": "Hindi"
+      },
+      "preferred": true
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:c8579e0b-8c10-5f4a-905b-e7591c2f45c8",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "c8579e0b-8c10-5f4a-905b-e7591c2f45c8",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "clinicalStatus": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+       "code": "active"
+      }
+     ]
+    },
+    "verificationStatus": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+       "code": "confirmed"
+      }
+     ]
+    },
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+        "code": "problem-list-item"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "44054006",
+       "display": "Type 2 diabetes mellitus"
+      }
+     ],
+     "text": "Type 2 diabetes mellitus"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "onsetDateTime": "2024-01-26"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:2818b0a5-ca91-5b9d-b9ac-6f54b3b48f5c",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "2818b0a5-ca91-5b9d-b9ac-6f54b3b48f5c",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "clinicalStatus": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+       "code": "active"
+      }
+     ]
+    },
+    "verificationStatus": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+       "code": "confirmed"
+      }
+     ]
+    },
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+        "code": "problem-list-item"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "370992007",
+       "display": "Dyslipidemia"
+      }
+     ],
+     "text": "Dyslipidemia"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "onsetDateTime": "2016-11-13"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:4f99fb01-786a-51a5-a0f9-0f5623fd83bc",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "4f99fb01-786a-51a5-a0f9-0f5623fd83bc",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "clinicalStatus": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+       "code": "active"
+      }
+     ]
+    },
+    "verificationStatus": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+       "code": "confirmed"
+      }
+     ]
+    },
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+        "code": "problem-list-item"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "197321007",
+       "display": "Steatosis of liver"
+      }
+     ],
+     "text": "Steatosis of liver"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "onsetDateTime": "2023-04-09"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:34b84277-1cfc-5592-9379-cd071e320dfa",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "34b84277-1cfc-5592-9379-cd071e320dfa",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "clinicalStatus": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+       "code": "active"
+      }
+     ]
+    },
+    "verificationStatus": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+       "code": "confirmed"
+      }
+     ]
+    },
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+        "code": "problem-list-item"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "53741008",
+       "display": "Coronary arteriosclerosis"
+      }
+     ],
+     "text": "Coronary arteriosclerosis"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "onsetDateTime": "2023-04-09"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:fdf719d4-f670-5e03-9180-0635f848ce08",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "fdf719d4-f670-5e03-9180-0635f848ce08",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 6.1,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:35afa758-b4ca-59f6-bd9f-8be2a4ff5107",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "35afa758-b4ca-59f6-bd9f-8be2a4ff5107",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 112.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ddb338ff-9bd9-50ff-9a78-ac898f9bca69",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "ddb338ff-9bd9-50ff-9a78-ac898f9bca69",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "20448-7",
+       "display": "Insulin [Units/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Insulin [Units/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 14.3,
+     "unit": "u[IU]/mL",
+     "system": "http://unitsofmeasure.org",
+     "code": "u[IU]/mL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:15dc5137-2a25-50d6-a77a-30f0fd18bf65",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "15dc5137-2a25-50d6-a77a-30f0fd18bf65",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "2093-3",
+       "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Cholesterol [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 153.77,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:2f150d94-6c9b-549c-b594-eac8a4374d51",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "2f150d94-6c9b-549c-b594-eac8a4374d51",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "2085-9",
+       "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 42.37,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:6ecd7055-9d09-5f2b-8159-fdf396ff01ce",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "6ecd7055-9d09-5f2b-8159-fdf396ff01ce",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "13457-7",
+       "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma by calculation"
+      }
+     ],
+     "text": "Cholesterol in LDL [Mass/volume] in Serum or Plasma by calculation"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 61.5,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:6d607e87-52d3-562a-92dc-2bb5d1ef70b2",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "6d607e87-52d3-562a-92dc-2bb5d1ef70b2",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "2571-8",
+       "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Triglyceride [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 249.48,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:63d60ac9-671d-55d8-a298-b2eeb8d4bc65",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "63d60ac9-671d-55d8-a298-b2eeb8d4bc65",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "2160-0",
+       "display": "Creatinine [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Creatinine [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 0.95,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:f977126e-2e8f-5b35-85ec-f7d85a73c5fb",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "f977126e-2e8f-5b35-85ec-f7d85a73c5fb",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "98979-8",
+       "display": "Glomerular filtration rate/1.73 sq M.predicted [Volume Rate/Area] by CKD-EPI 2021"
+      }
+     ],
+     "text": "Glomerular filtration rate/1.73 sq M.predicted [Volume Rate/Area] by CKD-EPI 2021"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 79.0,
+     "unit": "mL/min/{1.73_m2}",
+     "system": "http://unitsofmeasure.org",
+     "code": "mL/min/{1.73_m2}"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:c75a2e8c-7f36-5f35-a6be-1a9d83faa678",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "c75a2e8c-7f36-5f35-a6be-1a9d83faa678",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1742-6",
+       "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 46.03,
+     "unit": "U/L",
+     "system": "http://unitsofmeasure.org",
+     "code": "U/L"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:6631db3a-a8f4-5976-98b0-9db4ad8777af",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "6631db3a-a8f4-5976-98b0-9db4ad8777af",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "9318-7",
+       "display": "Albumin/Creatinine [Mass Ratio] in Urine"
+      }
+     ],
+     "text": "Albumin/Creatinine [Mass Ratio] in Urine"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 13.68,
+     "unit": "mg/g",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/g"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:f1cd3b0d-2fc9-5194-8bd2-b4873f475c77",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "f1cd3b0d-2fc9-5194-8bd2-b4873f475c77",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "2132-9",
+       "display": "Cobalamin (Vitamin B12) [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Cobalamin (Vitamin B12) [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 181.38,
+     "unit": "pg/mL",
+     "system": "http://unitsofmeasure.org",
+     "code": "pg/mL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ba134549-68f7-5f80-a286-09de63c31f5d",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "ba134549-68f7-5f80-a286-09de63c31f5d",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "3016-3",
+       "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Thyrotropin [Units/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 1.26,
+     "unit": "m[IU]/L",
+     "system": "http://unitsofmeasure.org",
+     "code": "m[IU]/L"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:806ad7c3-c1e6-5d3c-ac15-d3041add6e9e",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "806ad7c3-c1e6-5d3c-ac15-d3041add6e9e",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2024-08-31",
+    "valueQuantity": {
+     "value": 4.6,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:2ef53194-37c9-560a-9526-53c6855294a4",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "2ef53194-37c9-560a-9526-53c6855294a4",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2024-08-31",
+    "valueQuantity": {
+     "value": 72.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:4d040d17-fc20-5603-a4a6-028bee6ad13e",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "4d040d17-fc20-5603-a4a6-028bee6ad13e",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2024-08-31",
+    "valueQuantity": {
+     "value": 56.6,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:41d309af-8e59-52e9-ad17-a388b29a5c3d",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "41d309af-8e59-52e9-ad17-a388b29a5c3d",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2024-12-01",
+    "valueQuantity": {
+     "value": 4.5,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:89fe748d-a9e5-5f28-b5e6-558c9dbd1819",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "89fe748d-a9e5-5f28-b5e6-558c9dbd1819",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2024-12-01",
+    "valueQuantity": {
+     "value": 88.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:618bd897-d7f4-5220-9fb3-1b289551adb3",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "618bd897-d7f4-5220-9fb3-1b289551adb3",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2024-12-01",
+    "valueQuantity": {
+     "value": 58.7,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:dd671363-4b4a-593d-b8dd-9be9a05f3f29",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "dd671363-4b4a-593d-b8dd-9be9a05f3f29",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2025-02-25",
+    "valueQuantity": {
+     "value": 5.2,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:592da254-7565-59c3-bf13-5a7e1e0a36a5",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "592da254-7565-59c3-bf13-5a7e1e0a36a5",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2025-02-25",
+    "valueQuantity": {
+     "value": 87.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:9082f8b2-b2a3-50dc-aa34-1ee9215b546f",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "9082f8b2-b2a3-50dc-aa34-1ee9215b546f",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2025-02-25",
+    "valueQuantity": {
+     "value": 57.1,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:2a5a5c68-726f-518e-a8cd-8be041945baa",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "2a5a5c68-726f-518e-a8cd-8be041945baa",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2025-06-01",
+    "valueQuantity": {
+     "value": 5.2,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ec9f35c5-4e61-567e-8fff-1f56af3ab98c",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "ec9f35c5-4e61-567e-8fff-1f56af3ab98c",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2025-06-01",
+    "valueQuantity": {
+     "value": 89.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:0b01b8c7-9b97-5cdb-804a-062d755c1b2b",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "0b01b8c7-9b97-5cdb-804a-062d755c1b2b",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2025-06-01",
+    "valueQuantity": {
+     "value": 55.2,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:e1b3d200-61e8-57a4-a68a-4b74b905a340",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "e1b3d200-61e8-57a4-a68a-4b74b905a340",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2025-08-28",
+    "valueQuantity": {
+     "value": 5.2,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:2c1af3be-b627-58d2-aaf1-e592659ce4fc",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "2c1af3be-b627-58d2-aaf1-e592659ce4fc",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2025-08-28",
+    "valueQuantity": {
+     "value": 113.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:790dc1d1-b0b9-508c-af99-800a213b2273",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "790dc1d1-b0b9-508c-af99-800a213b2273",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2025-08-28",
+    "valueQuantity": {
+     "value": 55.8,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:5bbc0360-5a83-542b-b6b5-e57b425b7d03",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "5bbc0360-5a83-542b-b6b5-e57b425b7d03",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2025-11-27",
+    "valueQuantity": {
+     "value": 5.6,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:1d24c478-66aa-55d9-bbec-77f37d9278ce",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "1d24c478-66aa-55d9-bbec-77f37d9278ce",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2025-11-27",
+    "valueQuantity": {
+     "value": 106.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:96034654-d357-5173-97a7-bf489b4472f8",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "96034654-d357-5173-97a7-bf489b4472f8",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2025-11-27",
+    "valueQuantity": {
+     "value": 57.0,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:a1c8efb0-96df-57c9-99d7-15eb10828c57",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "a1c8efb0-96df-57c9-99d7-15eb10828c57",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-02-19",
+    "valueQuantity": {
+     "value": 5.9,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:da84cde1-227c-51b1-a1cf-331b490d9418",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "da84cde1-227c-51b1-a1cf-331b490d9418",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-02-19",
+    "valueQuantity": {
+     "value": 113.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:0848086d-0c8d-55cb-a8fb-8d7256598aca",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "0848086d-0c8d-55cb-a8fb-8d7256598aca",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-02-19",
+    "valueQuantity": {
+     "value": 56.3,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:d5039818-3700-5aba-b121-2f110be20132",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "d5039818-3700-5aba-b121-2f110be20132",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-05-26",
+    "valueQuantity": {
+     "value": 5.8,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:7b3422ec-dcdc-5713-bf0d-c069f8f5946a",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "7b3422ec-dcdc-5713-bf0d-c069f8f5946a",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-05-26",
+    "valueQuantity": {
+     "value": 120.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:e0f1f8fa-028c-5b49-9089-114409d29ad3",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "e0f1f8fa-028c-5b49-9089-114409d29ad3",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-05-26",
+    "valueQuantity": {
+     "value": 55.4,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:b3646c3b-5c92-56bb-b3c5-8eba3951eda9",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "b3646c3b-5c92-56bb-b3c5-8eba3951eda9",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "39156-5",
+       "display": "Body mass index (BMI) [Ratio]"
+      }
+     ],
+     "text": "Body mass index (BMI) [Ratio]"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 23.8,
+     "unit": "kg/m2",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg/m2"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:0431020c-015e-599e-9e45-97ca8728e51c",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "0431020c-015e-599e-9e45-97ca8728e51c",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 55.6,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:77cf4318-5d25-5701-b39c-7a7c221a811f",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "77cf4318-5d25-5701-b39c-7a7c221a811f",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "8302-2",
+       "display": "Body height"
+      }
+     ],
+     "text": "Body height"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 152.8,
+     "unit": "cm",
+     "system": "http://unitsofmeasure.org",
+     "code": "cm"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:6850f5df-fefc-5430-b8f2-37775fb8add1",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "6850f5df-fefc-5430-b8f2-37775fb8add1",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "8280-0",
+       "display": "Waist Circumference at umbilicus by Tape measure"
+      }
+     ],
+     "text": "Waist Circumference at umbilicus by Tape measure"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 86.1,
+     "unit": "cm",
+     "system": "http://unitsofmeasure.org",
+     "code": "cm"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:da46f942-6806-5990-a50b-a18e9f04a5a6",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "da46f942-6806-5990-a50b-a18e9f04a5a6",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "85354-9",
+       "display": "Blood pressure panel"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "component": [
+     {
+      "code": {
+       "coding": [
+        {
+         "system": "http://loinc.org",
+         "code": "8480-6",
+         "display": "Systolic blood pressure"
+        }
+       ]
+      },
+      "valueQuantity": {
+       "value": 140.0,
+       "unit": "mm[Hg]",
+       "system": "http://unitsofmeasure.org",
+       "code": "mm[Hg]"
+      }
+     },
+     {
+      "code": {
+       "coding": [
+        {
+         "system": "http://loinc.org",
+         "code": "8462-4",
+         "display": "Diastolic blood pressure"
+        }
+       ]
+      },
+      "valueQuantity": {
+       "value": 69.0,
+       "unit": "mm[Hg]",
+       "system": "http://unitsofmeasure.org",
+       "code": "mm[Hg]"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:f017eae5-fb9b-5e95-b62e-c2e4719f423c",
+   "resource": {
+    "resourceType": "MedicationStatement",
+    "id": "f017eae5-fb9b-5e95-b62e-c2e4719f423c",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "active",
+    "medicationCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://www.whocc.no/atc",
+       "code": "A10BA02",
+       "display": "Metformin"
+      }
+     ],
+     "text": "Metformin"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectivePeriod": {
+     "start": "2025-09-01"
+    },
+    "dosage": [
+     {
+      "text": "500 mg at 08:30, 21:00",
+      "timing": {
+       "repeat": {
+        "frequency": 2,
+        "period": 1,
+        "periodUnit": "d",
+        "timeOfDay": [
+         "08:30:00",
+         "21:00:00"
+        ]
+       }
+      },
+      "doseAndRate": [
+       {
+        "doseQuantity": {
+         "value": 500.0,
+         "unit": "mg",
+         "system": "http://unitsofmeasure.org",
+         "code": "mg"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:e2c66f99-e22f-5c58-97bd-9485c819aa7f",
+   "resource": {
+    "resourceType": "MedicationStatement",
+    "id": "e2c66f99-e22f-5c58-97bd-9485c819aa7f",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "active",
+    "medicationCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://www.whocc.no/atc",
+       "code": "A10AE04",
+       "display": "Insulin glargine"
+      }
+     ],
+     "text": "Insulin glargine"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectivePeriod": {
+     "start": "2024-09-01"
+    },
+    "dosage": [
+     {
+      "text": "14 IU at 22:00",
+      "timing": {
+       "repeat": {
+        "frequency": 1,
+        "period": 1,
+        "periodUnit": "d",
+        "timeOfDay": [
+         "22:00:00"
+        ]
+       }
+      },
+      "doseAndRate": [
+       {
+        "doseQuantity": {
+         "value": 14.0,
+         "unit": "[IU]",
+         "system": "http://unitsofmeasure.org",
+         "code": "[IU]"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:1f5e959a-3127-527f-a7df-9c1123fc2fb6",
+   "resource": {
+    "resourceType": "MedicationStatement",
+    "id": "1f5e959a-3127-527f-a7df-9c1123fc2fb6",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "active",
+    "medicationCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://www.whocc.no/atc",
+       "code": "C10AA05",
+       "display": "Atorvastatin"
+      }
+     ],
+     "text": "Atorvastatin"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectivePeriod": {
+     "start": "2026-04-08"
+    },
+    "dosage": [
+     {
+      "text": "10 mg at 21:30",
+      "timing": {
+       "repeat": {
+        "frequency": 1,
+        "period": 1,
+        "periodUnit": "d",
+        "timeOfDay": [
+         "21:30:00"
+        ]
+       }
+      },
+      "doseAndRate": [
+       {
+        "doseQuantity": {
+         "value": 10.0,
+         "unit": "mg",
+         "system": "http://unitsofmeasure.org",
+         "code": "mg"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:eb46f280-7ef3-5416-868e-def3b26c5e59",
+   "resource": {
+    "resourceType": "MedicationStatement",
+    "id": "eb46f280-7ef3-5416-868e-def3b26c5e59",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "active",
+    "medicationCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://www.whocc.no/atc",
+       "code": "B01AC06",
+       "display": "Acetylsalicylic acid"
+      }
+     ],
+     "text": "Acetylsalicylic acid"
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectivePeriod": {
+     "start": "2024-07-26"
+    },
+    "dosage": [
+     {
+      "text": "75 mg at 13:30",
+      "timing": {
+       "repeat": {
+        "frequency": 1,
+        "period": 1,
+        "periodUnit": "d",
+        "timeOfDay": [
+         "13:30:00"
+        ]
+       }
+      },
+      "doseAndRate": [
+       {
+        "doseQuantity": {
+         "value": 75.0,
+         "unit": "mg",
+         "system": "http://unitsofmeasure.org",
+         "code": "mg"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:e2df573d-9c5a-537c-a110-e331830e4914",
+   "resource": {
+    "resourceType": "FamilyMemberHistory",
+    "id": "e2df573d-9c5a-537c-a110-e331830e4914",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "completed",
+    "patient": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "relationship": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+       "code": "PRN",
+       "display": "parent"
+      }
+     ]
+    },
+    "condition": [
+     {
+      "code": {
+       "coding": [
+        {
+         "system": "http://snomed.info/sct",
+         "code": "44054006",
+         "display": "Type 2 diabetes mellitus"
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:8590342d-53b5-59c5-8052-a08ffaa319e4",
+   "resource": {
+    "resourceType": "FamilyMemberHistory",
+    "id": "8590342d-53b5-59c5-8052-a08ffaa319e4",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "completed",
+    "patient": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "relationship": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+       "code": "MTH",
+       "display": "mother"
+      }
+     ]
+    },
+    "condition": [
+     {
+      "code": {
+       "coding": [
+        {
+         "system": "http://snomed.info/sct",
+         "code": "53741008",
+         "display": "Coronary arteriosclerosis"
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:514837e0-9571-52ee-a778-5e20594c3842",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "514837e0-9571-52ee-a778-5e20594c3842",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "69548-6",
+       "display": "Genetic variant assessment"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "LA9634-2",
+       "display": "Absent"
+      }
+     ]
+    },
+    "component": [
+     {
+      "code": {
+       "coding": [
+        {
+         "system": "http://loinc.org",
+         "code": "81255-2",
+         "display": "dbSNP [ID]"
+        }
+       ]
+      },
+      "valueCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://www.ncbi.nlm.nih.gov/projects/SNP",
+         "code": "rs7903146"
+        }
+       ],
+       "text": "TCF7L2 rs7903146 (T risk allele)"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:cad15b6c-be92-5363-a210-eb0ec3326a31",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "cad15b6c-be92-5363-a210-eb0ec3326a31",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "code": {
+     "coding": [
+      {
+       "system": "https://madhutwin.dev/fhir/CodeSystem/local",
+       "code": "prs-t2d",
+       "display": "Type 2 diabetes polygenic risk score (z)"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/be79ae08-aa3e-5fbb-86ff-7838e106c31b"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": -0.32,
+     "unit": "SD",
+     "system": "http://unitsofmeasure.org",
+     "code": "1"
+    }
+   }
+  }
+ ]
+}

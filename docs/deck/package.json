@@ -1,0 +1,1 @@
+{"name":"madhutwin-deck","private":true,"type":"commonjs","scripts":{"build":"node build_deck.js && node build_architecture.js"},"dependencies":{"pptxgenjs":"^3.12.0"}}

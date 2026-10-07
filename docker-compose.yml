@@ -1,0 +1,10 @@
+services:
+  madhutwin:
+    build: .
+    image: madhutwin:latest
+    ports:
+      - "8000:8000"
+    environment:
+      # Optional LLM layer for "Ask the twin": set MADHUTWIN_LLM=on and provide ANTHROPIC_API_KEY
+      MADHUTWIN_LLM: ${MADHUTWIN_LLM:-off}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}

@@ -1,0 +1,6 @@
+patient_id,source,status,age,sex,height_cm,weight_kg,bmi,hba1c_pct,fpg_mgdl,fasting_insulin_uU,homa_ir,tg_mgdl,chol_mgdl,hdl_mgdl,ldl_mgdl,egfr,diabetes_years,on_metformin,on_sulfonylurea,on_dpp4,on_sglt2,on_insulin,hypertension,dyslipidemia,tcf7l2_risk_alleles,prs_t2d
+MT-0001,synthetic,t2d,58.0,M,165.8,71.5,26.0,8.8,235.0,8.9,5.18,235.0,169.0,33.0,89.0,74.0,7.1,0.0,1.0,0.0,0.0,0.0,1.0,1.0,0.0,0.31
+MT-0002,synthetic,prediabetes,34.0,F,139.4,42.7,22.0,6.0,110.0,9.3,2.53,147.0,163.0,40.0,94.0,107.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,1.36
+MT-0003,synthetic,prediabetes,38.0,M,176.4,81.6,26.2,6.0,113.0,6.9,1.93,157.0,208.0,43.0,133.0,108.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,0.52
+MT-0004,synthetic,t2d,36.0,F,149.6,63.5,28.4,8.7,159.0,6.4,2.5,129.0,187.0,55.0,107.0,63.0,10.3,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.43
+MT-0005,synthetic,t2d,69.0,M,162.5,81.8,31.0,8.4,182.0,13.1,5.91,184.0,147.0,29.0,80.0,59.0,20.0,1.0,1.0,0.0,1.0,0.0,1.0,1.0,1.0,-1.04

@@ -1,0 +1,10 @@
+.venv
+.git
+data/raw
+data/processed
+data/synthetic/full
+artifacts/datasets
+artifacts/models
+artifacts/shots
+**/node_modules
+**/__pycache__

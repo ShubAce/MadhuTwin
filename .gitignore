@@ -18,6 +18,9 @@ data/synthetic/full/
 # Experiment tracking / model artefacts
 mlruns/
 artifacts/checkpoints/
+artifacts/datasets/
+artifacts/shots/
+artifacts/models/*.pkl
 
 # Node
 node_modules/

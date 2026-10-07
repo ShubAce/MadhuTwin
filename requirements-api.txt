@@ -1,0 +1,12 @@
+# Serving only: the API needs the physics engine and precomputed demo bundles, not the ML stack
+numpy>=1.26
+pandas>=2.1
+pyarrow>=14
+scipy>=1.11
+numba>=0.59
+fhir.resources>=8
+fastapi>=0.110
+uvicorn>=0.29
+pydantic>=2.6
+websockets>=12
+anthropic>=1.12

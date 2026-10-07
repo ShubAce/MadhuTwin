@@ -1,0 +1,57 @@
+[
+ {
+  "id": "MT-0066",
+  "story": "Premixed insulin with hypoglycaemia",
+  "source": "synthetic"
+ },
+ {
+  "id": "MT-0695",
+  "story": "Sulfonylurea-related low glucose",
+  "source": "synthetic"
+ },
+ {
+  "id": "MT-0193",
+  "story": "Viral illness: insulin resistance detected by the twin",
+  "source": "synthetic"
+ },
+ {
+  "id": "MT-0087",
+  "story": "Festival feast: sweets and post-meal spikes",
+  "source": "synthetic"
+ },
+ {
+  "id": "MT-0546",
+  "story": "Poorly controlled, frequent spikes",
+  "source": "synthetic"
+ },
+ {
+  "id": "MT-0657",
+  "story": "Well controlled on metformin + DPP-4 inhibitor",
+  "source": "synthetic"
+ },
+ {
+  "id": "MT-0235",
+  "story": "SGLT2 inhibitor with reduced kidney function",
+  "source": "synthetic"
+ },
+ {
+  "id": "MT-0955",
+  "story": "Prediabetes: late dinners and short sleep",
+  "source": "synthetic"
+ },
+ {
+  "id": "CGM-049",
+  "story": "Real-world recording (held out from training)",
+  "source": "cgmacros"
+ },
+ {
+  "id": "CGM-036",
+  "story": "Real-world recording (held out from training)",
+  "source": "cgmacros"
+ },
+ {
+  "id": "SH-2094-0",
+  "story": "Real-world recording (held out from training)",
+  "source": "shanghai"
+ }
+]

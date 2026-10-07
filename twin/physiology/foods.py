@@ -91,9 +91,10 @@ def absorption_time_constant(carbs: float, fat: float, fiber: float, protein: fl
     """Gut absorption time constant (min) for a mixed meal.
 
     High-GI carbohydrates absorb quickly; fat, fibre and protein slow gastric emptying.
-    Calibrated so pure glucose (GI 100) peaks ~20-25 min and a low-GI mixed meal ~60-75 min.
+    Calibrated so a 75 g glucose drink (GI 100) gives a peak appearance of ~8 mg/kg/min at
+    ~40 min (in line with OGTT tracer studies) and low-GI mixed meals peak at ~60-90 min.
     """
-    tau = 22.0 + 0.55 * (100.0 - gi)
+    tau = 38.0 + 0.45 * (100.0 - gi)
     if carbs > 0:
         tau *= 1.0 + 0.6 * min(fat / carbs, 1.0) + 0.8 * min(fiber / carbs, 0.5) + 0.2 * min(protein / carbs, 1.0)
     return float(min(max(tau, 18.0), 120.0))

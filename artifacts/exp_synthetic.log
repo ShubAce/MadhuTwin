@@ -1,0 +1,38 @@
+[00:07:51] loading synthetic dataset
+[00:07:51] split: 700 train / 101 val / 199 test patients
+[00:07:52] anchors: train 911863, val 131590, test (days 8-14) 129956
+[00:07:52] tabular features
+[00:08:04] fitting LightGBM (3 quantiles x 4 horizons + spike/hypo classifiers)
+[00:10:56] training TwinNet (full hybrid)
+[00:14:08]     epoch 1: train_loss=0.3897, val_rmse_mgdl=20.5306
+[00:16:47]     epoch 2: train_loss=0.2892, val_rmse_mgdl=19.0763
+[00:19:28]     epoch 3: train_loss=0.2750, val_rmse_mgdl=18.7096
+[00:22:23]     epoch 4: train_loss=0.2609, val_rmse_mgdl=18.3662
+[00:24:57]     epoch 5: train_loss=0.2519, val_rmse_mgdl=18.2938
+[00:27:26]     epoch 6: train_loss=0.2442, val_rmse_mgdl=18.1878
+[00:28:02] forecast metrics
+[00:28:13] event metrics
+[00:29:00] ablation: LightGBM per stream combination
+[00:31:54]   CGM only: RMSE60=24.87 RMSE120=29.89 spike AUROC=0.923
+[00:33:04]   CGM + EHR: RMSE60=23.82 RMSE120=27.95 spike AUROC=0.931
+[00:33:41]   CGM + wearables: RMSE60=23.99 RMSE120=28.55 spike AUROC=0.930
+[00:34:09]   CGM + meals/meds: RMSE60=21.38 RMSE120=28.12 spike AUROC=0.937
+[00:35:02]   CGM + wearables + meals/meds: RMSE60=21.12 RMSE120=27.47 spike AUROC=0.941
+[00:35:59]   Both streams (dynamic + EHR): RMSE60=20.12 RMSE120=25.94 spike AUROC=0.949
+[00:38:47]   Both streams + physics twin: RMSE60=18.44 RMSE120=24.47 spike AUROC=0.955
+[00:38:47] ablation: TwinNet variants
+[00:41:35]     epoch 1: train_loss=0.4139, val_rmse_mgdl=21.3772
+[00:44:37]     epoch 2: train_loss=0.3062, val_rmse_mgdl=20.2894
+[00:48:19]     epoch 3: train_loss=0.2898, val_rmse_mgdl=19.9208
+[00:50:50]     epoch 4: train_loss=0.2756, val_rmse_mgdl=19.6612
+[00:53:20]     epoch 5: train_loss=0.2644, val_rmse_mgdl=19.4592
+[00:55:20]     epoch 6: train_loss=0.2584, val_rmse_mgdl=19.3733
+[00:55:34]   TwinNet without physics: RMSE60=20.24 RMSE120=26.21
+[00:57:51]     epoch 1: train_loss=0.3934, val_rmse_mgdl=19.9264
+[01:00:48]     epoch 2: train_loss=0.2981, val_rmse_mgdl=19.3011
+[01:03:18]     epoch 3: train_loss=0.2868, val_rmse_mgdl=18.8938
+[01:07:22]     epoch 4: train_loss=0.2723, val_rmse_mgdl=18.5915
+[01:10:03]     epoch 5: train_loss=0.2617, val_rmse_mgdl=18.2909
+[01:12:06]     epoch 6: train_loss=0.2555, val_rmse_mgdl=18.3283
+[01:12:20]   TwinNet without EHR: RMSE60=19.19 RMSE120=25.34
+[01:14:41]     epoch 1: train_loss=0.3859, val_rmse_mgdl=20.2682

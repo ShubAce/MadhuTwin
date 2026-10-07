@@ -1,0 +1,4399 @@
+{
+ "resourceType": "Bundle",
+ "id": "79d683ce-9261-5775-9da7-035118cb9354",
+ "meta": {
+  "tag": [
+   {
+    "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+    "code": "HTEST",
+    "display": "test health data"
+   }
+  ]
+ },
+ "type": "collection",
+ "timestamp": "2026-09-01T09:00:00+05:30",
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:97370368-7351-55e3-9546-fe120f331145",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "97370368-7351-55e3-9546-fe120f331145",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "identifier": [
+     {
+      "system": "https://madhutwin.dev/fhir/sid/synthetic-patient",
+      "value": "MT-0003"
+     }
+    ],
+    "name": [
+     {
+      "use": "official",
+      "family": "Bansal",
+      "given": [
+       "Ashok"
+      ]
+     }
+    ],
+    "gender": "male",
+    "birthDate": "1988-12-10",
+    "address": [
+     {
+      "city": "Kanpur",
+      "state": "Uttar Pradesh",
+      "country": "IN"
+     }
+    ],
+    "communication": [
+     {
+      "language": {
+       "coding": [
+        {
+         "system": "urn:ietf:bcp:47",
+         "code": "hi"
+        }
+       ],
+       "text": "Hindi"
+      },
+      "preferred": true
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:1f1c53a8-257a-5019-b74e-3f9b586b1136",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "1f1c53a8-257a-5019-b74e-3f9b586b1136",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "clinicalStatus": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+       "code": "active"
+      }
+     ]
+    },
+    "verificationStatus": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+       "code": "confirmed"
+      }
+     ]
+    },
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+        "code": "problem-list-item"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "714628002",
+       "display": "Prediabetes"
+      }
+     ],
+     "text": "Prediabetes"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "onsetDateTime": "2025-05-15"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:4cd54df9-449e-52fe-9ab4-01b26fa424a3",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "4cd54df9-449e-52fe-9ab4-01b26fa424a3",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 6.0,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:a2a4911b-f0f0-53c8-b669-0418274ac8fa",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "a2a4911b-f0f0-53c8-b669-0418274ac8fa",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 113.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:2c7e385e-926a-5fe4-93c7-107e5ddcfd34",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "2c7e385e-926a-5fe4-93c7-107e5ddcfd34",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "20448-7",
+       "display": "Insulin [Units/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Insulin [Units/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 6.9,
+     "unit": "u[IU]/mL",
+     "system": "http://unitsofmeasure.org",
+     "code": "u[IU]/mL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:acdff552-970d-56d8-b26b-9f2075d7a179",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "acdff552-970d-56d8-b26b-9f2075d7a179",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "2093-3",
+       "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Cholesterol [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 207.99,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:0f79dd40-ac95-586a-858d-c8484b3a5b03",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "0f79dd40-ac95-586a-858d-c8484b3a5b03",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "2085-9",
+       "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 43.49,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:3e6ba83c-e329-577b-91b9-77ac11692885",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "3e6ba83c-e329-577b-91b9-77ac11692885",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "13457-7",
+       "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma by calculation"
+      }
+     ],
+     "text": "Cholesterol in LDL [Mass/volume] in Serum or Plasma by calculation"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 133.11,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ab049f05-89f1-566d-adf0-f428f7894ba3",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "ab049f05-89f1-566d-adf0-f428f7894ba3",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "2571-8",
+       "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Triglyceride [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 156.99,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:d3400dc3-7933-54ca-8a36-dab9d2074ce0",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "d3400dc3-7933-54ca-8a36-dab9d2074ce0",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "2160-0",
+       "display": "Creatinine [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Creatinine [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 0.93,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:e73ce313-6e08-5c95-b76b-1af9fc583962",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "e73ce313-6e08-5c95-b76b-1af9fc583962",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "98979-8",
+       "display": "Glomerular filtration rate/1.73 sq M.predicted [Volume Rate/Area] by CKD-EPI 2021"
+      }
+     ],
+     "text": "Glomerular filtration rate/1.73 sq M.predicted [Volume Rate/Area] by CKD-EPI 2021"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 108.0,
+     "unit": "mL/min/{1.73_m2}",
+     "system": "http://unitsofmeasure.org",
+     "code": "mL/min/{1.73_m2}"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:2939e8da-a760-5eb2-a745-d7f95f760d65",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "2939e8da-a760-5eb2-a745-d7f95f760d65",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1742-6",
+       "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 25.04,
+     "unit": "U/L",
+     "system": "http://unitsofmeasure.org",
+     "code": "U/L"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:51e9ce43-487e-5c23-b12d-e1e944740334",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "51e9ce43-487e-5c23-b12d-e1e944740334",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "9318-7",
+       "display": "Albumin/Creatinine [Mass Ratio] in Urine"
+      }
+     ],
+     "text": "Albumin/Creatinine [Mass Ratio] in Urine"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 22.91,
+     "unit": "mg/g",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/g"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:06e317d0-9ac4-5fd6-af98-3217a588273d",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "06e317d0-9ac4-5fd6-af98-3217a588273d",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "2132-9",
+       "display": "Cobalamin (Vitamin B12) [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Cobalamin (Vitamin B12) [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 549.11,
+     "unit": "pg/mL",
+     "system": "http://unitsofmeasure.org",
+     "code": "pg/mL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:bb71df58-c59f-5e16-9033-abb30feb3b90",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "bb71df58-c59f-5e16-9033-abb30feb3b90",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "3016-3",
+       "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Thyrotropin [Units/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 3.27,
+     "unit": "m[IU]/L",
+     "system": "http://unitsofmeasure.org",
+     "code": "m[IU]/L"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:f654d091-1087-5baa-a8c8-dcb35295f6ee",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "f654d091-1087-5baa-a8c8-dcb35295f6ee",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2024-09-05",
+    "valueQuantity": {
+     "value": 6.9,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:05c65aa1-61ae-590c-a330-e039992b3411",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "05c65aa1-61ae-590c-a330-e039992b3411",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2024-09-05",
+    "valueQuantity": {
+     "value": 121.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:495221cb-6c4f-5e08-bf13-558ca05eaf89",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "495221cb-6c4f-5e08-bf13-558ca05eaf89",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2024-09-05",
+    "valueQuantity": {
+     "value": 80.4,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:b5b3ecb7-1f6f-5e74-b0b4-17905c68355b",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "b5b3ecb7-1f6f-5e74-b0b4-17905c68355b",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2024-12-03",
+    "valueQuantity": {
+     "value": 6.7,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:3c92acce-fc45-5f44-b3f7-63cebd41585c",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "3c92acce-fc45-5f44-b3f7-63cebd41585c",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2024-12-03",
+    "valueQuantity": {
+     "value": 115.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:adfa12eb-1240-56ff-9f6b-044353fa3229",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "adfa12eb-1240-56ff-9f6b-044353fa3229",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2024-12-03",
+    "valueQuantity": {
+     "value": 79.9,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:5f014018-694a-58cd-8d8d-001e926c8c75",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "5f014018-694a-58cd-8d8d-001e926c8c75",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2025-02-27",
+    "valueQuantity": {
+     "value": 6.3,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:b61e76e3-51e9-5cf3-b413-fc336e912430",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "b61e76e3-51e9-5cf3-b413-fc336e912430",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2025-02-27",
+    "valueQuantity": {
+     "value": 109.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:d0310515-a3ed-58b4-8d39-2c4d57d6bb2d",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "d0310515-a3ed-58b4-8d39-2c4d57d6bb2d",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2025-02-27",
+    "valueQuantity": {
+     "value": 80.9,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:a27a7db7-91d9-59a2-823c-d37e7bf4ba6e",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "a27a7db7-91d9-59a2-823c-d37e7bf4ba6e",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2025-05-24",
+    "valueQuantity": {
+     "value": 6.3,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:f79cce3c-10b5-5a81-86be-ed82190e0541",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "f79cce3c-10b5-5a81-86be-ed82190e0541",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2025-05-24",
+    "valueQuantity": {
+     "value": 121.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:3dfaabfe-981b-5e6a-9937-7abed2e87423",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "3dfaabfe-981b-5e6a-9937-7abed2e87423",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2025-05-24",
+    "valueQuantity": {
+     "value": 80.7,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:570fc3df-374d-5197-9958-0f77fc10f227",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "570fc3df-374d-5197-9958-0f77fc10f227",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2025-08-29",
+    "valueQuantity": {
+     "value": 6.4,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:02717693-d290-54bb-a185-4a7d84b8aaa5",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "02717693-d290-54bb-a185-4a7d84b8aaa5",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2025-08-29",
+    "valueQuantity": {
+     "value": 116.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:e636ca99-98a1-5053-99ef-119cbb6e03af",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "e636ca99-98a1-5053-99ef-119cbb6e03af",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2025-08-29",
+    "valueQuantity": {
+     "value": 81.1,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:d5ca8a08-9d71-5a7f-8532-1f02845b6a63",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "d5ca8a08-9d71-5a7f-8532-1f02845b6a63",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2025-11-29",
+    "valueQuantity": {
+     "value": 6.2,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:206d9150-5fc5-5dab-b326-221ab3df4044",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "206d9150-5fc5-5dab-b326-221ab3df4044",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2025-11-29",
+    "valueQuantity": {
+     "value": 132.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:617bc649-f291-5d69-92a1-0957e7201a8b",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "617bc649-f291-5d69-92a1-0957e7201a8b",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2025-11-29",
+    "valueQuantity": {
+     "value": 82.8,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:16f2223a-34cb-51e2-b4e4-737f3ae8838c",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "16f2223a-34cb-51e2-b4e4-737f3ae8838c",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-02-23",
+    "valueQuantity": {
+     "value": 6.3,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:dc0be3b6-04ef-514d-80d8-93d2f40af77d",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "dc0be3b6-04ef-514d-80d8-93d2f40af77d",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-02-23",
+    "valueQuantity": {
+     "value": 120.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:66ada293-8729-554d-953a-369f6b830ae2",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "66ada293-8729-554d-953a-369f6b830ae2",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-02-23",
+    "valueQuantity": {
+     "value": 82.0,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:8ba2ac7e-5066-5994-b525-6ae858c199f5",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "8ba2ac7e-5066-5994-b525-6ae858c199f5",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "4548-4",
+       "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+      }
+     ],
+     "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-06-04",
+    "valueQuantity": {
+     "value": 6.1,
+     "unit": "%",
+     "system": "http://unitsofmeasure.org",
+     "code": "%"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:b90e6789-3531-5e78-b1ad-b5e99020b145",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "b90e6789-3531-5e78-b1ad-b5e99020b145",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "1558-6",
+       "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+      }
+     ],
+     "text": "Fasting glucose [Mass/volume] in Serum or Plasma"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-06-04",
+    "valueQuantity": {
+     "value": 117.0,
+     "unit": "mg/dL",
+     "system": "http://unitsofmeasure.org",
+     "code": "mg/dL"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:b67a0b44-a539-58ed-a5eb-bba371e0285c",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "b67a0b44-a539-58ed-a5eb-bba371e0285c",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-06-04",
+    "valueQuantity": {
+     "value": 81.3,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ead9b26d-926f-5b5b-affb-88dcde3ed41c",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "ead9b26d-926f-5b5b-affb-88dcde3ed41c",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "39156-5",
+       "display": "Body mass index (BMI) [Ratio]"
+      }
+     ],
+     "text": "Body mass index (BMI) [Ratio]"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 26.2,
+     "unit": "kg/m2",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg/m2"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:b7bf5b24-73f4-5399-808f-a3dcc50043d0",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "b7bf5b24-73f4-5399-808f-a3dcc50043d0",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "29463-7",
+       "display": "Body weight"
+      }
+     ],
+     "text": "Body weight"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 81.6,
+     "unit": "kg",
+     "system": "http://unitsofmeasure.org",
+     "code": "kg"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:d781edae-5fdf-5eea-aec6-f82df77faa40",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "d781edae-5fdf-5eea-aec6-f82df77faa40",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "8302-2",
+       "display": "Body height"
+      }
+     ],
+     "text": "Body height"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 176.4,
+     "unit": "cm",
+     "system": "http://unitsofmeasure.org",
+     "code": "cm"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ca420a5f-d597-502d-8eeb-5a1d7175ae94",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "ca420a5f-d597-502d-8eeb-5a1d7175ae94",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "8280-0",
+       "display": "Waist Circumference at umbilicus by Tape measure"
+      }
+     ],
+     "text": "Waist Circumference at umbilicus by Tape measure"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 96.0,
+     "unit": "cm",
+     "system": "http://unitsofmeasure.org",
+     "code": "cm"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:fd8346c5-ae36-52cc-8619-4ca5407f8070",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "fd8346c5-ae36-52cc-8619-4ca5407f8070",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "vital-signs"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "85354-9",
+       "display": "Blood pressure panel"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "component": [
+     {
+      "code": {
+       "coding": [
+        {
+         "system": "http://loinc.org",
+         "code": "8480-6",
+         "display": "Systolic blood pressure"
+        }
+       ]
+      },
+      "valueQuantity": {
+       "value": 114.0,
+       "unit": "mm[Hg]",
+       "system": "http://unitsofmeasure.org",
+       "code": "mm[Hg]"
+      }
+     },
+     {
+      "code": {
+       "coding": [
+        {
+         "system": "http://loinc.org",
+         "code": "8462-4",
+         "display": "Diastolic blood pressure"
+        }
+       ]
+      },
+      "valueQuantity": {
+       "value": 73.0,
+       "unit": "mm[Hg]",
+       "system": "http://unitsofmeasure.org",
+       "code": "mm[Hg]"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:e83e5c8b-16b7-502c-ae14-6d152d4e4e36",
+   "resource": {
+    "resourceType": "FamilyMemberHistory",
+    "id": "e83e5c8b-16b7-502c-ae14-6d152d4e4e36",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "completed",
+    "patient": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "relationship": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+       "code": "PRN",
+       "display": "parent"
+      }
+     ]
+    },
+    "condition": [
+     {
+      "code": {
+       "coding": [
+        {
+         "system": "http://snomed.info/sct",
+         "code": "44054006",
+         "display": "Type 2 diabetes mellitus"
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:7a58db12-377d-5f10-819f-113949fa25f9",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "7a58db12-377d-5f10-819f-113949fa25f9",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "69548-6",
+       "display": "Genetic variant assessment"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "LA9633-4",
+       "display": "Present"
+      }
+     ]
+    },
+    "component": [
+     {
+      "code": {
+       "coding": [
+        {
+         "system": "http://loinc.org",
+         "code": "81255-2",
+         "display": "dbSNP [ID]"
+        }
+       ]
+      },
+      "valueCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://www.ncbi.nlm.nih.gov/projects/SNP",
+         "code": "rs7903146"
+        }
+       ],
+       "text": "TCF7L2 rs7903146 (T risk allele)"
+      }
+     },
+     {
+      "code": {
+       "coding": [
+        {
+         "system": "http://loinc.org",
+         "code": "53034-5",
+         "display": "Allelic state"
+        }
+       ]
+      },
+      "valueCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://loinc.org",
+         "code": "LA6705-3",
+         "display": "Homozygous"
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:eb8e9110-ab04-546f-a277-bd07f05e750b",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "eb8e9110-ab04-546f-a277-bd07f05e750b",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "code": {
+     "coding": [
+      {
+       "system": "https://madhutwin.dev/fhir/CodeSystem/local",
+       "code": "prs-t2d",
+       "display": "Type 2 diabetes polygenic risk score (z)"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 0.52,
+     "unit": "SD",
+     "system": "http://unitsofmeasure.org",
+     "code": "1"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:4cbf126e-d784-5bfc-b809-63f3ab9e4286",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "4cbf126e-d784-5bfc-b809-63f3ab9e4286",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-01T00:00:00+05:30",
+     "end": "2026-09-01T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "E E E E E E E E E E E E 102 120 115 103 111 118 122 123 124 119 123 104 109 112 103 105 87 96 97 91 92 100 99 90 90 99 95 92 99 94 95 98 92 99 99 103 100 105 109 109 102 99 96 106 106 95 98 97 102 101 111 101 104 105 100 104 109 108 105 107 110 100 100 113 106 93 108 113 119 120 111 88 94 111 117 132 124 120 106 117 118 108 106 107 120 115 116 112 112 122 125 136 138 148 160 164 165 154 149 163 150 155 157 156 159 160 157 155 156 144 148 155 147 147 155 153 144 148 148 139 147 141 132 129 133 133 124 136 133 136 111 106 102 95 108 106 103 107 107 113 104 119 96 104 104 99 102 109 99 96 88 87 94 98 110 100 99 95 96 81 88 94 102 104 120 122 129 138 138 141 153 142 161 161 161 161 176 172 175 166 168 154 151 159 154 163 146 140 141 147 144 136 128 122 126 124 127 128 127 140 129 144 142 147 151 152 144 160 150 146 144 146 146 147 143 155 139 127 133 125 130 136 129 139 136 127 131 119 113 104 96 106 114 111 96 98 95 95 101 102 100 102 100 101 99 99 100 109 114 115 111 131 130 124 126 132 130 128 131 122 140 124 99 115 111 116 97 97 106 109 108 119 117 106 108 98"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:d43c026c-d113-5758-b039-2b23f13dc9e5",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "d43c026c-d113-5758-b039-2b23f13dc9e5",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 9468.54,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:40d52d90-70b1-5a7d-8a25-738f52dc44ff",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "40d52d90-70b1-5a7d-8a25-738f52dc44ff",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-02T00:00:00+05:30",
+     "end": "2026-09-02T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "104 101 101 104 104 105 106 116 90 99 95 113 113 113 99 100 91 93 94 95 91 82 98 105 107 100 101 105 109 98 98 93 87 98 93 93 101 86 93 95 94 96 103 112 110 105 109 107 113 108 113 98 91 77 81 85 85 93 97 94 95 92 97 94 97 89 81 79 87 88 90 94 101 93 103 112 103 117 100 100 96 102 102 103 94 98 110 109 108 107 108 108 112 99 111 119 111 101 129 130 146 131 138 150 144 151 160 166 152 146 144 138 128 138 133 151 145 141 157 144 142 143 147 128 133 134 121 133 128 127 131 120 146 129 125 118 119 123 116 128 125 131 129 128 122 101 112 96 88 90 82 92 96 90 99 103 103 106 94 107 93 106 106 109 107 113 116 122 128 131 146 144 147 152 157 149 149 151 152 161 143 129 133 129 132 135 145 131 130 143 136 138 140 121 122 116 123 123 126 135 123 122 120 126 116 121 122 115 108 109 122 104 95 119 111 125 130 121 124 126 115 E E E 115 113 117 110 111 107 99 97 102 102 98 96 105 107 114 117 108 115 103 110 97 105 92 99 105 105 103 99 118 105 117 122 128 135 133 127 133 143 143 144 148 144 153 159 151 153 152 156 154 152 144 152 146 151 142 138 146 149 134 139 150 138 145 137"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:b65555cc-9fe9-50e2-b26b-e4f46014ce90",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "b65555cc-9fe9-50e2-b26b-e4f46014ce90",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-02",
+    "valueQuantity": {
+     "value": 7959.55,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:d676bd1d-5fef-51fe-a081-da4454bfefaf",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "d676bd1d-5fef-51fe-a081-da4454bfefaf",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-03T00:00:00+05:30",
+     "end": "2026-09-03T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "123 131 139 130 131 118 123 119 109 135 127 132 118 114 108 117 107 113 104 99 101 105 106 106 110 105 96 96 92 106 101 93 81 96 105 109 102 97 112 113 101 101 89 96 82 94 87 101 94 98 94 95 103 92 102 95 93 95 88 97 108 109 112 113 108 110 107 107 106 95 103 103 83 97 97 104 101 123 113 105 112 123 116 108 110 108 100 96 109 109 104 93 99 96 103 107 120 118 112 121 115 123 106 110 107 112 113 113 124 127 135 130 140 130 134 123 123 136 133 134 137 132 138 125 125 127 111 125 118 111 125 120 122 113 117 130 124 129 130 127 131 129 125 115 133 135 123 103 102 103 98 98 106 103 106 97 102 100 104 104 97 100 103 87 81 82 82 79 96 94 94 94 92 99 103 112 116 123 122 128 143 138 156 160 149 156 150 163 165 155 151 149 137 145 138 149 149 142 134 124 126 124 123 127 127 127 124 128 130 120 118 126 128 132 124 123 121 134 124 124 129 137 130 127 140 140 121 118 123 115 118 122 128 129 135 130 125 117 117 109 115 105 112 117 109 117 119 134 135 134 137 134 125 133 123 118 122 106 105 112 119 123 119 112 126 126 113 129 128 123 124 117 116 107 109 102 105 111 113 123 135 128 124 130 135 117 137 138"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:065f91ff-bead-5272-9736-9d5533633d4f",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "065f91ff-bead-5272-9736-9d5533633d4f",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-03",
+    "valueQuantity": {
+     "value": 8077.22,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:2cb2af99-4491-57d8-86f8-56acff813794",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "2cb2af99-4491-57d8-86f8-56acff813794",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-04T00:00:00+05:30",
+     "end": "2026-09-04T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "129 126 101 102 112 118 121 109 118 118 115 112 104 106 118 108 112 106 109 99 104 104 107 119 124 117 121 107 104 107 110 103 106 105 104 111 105 92 106 118 95 92 84 97 117 87 88 92 108 110 109 105 95 98 98 103 103 103 96 90 95 95 105 104 109 109 120 105 107 100 99 113 102 106 116 119 112 114 97 105 96 110 109 120 116 104 107 107 109 116 128 116 132 118 124 118 124 131 117 122 124 132 146 139 131 146 155 153 149 162 165 150 155 152 141 154 144 141 129 140 137 138 132 136 134 123 122 122 129 98 94 98 98 97 98 102 110 111 106 104 108 111 107 103 107 99 101 97 98 94 108 105 101 80 83 94 87 91 85 95 103 106 94 102 95 103 125 115 127 133 143 136 163 177 187 194 196 200 210 203 183 189 192 198 187 177 170 172 160 171 159 169 164 159 156 157 149 140 148 153 153 134 126 115 124 123 130 133 129 127 150 150 149 144 159 146 140 150 135 137 129 133 131 123 125 126 136 138 134 118 124 129 133 123 124 130 136 119 122 117 110 117 123 110 96 99 115 100 94 116 104 94 100 109 119 121 121 123 132 132 143 154 174 172 183 199 214 219 223 211 217 217 206 208 221 200 183 186 184 170 174 165 149 148 142 147 131 142"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:f21c3b66-8d14-53d6-bcd7-87dfbcc5b98b",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "f21c3b66-8d14-53d6-bcd7-87dfbcc5b98b",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-04",
+    "valueQuantity": {
+     "value": 5471.86,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:afd39286-ecb8-5795-ac87-c167521ebef7",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "afd39286-ecb8-5795-ac87-c167521ebef7",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-05T00:00:00+05:30",
+     "end": "2026-09-05T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "143 156 144 141 138 156 149 140 133 139 138 115 114 114 117 111 115 118 128 120 126 126 116 124 118 115 123 110 104 108 103 109 111 106 114 111 115 118 106 92 93 94 94 87 85 106 104 100 94 108 112 114 103 110 104 107 108 98 103 111 88 97 87 93 95 98 93 78 81 79 80 88 93 102 112 108 105 104 104 98 108 128 123 113 106 118 112 111 111 103 121 125 123 118 104 106 109 114 102 120 120 127 117 114 108 125 121 113 112 112 110 122 135 143 146 143 156 131 136 121 125 123 135 145 152 144 138 135 128 130 130 122 130 114 120 127 126 133 127 119 122 120 114 124 114 110 101 98 102 91 96 92 104 106 113 97 98 108 111 104 92 88 100 103 107 118 117 122 126 133 133 128 112 122 119 121 115 106 125 131 136 129 124 121 125 139 121 112 110 114 108 110 113 108 106 105 120 115 93 94 96 93 95 115 114 136 145 144 130 124 122 123 112 109 106 116 115 107 99 121 114 101 108 110 115 107 117 116 106 106 95 89 92 88 82 86 98 107 102 104 97 90 98 91 99 107 98 103 101 113 106 109 113 103 102 99 108 107 121 114 115 121 133 118 108 107 110 114 108 113 119 114 112 113 118 115 121 113 117 128 131 136 132 129 136 130 125 123"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:c19a9c8c-affe-5428-ad69-736ae3b29856",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "c19a9c8c-affe-5428-ad69-736ae3b29856",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-05",
+    "valueQuantity": {
+     "value": 11934.43,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:8a070c38-dfbe-57d8-8a67-25ddd83bdf40",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "8a070c38-dfbe-57d8-8a67-25ddd83bdf40",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-06T00:00:00+05:30",
+     "end": "2026-09-06T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "124 106 111 97 101 96 105 102 120 116 117 116 113 111 103 85 100 97 105 90 85 97 100 101 110 110 114 114 113 117 105 101 100 107 98 101 111 110 109 117 119 107 115 121 118 110 97 90 94 97 99 114 113 97 94 96 100 96 93 91 79 74 83 74 73 88 76 91 96 107 98 92 107 106 108 115 111 119 112 116 111 110 111 114 115 122 106 111 89 92 84 105 107 116 120 120 127 117 127 120 105 115 115 116 112 109 98 104 94 102 90 93 102 99 131 119 120 121 120 124 115 121 130 121 117 124 127 134 145 132 130 117 105 105 101 108 110 98 108 98 108 98 104 101 100 105 111 114 107 111 106 95 98 96 91 106 117 120 113 105 103 103 111 104 106 107 123 131 143 139 156 162 175 162 163 174 182 176 184 177 167 167 169 163 162 162 168 167 162 157 160 142 131 129 121 122 121 130 127 123 131 144 140 144 142 131 136 142 142 134 129 137 126 125 128 115 119 113 100 118 115 108 114 122 115 108 115 107 101 118 113 123 113 115 98 93 95 102 95 93 104 114 115 118 131 111 110 103 98 96 112 100 104 106 106 111 120 120 111 111 119 116 117 128 152 153 154 155 161 163 154 172 164 164 159 156 156 145 129 131 142 137 129 143 145 140 140 134"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:e5021caf-ab3c-5d16-b493-9d156e1c847a",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "e5021caf-ab3c-5d16-b493-9d156e1c847a",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-06",
+    "valueQuantity": {
+     "value": 8249.39,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:8503c829-c8a3-5879-90e2-f1d8d5be6f20",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "8503c829-c8a3-5879-90e2-f1d8d5be6f20",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-07T00:00:00+05:30",
+     "end": "2026-09-07T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "133 132 133 118 116 114 116 106 114 103 108 103 101 114 112 114 114 119 109 125 119 118 117 130 120 117 115 112 104 97 99 103 111 106 101 88 92 93 99 104 103 105 101 96 92 90 91 97 95 106 106 99 93 102 104 100 94 97 105 104 111 112 102 100 104 110 92 107 100 107 111 110 101 116 115 97 109 95 94 97 102 112 125 121 123 115 113 112 108 117 118 112 109 105 110 108 111 115 120 115 111 112 112 112 118 122 122 139 141 141 134 137 138 131 143 146 155 153 140 142 145 137 135 127 128 123 133 140 138 134 142 123 123 130 117 126 122 110 126 122 112 120 133 136 128 128 121 124 130 131 138 134 141 142 142 142 134 139 133 141 138 150 148 148 148 150 145 138 140 136 134 128 E E E E E E E E 127 117 122 109 109 110 119 125 123 120 125 132 126 130 117 116 117 119 122 107 112 110 113 111 121 117 119 128 108 100 102 106 100 90 93 95 107 112 117 125 119 123 126 120 128 126 122 134 127 116 120 111 101 104 105 110 109 107 108 113 110 126 125 108 97 105 94 91 90 95 109 102 108 86 74 92 96 85 83 98 99 103 101 89 94 95 88 85 98 90 105 109 127 120 122 124 120 133 134 144 135 129 127 127 114 116 127 121"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:8298c3d7-735f-5288-91dc-5e3dbaa8b0ea",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "8298c3d7-735f-5288-91dc-5e3dbaa8b0ea",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-07",
+    "valueQuantity": {
+     "value": 10402.57,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:e08df608-1dbb-5d78-add2-aca52c1d4dba",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "e08df608-1dbb-5d78-add2-aca52c1d4dba",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-08T00:00:00+05:30",
+     "end": "2026-09-08T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "118 122 121 118 144 140 136 138 131 133 129 118 113 120 130 119 120 113 116 111 107 111 105 117 129 125 118 103 105 103 108 120 112 100 110 99 92 91 91 99 93 103 101 103 93 93 82 101 86 91 89 91 106 107 107 92 99 105 106 116 108 118 109 108 111 100 109 116 114 107 98 100 108 106 98 86 91 88 93 92 104 93 104 102 103 102 94 100 109 107 102 111 115 118 122 111 118 118 110 114 115 140 136 146 148 152 154 141 140 147 148 148 155 157 147 150 151 162 141 133 135 119 129 142 138 143 124 123 115 118 112 109 108 106 121 109 117 119 116 109 113 109 100 101 105 110 110 105 101 109 104 120 106 92 85 93 108 98 103 95 94 89 92 114 99 102 99 104 108 93 114 129 128 123 127 140 146 152 155 160 158 158 165 168 169 169 170 150 147 146 141 140 126 124 122 130 125 134 132 133 134 126 114 110 121 127 106 128 122 128 99 107 108 105 113 123 110 109 114 117 120 139 130 126 119 110 110 127 119 128 131 118 107 107 111 105 96 89 95 109 105 103 111 104 111 96 102 111 117 106 91 87 83 87 92 91 102 111 110 112 111 119 135 130 136 135 152 141 140 143 153 145 155 146 132 142 140 137 142 149 141 142 147 145 130 134 128 124"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:348354bb-a9ca-5348-a196-0f459d9a96db",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "348354bb-a9ca-5348-a196-0f459d9a96db",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-08",
+    "valueQuantity": {
+     "value": 8742.1,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:edd0af8e-baeb-5973-b632-6e894902ea20",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "edd0af8e-baeb-5973-b632-6e894902ea20",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-09T00:00:00+05:30",
+     "end": "2026-09-09T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "128 133 124 122 116 105 103 105 110 110 104 111 99 102 83 103 97 98 106 98 108 114 104 98 98 102 102 110 102 100 103 94 111 96 102 99 106 103 100 85 99 110 98 113 83 79 61 54 60 83 89 89 105 92 100 92 98 95 97 85 85 98 118 112 114 104 102 101 105 98 117 130 121 101 97 112 99 106 114 117 95 81 87 100 95 96 97 97 106 113 115 107 106 102 102 112 101 98 105 102 106 106 113 106 111 113 123 120 112 97 114 100 118 116 110 114 108 104 110 96 95 95 102 110 105 112 98 109 109 116 127 116 115 123 116 131 126 126 126 119 121 117 109 110 103 106 111 110 110 126 120 126 118 119 118 95 101 95 90 104 117 115 120 114 112 120 124 110 119 136 140 146 143 140 146 157 158 152 150 158 154 149 146 150 135 139 137 126 126 117 125 118 112 118 111 115 112 104 110 98 104 115 112 104 110 113 108 113 111 114 96 106 113 108 107 118 121 116 129 117 112 118 109 123 126 123 109 110 109 107 101 100 101 88 94 85 87 92 88 107 94 113 101 101 106 105 101 104 109 108 113 100 109 106 94 111 98 88 95 110 102 108 118 123 127 119 122 122 121 114 118 116 116 116 117 132 136 125 132 122 118 121 108 111 120 118 114 112"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:cce99663-80e9-5d7e-ade7-5090c5ae382b",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "cce99663-80e9-5d7e-ade7-5090c5ae382b",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-09",
+    "valueQuantity": {
+     "value": 5079.97,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:f4d7e7fb-6bcb-5aa3-9e96-ae226865d062",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "f4d7e7fb-6bcb-5aa3-9e96-ae226865d062",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-10T00:00:00+05:30",
+     "end": "2026-09-10T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "106 98 114 99 104 96 90 94 104 91 103 106 109 113 114 112 99 100 86 90 94 93 95 98 98 94 107 96 99 102 99 101 109 105 109 96 99 104 110 111 124 123 117 122 131 116 121 119 118 111 112 107 102 91 97 104 116 117 100 104 97 91 96 101 98 107 105 93 93 96 94 88 93 97 83 78 106 101 97 101 101 101 108 110 112 115 109 102 107 106 108 116 111 120 130 126 122 123 127 125 119 121 128 147 143 145 151 152 154 158 163 161 162 154 156 162 173 173 158 156 150 167 156 154 146 135 129 131 130 137 133 121 131 120 136 140 143 133 131 129 126 115 125 129 125 117 112 115 111 116 104 110 103 115 114 101 101 104 114 113 102 110 98 96 89 87 94 96 107 115 120 117 131 141 148 148 160 156 168 177 168 172 178 180 179 175 178 178 176 162 172 180 158 159 157 156 146 131 122 125 129 143 142 136 129 130 132 129 137 138 124 123 113 104 120 120 134 133 141 139 139 122 117 117 107 110 105 95 91 79 86 83 85 98 82 96 89 100 105 104 106 110 106 98 89 83 92 104 107 100 111 106 108 94 94 82 94 94 103 115 108 109 116 106 111 104 107 123 129 133 153 150 146 148 142 146 147 143 142 149 143 143 140 143 144 136 140 128"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:a9abf36e-9728-5109-af23-46424f1b7dce",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "a9abf36e-9728-5109-af23-46424f1b7dce",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-10",
+    "valueQuantity": {
+     "value": 9384.38,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:e1bc6b64-dc96-5f54-b87f-8761b149a005",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "e1bc6b64-dc96-5f54-b87f-8761b149a005",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-11T00:00:00+05:30",
+     "end": "2026-09-11T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "121 116 107 119 121 134 122 118 120 108 106 93 97 103 107 97 106 108 110 111 105 98 108 124 108 103 104 110 117 110 112 121 126 119 119 125 112 72 63 96 100 98 101 116 95 98 91 102 92 109 119 103 116 108 103 87 94 110 113 108 97 96 116 101 106 101 120 125 124 109 119 110 107 105 118 114 110 110 113 96 99 103 105 105 107 110 113 115 114 114 113 114 116 106 107 112 114 102 102 107 108 113 103 110 114 116 112 116 116 126 130 134 130 139 121 122 120 120 114 111 117 125 115 111 122 134 138 133 127 109 120 119 122 111 95 113 103 107 104 101 106 106 114 127 126 125 125 126 119 125 132 129 117 112 118 121 118 113 111 111 113 102 88 96 81 81 81 79 88 81 99 97 96 103 108 106 104 95 96 114 102 109 105 93 81 84 82 89 81 89 89 88 76 77 76 89 88 92 100 95 89 84 90 88 95 94 77 85 86 86 87 94 96 105 91 112 118 112 110 117 114 115 125 124 117 123 120 124 129 125 126 119 118 106 97 102 94 92 104 104 116 115 100 98 104 103 107 110 111 98 97 100 97 103 96 110 106 98 94 121 139 147 145 148 155 151 158 144 148 152 144 151 147 144 140 130 145 147 138 134 126 130 130 126 108 120 112 112"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:6073bef6-2371-5970-9f99-f17dee8a95b7",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "6073bef6-2371-5970-9f99-f17dee8a95b7",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-11",
+    "valueQuantity": {
+     "value": 8222.79,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:136e21b9-aca0-5f70-9c61-2df160931c66",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "136e21b9-aca0-5f70-9c61-2df160931c66",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-12T00:00:00+05:30",
+     "end": "2026-09-12T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "118 114 110 114 116 111 112 98 104 97 92 97 106 117 109 111 122 112 112 119 122 120 108 112 90 101 97 96 99 103 108 106 115 109 110 103 101 98 107 101 90 98 94 86 84 96 93 92 93 99 96 100 94 91 84 85 83 91 90 95 104 104 117 113 108 96 92 80 74 82 89 95 86 91 82 91 108 106 100 103 96 95 94 90 88 79 90 89 105 100 106 111 109 117 111 117 122 132 134 131 135 140 164 158 160 159 169 171 177 167 168 178 181 180 180 168 166 158 152 153 154 167 167 150 139 140 128 134 124 123 120 127 128 120 110 93 101 90 101 103 94 97 102 109 115 111 121 116 103 100 110 107 105 104 106 109 120 119 128 117 109 119 109 99 116 127 136 129 131 129 141 135 139 135 140 134 131 140 136 141 133 129 123 129 134 137 135 125 128 130 120 131 126 125 124 121 119 122 119 123 103 116 108 114 108 121 117 113 126 120 124 106 97 100 112 109 112 109 102 105 107 108 112 111 119 125 120 121 116 102 106 121 119 120 102 105 109 93 105 116 102 108 104 111 97 91 90 88 78 96 105 114 110 106 107 112 114 97 89 100 106 94 99 104 97 95 105 116 105 127 117 118 134 134 147 144 148 152 141 133 140 130 131 119 123 126 127 129"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:1a910e5d-17a1-568a-a582-d68aa65d85d6",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "1a910e5d-17a1-568a-a582-d68aa65d85d6",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-12",
+    "valueQuantity": {
+     "value": 9521.74,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ac72d543-5dcf-5703-9ceb-b3330c66267e",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "ac72d543-5dcf-5703-9ceb-b3330c66267e",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-13T00:00:00+05:30",
+     "end": "2026-09-13T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "137 137 139 127 128 119 116 116 114 111 113 110 114 113 126 125 123 113 105 111 105 114 105 123 107 113 106 102 124 116 84 79 64 54 59 102 94 89 84 93 91 93 89 90 92 90 92 88 84 100 103 97 97 108 113 112 112 104 118 104 103 101 108 109 95 97 88 83 88 91 93 98 102 108 110 110 110 104 97 106 106 94 100 82 94 103 104 96 110 116 104 113 101 95 100 91 89 80 90 108 106 115 126 112 114 126 116 111 128 125 125 129 123 117 113 105 127 128 132 142 137 135 118 107 116 114 114 108 123 135 130 135 129 150 141 148 132 135 112 112 127 132 122 124 113 116 115 132 119 120 116 122 115 95 93 90 85 81 82 92 102 97 92 98 100 94 97 100 107 113 109 113 104 110 125 134 152 150 152 156 150 148 155 149 138 144 140 140 141 144 147 156 157 144 139 152 139 143 137 130 129 141 137 133 127 136 134 131 112 101 88 104 109 120 128 129 127 129 137 131 127 140 132 129 128 118 115 108 107 110 118 108 94 93 93 97 109 109 115 97 106 99 106 95 91 103 108 109 108 101 92 101 98 93 86 74 86 95 87 94 104 90 85 91 104 107 119 103 102 102 114 110 99 104 127 116 128 124 139 135 134 123 115 122 124 126 123 134"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:9853ddbc-68ff-5be2-91b1-5ff02443bb0b",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "9853ddbc-68ff-5be2-91b1-5ff02443bb0b",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-13",
+    "valueQuantity": {
+     "value": 10240.53,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:7abd83ec-c121-51cb-945c-4746e7448054",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "7abd83ec-c121-51cb-945c-4746e7448054",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "laboratory"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "99504-3",
+       "display": "Glucose [Mass/volume] in Interstitial fluid"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectivePeriod": {
+     "start": "2026-09-14T00:00:00+05:30",
+     "end": "2026-09-14T23:59:59+05:30"
+    },
+    "valueSampledData": {
+     "origin": {
+      "value": 0.0,
+      "unit": "mg/dL",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg/dL"
+     },
+     "period": 300000,
+     "dimensions": 1,
+     "lowerLimit": 40,
+     "upperLimit": 400,
+     "data": "134 130 114 113 125 131 133 129 130 118 115 130 120 125 131 136 116 107 110 101 111 112 107 111 103 105 113 119 113 127 110 109 100 103 111 99 101 105 108 99 98 101 93 96 99 105 97 111 109 123 125 119 119 112 124 122 117 106 107 97 100 98 103 103 87 100 100 92 87 93 97 101 109 112 110 112 105 121 122 125 129 124 131 119 123 121 125 129 127 114 111 102 89 86 90 83 84 81 89 109 120 122 113 116 120 130 137 153 152 161 170 158 160 168 167 182 180 179 170 171 161 150 161 149 144 141 133 131 118 113 113 127 130 124 127 127 140 141 134 126 116 120 118 109 107 111 105 118 118 112 123 113 108 110 130 118 110 110 103 98 104 93 94 99 104 90 111 108 105 97 115 117 122 133 140 146 152 151 137 142 143 135 133 131 148 129 144 146 141 133 136 134 139 124 139 132 130 125 113 113 118 120 112 112 114 125 116 125 134 129 144 126 123 116 127 138 149 149 153 142 123 122 122 123 122 122 126 115 119 114 112 111 113 101 90 97 106 120 112 106 115 122 126 122 111 110 120 93 91 94 93 92 92 94 94 99 103 108 103 102 86 92 95 106 119 109 121 130 127 136 134 129 142 144 140 147 134 127 136 144 148 143 158 154 143 134 132 128"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:78b21dbc-c0a9-5673-9bd7-e21c8be8d098",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "78b21dbc-c0a9-5673-9bd7-e21c8be8d098",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "41950-7",
+       "display": "Number of steps in 24 hour Measured"
+      }
+     ],
+     "text": "Number of steps in 24 hour Measured"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-14",
+    "valueQuantity": {
+     "value": 9694.16,
+     "unit": "/(24.h)",
+     "system": "http://unitsofmeasure.org",
+     "code": "/(24.h)"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:96a4b875-31d8-5057-83e9-02fdddefd7a2",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "96a4b875-31d8-5057-83e9-02fdddefd7a2",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-01",
+    "valueQuantity": {
+     "value": 4.92,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:1267b229-b1b0-5dec-93e3-09bd7fe72015",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "1267b229-b1b0-5dec-93e3-09bd7fe72015",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-02",
+    "valueQuantity": {
+     "value": 4.08,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:33ed7abc-3dc9-511c-b223-2ab6852a0bde",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "33ed7abc-3dc9-511c-b223-2ab6852a0bde",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-03",
+    "valueQuantity": {
+     "value": 5.58,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:07fe5480-0855-567a-ac73-4454473a419f",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "07fe5480-0855-567a-ac73-4454473a419f",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-04",
+    "valueQuantity": {
+     "value": 5.83,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:b5a528df-4831-5a55-bce1-69f5b79055ee",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "b5a528df-4831-5a55-bce1-69f5b79055ee",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-05",
+    "valueQuantity": {
+     "value": 6.42,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:eba274c6-0171-5d5b-88e3-102af2cf2ab9",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "eba274c6-0171-5d5b-88e3-102af2cf2ab9",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-06",
+    "valueQuantity": {
+     "value": 3.58,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:b8cc6bcf-8970-5e25-aa21-ec8954f4e070",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "b8cc6bcf-8970-5e25-aa21-ec8954f4e070",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-07",
+    "valueQuantity": {
+     "value": 6.58,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:1ebe40ec-983c-5810-8ab5-e9d04e2a9ca7",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "1ebe40ec-983c-5810-8ab5-e9d04e2a9ca7",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-08",
+    "valueQuantity": {
+     "value": 6.5,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:f4d52cf5-017e-5d1b-96aa-827f61c43bd8",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "f4d52cf5-017e-5d1b-96aa-827f61c43bd8",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-09",
+    "valueQuantity": {
+     "value": 6.17,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:9d32e10c-fd60-5e0c-8b9a-cfa0c1fa1311",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "9d32e10c-fd60-5e0c-8b9a-cfa0c1fa1311",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-10",
+    "valueQuantity": {
+     "value": 6.08,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:827ab59e-6976-5e39-87c8-882e3b824009",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "827ab59e-6976-5e39-87c8-882e3b824009",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-11",
+    "valueQuantity": {
+     "value": 5.67,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:1e81740a-c32a-5e1f-9a57-afb457df034c",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "1e81740a-c32a-5e1f-9a57-afb457df034c",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-12",
+    "valueQuantity": {
+     "value": 5.92,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:6da9169e-d9ec-58be-bbfd-e2f27dcb38d4",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "6da9169e-d9ec-58be-bbfd-e2f27dcb38d4",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-13",
+    "valueQuantity": {
+     "value": 6.25,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:efa0bd97-f7bb-5329-af23-874ea8034751",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "efa0bd97-f7bb-5329-af23-874ea8034751",
+    "meta": {
+     "tag": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+       "code": "HTEST",
+       "display": "test health data"
+      }
+     ]
+    },
+    "status": "final",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "activity"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "93832-4",
+       "display": "Sleep duration"
+      }
+     ],
+     "text": "Sleep duration"
+    },
+    "subject": {
+     "reference": "Patient/97370368-7351-55e3-9546-fe120f331145"
+    },
+    "effectiveDateTime": "2026-09-14",
+    "valueQuantity": {
+     "value": 4.92,
+     "unit": "h",
+     "system": "http://unitsofmeasure.org",
+     "code": "h"
+    }
+   }
+  }
+ ]
+}
