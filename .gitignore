@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Data: raw third-party datasets are never committed (licence terms); fetch with scripts/download_data.py
+data/raw/
+data/processed/
+data/synthetic/full/
+*.parquet
+!data/synthetic/sample/*.parquet
+
+# Experiment tracking / model artefacts
+mlruns/
+artifacts/checkpoints/
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Secrets
+.env
+.env.*
+!.env.example
