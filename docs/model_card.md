@@ -44,6 +44,8 @@ On top of the twin, TwinNet (a neural network) forecasts glucose 5–120 minutes
 
 - The synthetic data generator and the mechanistic twin share a model structure, which flatters physics-based methods on synthetic data. Real and external results are the primary evidence.
 - The real cohorts are small (45 and 100 people) and none is Indian. Prospective validation in Indian clinics is required.
+- Synthetic-only models do not transfer to a new population without fine-tuning (ShanghaiT2DM zero-shot is worse than persistence). Pretraining on synthetic data plus fine-tuning on a few real patients is the supported regime; it also improves spike discrimination over real-only training.
+- Hypoglycaemia on CGMacros is rare and occurs mostly in people without diabetes (often likely sensor artefacts), so real-world hypoglycaemia precision is low and not yet established.
 - Unlogged meals are the main source of 2-hour error. Forecasts only use meals logged up to the moment of prediction.
 - CGM sensor bias differs between devices (CGMacros Dexcom vs Libre disagree by up to 40 mg/dL); the twin's set-point absorbs a constant bias.
 - Possible subgroup performance differences (age, sex, BMI, therapy) have not yet been audited on real data at scale.

@@ -36,3 +36,33 @@
 [01:12:06]     epoch 6: train_loss=0.2555, val_rmse_mgdl=18.3283
 [01:12:20]   TwinNet without EHR: RMSE60=19.19 RMSE120=25.34
 [01:14:41]     epoch 1: train_loss=0.3859, val_rmse_mgdl=20.2682
+[01:17:23]     epoch 2: train_loss=0.2963, val_rmse_mgdl=19.5495
+[01:19:50]     epoch 3: train_loss=0.2816, val_rmse_mgdl=19.3266
+[01:22:58]     epoch 4: train_loss=0.2663, val_rmse_mgdl=19.1589
+[01:26:06]     epoch 5: train_loss=0.2558, val_rmse_mgdl=18.8245
+[01:29:08]     epoch 6: train_loss=0.2499, val_rmse_mgdl=18.8400
+[01:29:30]   TwinNet without wearables: RMSE60=19.39 RMSE120=26.11
+[01:32:34]     epoch 1: train_loss=0.3893, val_rmse_mgdl=19.9848
+[01:35:39]     epoch 2: train_loss=0.2934, val_rmse_mgdl=19.0939
+[01:38:43]     epoch 3: train_loss=0.2785, val_rmse_mgdl=18.5812
+[01:41:48]     epoch 4: train_loss=0.2638, val_rmse_mgdl=18.6142
+[01:44:53]     epoch 5: train_loss=0.2533, val_rmse_mgdl=18.3037
+[01:47:58]     epoch 6: train_loss=0.2477, val_rmse_mgdl=18.3388
+[01:48:20]   TwinNet without meals/meds: RMSE60=19.11 RMSE120=25.16
+[01:48:20] illness detection
+[01:48:21]   illness-day AUROC 0.885 on 55 ill / 2786 days
+[01:48:23] done
+  Persistence              RMSE 30/60/120: 22.9 / 35.8 / 50.4   Clarke A+B@60: 98.2%
+  Linear trend             RMSE 30/60/120: 27.9 / 44.7 / 60.7   Clarke A+B@60: 97.1%
+  Twin (EHR prior)         RMSE 30/60/120: 23.2 / 30.3 / 39.1   Clarke A+B@60: 99.2%
+  Twin (personalised)      RMSE 30/60/120: 17.2 / 23.8 / 36.1   Clarke A+B@60: 99.1%
+  LightGBM fusion          RMSE 30/60/120: 13.1 / 18.4 / 24.4   Clarke A+B@60: 99.5%
+  TwinNet hybrid           RMSE 30/60/120: 13.6 / 19.0 / 24.9   Clarke A+B@60: 99.4%
+  spike Linear trend           AUROC 0.744 AUPRC 0.417
+  spike Twin (personalised)    AUROC 0.833 AUPRC 0.691
+  spike LightGBM fusion        AUROC 0.956 AUPRC 0.860  detected 86% lead 100 min FA/day 0.43
+  spike TwinNet hybrid         AUROC 0.956 AUPRC 0.859  detected 86% lead 100 min FA/day 0.45
+  hypo  Linear trend           AUROC 0.892 AUPRC 0.046
+  hypo  Twin (personalised)    AUROC 0.957 AUPRC 0.272
+  hypo  LightGBM fusion        AUROC 0.967 AUPRC 0.254  detected 77% lead 105 min FA/day 0.24
+  hypo  TwinNet hybrid         AUROC 0.968 AUPRC 0.288  detected 54% lead 105 min FA/day 0.11

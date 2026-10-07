@@ -1,7 +1,7 @@
 # MadhuTwin — Project Plan
 
 > Happiest Health Digital Twin Challenge 2026 · Working name *MadhuTwin* ("Madhumeha" = diabetes); rename freely.
-> Status: plan v1 · 2026-10-07
+> Status (2026-10-08): M0–M3 done; M4 done (what-if, explanations, CGM-light, Ask-the-twin with an optional LLM, Hindi/Kannada companion, consent and audit, external validation); M5 in progress (final models, report, deck, video script). Pending from the team: team details, video recording, GitHub repo.
 
 ---
 

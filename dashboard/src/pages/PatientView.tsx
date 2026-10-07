@@ -27,8 +27,9 @@ function RiskCard({ state }: { state: State }) {
   const end = fc.q50[fc.q50.length - 1];
   const nowG = [...state.series.cgm].reverse().find((v) => v != null) ?? null;
   const alreadyHigh = nowG != null && nowG > 180;
+  const alreadyLow = nowG != null && nowG < 70;
   const spikeLvl = alreadyHigh ? (nowG > 250 ? "serious" : "warning") : riskLevel(fc.spike, "spike");
-  const hypoLvl = riskLevel(fc.hypo, "hypo");
+  const hypoLvl = alreadyLow ? "critical" : riskLevel(fc.hypo, "hypo");
   const lead = hypoLvl !== "good" ? "hypo" : spikeLvl !== "good" ? "spike" : null;
   const why = lead === "hypo" ? fc.why_hypo : fc.why_spike;
   return (
@@ -41,14 +42,14 @@ function RiskCard({ state }: { state: State }) {
         </div>
         <div>
           <div className="mb-1 muted text-[12px]">Low &lt;70 for 15+ min</div>
-          <RiskMeter p={fc.hypo} kind="hypo" />
+          {alreadyLow ? <Status level="critical">Below range now</Status> : <RiskMeter p={fc.hypo} kind="hypo" />}
           <div className="mt-1 text-[12px] ink-2">10th percentile {Math.round(low)} mg/dL</div>
         </div>
       </div>
       {lead ? (
         <div className="rounded-lg p-3" style={{ background: "var(--surface-2)", border: "1px solid var(--border)" }}>
           <Status level={lead === "hypo" ? hypoLvl : spikeLvl}>
-            {lead === "hypo" ? "Hypoglycaemia predicted within 2 h" : alreadyHigh ? `Hyperglycaemia: ${Math.round(nowG!)} mg/dL now, forecast peak ${Math.round(peak)}` : "Hyperglycaemic excursion predicted within 2 h"}
+            {lead === "hypo" ? (alreadyLow ? `Hypoglycaemia now: ${Math.round(nowG!)} mg/dL` : "Hypoglycaemia predicted within 2 h") : alreadyHigh ? `Hyperglycaemia: ${Math.round(nowG!)} mg/dL now, forecast peak ${Math.round(peak)}` : "Hyperglycaemic excursion predicted within 2 h"}
           </Status>
           {why && why.length > 0 && (
             <ul className="mt-2 list-disc space-y-0.5 pl-5 text-[12px] ink-2">

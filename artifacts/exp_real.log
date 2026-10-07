@@ -1,0 +1,57 @@
+[01:59:58] CGMacros 5-fold cross-validation
+[01:59:58]   CGMacros fold 1/5: 36 train / 9 test recordings
+[02:04:24]   CGMacros fold 2/5: 36 train / 9 test recordings
+[02:09:13]   CGMacros fold 3/5: 36 train / 9 test recordings
+[02:13:41]   CGMacros fold 4/5: 36 train / 9 test recordings
+[02:17:59]   CGMacros fold 5/5: 36 train / 9 test recordings
+[02:22:40] ShanghaiT2DM 5-fold cross-validation (external population, no wearables)
+[02:22:40]   Shanghai fold 1/5: 86 train / 23 test recordings
+[02:26:35]   Shanghai fold 2/5: 87 train / 22 test recordings
+[02:30:28]   Shanghai fold 3/5: 88 train / 21 test recordings
+[02:34:21]   Shanghai fold 4/5: 88 train / 21 test recordings
+[02:38:12]   Shanghai fold 5/5: 87 train / 22 test recordings
+[02:42:36] training production models
+
+CGMacros: 45 recordings, 21474 evaluation anchors
+  Persistence                    RMSE 30/60/120: 19.6 / 28.3 / 37.8   A+B@60 99.1%
+  Linear trend                   RMSE 30/60/120: 26.6 / 40.2 / 49.6   A+B@60 97.5%
+  Twin (EHR prior)               RMSE 30/60/120: 30.5 / 37.4 / 41.1   A+B@60 99.1%
+  Twin (personalised)            RMSE 30/60/120: 25.5 / 31.0 / 33.7   A+B@60 99.3%
+  LightGBM (real-trained)        RMSE 30/60/120: 15.9 / 23.2 / 29.1   A+B@60 99.6%
+  LightGBM (synthetic-only)      RMSE 30/60/120: 20.0 / 26.7 / 32.1   A+B@60 99.6%
+  TwinNet zero-shot (synthetic)  RMSE 30/60/120: 20.0 / 26.4 / 33.1   A+B@60 99.4%
+  TwinNet real-only              RMSE 30/60/120: 17.0 / 23.5 / 28.8   A+B@60 99.5%
+  TwinNet sim-to-real            RMSE 30/60/120: 17.1 / 23.5 / 28.8   A+B@60 99.4%
+  spike Linear trend                   AUROC 0.690 AUPRC 0.276
+  spike Twin (personalised)            AUROC 0.731 AUPRC 0.350
+  spike LightGBM (real-trained)        AUROC 0.797 AUPRC 0.455  detected 60% lead 50 min FA/day 0.46
+  spike TwinNet zero-shot (synthetic)  AUROC 0.735 AUPRC 0.361
+  spike TwinNet real-only              AUROC 0.759 AUPRC 0.377
+  spike TwinNet sim-to-real            AUROC 0.832 AUPRC 0.476  detected 85% lead 92 min FA/day 1.26
+  hypo  Linear trend                   AUROC 0.752 AUPRC 0.030
+  hypo  Twin (personalised)            AUROC 0.653 AUPRC 0.030
+  hypo  LightGBM (real-trained)        AUROC 0.732 AUPRC 0.013  detected 18% lead 28 min FA/day 0.23
+  hypo  TwinNet zero-shot (synthetic)  AUROC 0.644 AUPRC 0.008
+  hypo  TwinNet real-only              AUROC 0.794 AUPRC 0.030
+  hypo  TwinNet sim-to-real            AUROC 0.762 AUPRC 0.079  detected 27% lead 110 min FA/day 0.09
+
+Shanghai: 109 recordings, 55303 evaluation anchors
+  Persistence                    RMSE 30/60/120: 16.5 / 27.5 / 40.9   A+B@60 98.8%
+  Linear trend                   RMSE 30/60/120: 18.2 / 32.0 / 46.6   A+B@60 98.6%
+  Twin (EHR prior)               RMSE 30/60/120: 43.9 / 55.4 / 64.2   A+B@60 91.3%
+  Twin (personalised)            RMSE 30/60/120: 29.6 / 36.7 / 42.2   A+B@60 96.7%
+  LightGBM (real-trained)        RMSE 30/60/120: 12.2 / 21.9 / 32.3   A+B@60 98.7%
+  LightGBM (synthetic-only)      RMSE 30/60/120: 22.1 / 35.9 / 49.7   A+B@60 96.9%
+  TwinNet zero-shot (synthetic)  RMSE 30/60/120: 22.3 / 32.9 / 48.9   A+B@60 97.3%
+  TwinNet sim-to-real            RMSE 30/60/120: 13.5 / 22.3 / 31.6   A+B@60 98.9%
+  spike Linear trend                   AUROC 0.760 AUPRC 0.348
+  spike Twin (personalised)            AUROC 0.744 AUPRC 0.306
+  spike LightGBM (real-trained)        AUROC 0.867 AUPRC 0.540  detected 84% lead 50 min FA/day 0.75
+  spike TwinNet zero-shot (synthetic)  AUROC 0.746 AUPRC 0.319
+  spike TwinNet sim-to-real            AUROC 0.870 AUPRC 0.523  detected 93% lead 85 min FA/day 1.61
+  hypo  Linear trend                   AUROC 0.840 AUPRC 0.183
+  hypo  Twin (personalised)            AUROC 0.779 AUPRC 0.110
+  hypo  LightGBM (real-trained)        AUROC 0.866 AUPRC 0.220  detected 16% lead 52 min FA/day 0.08
+  hypo  TwinNet zero-shot (synthetic)  AUROC 0.810 AUPRC 0.114
+  hypo  TwinNet sim-to-real            AUROC 0.860 AUPRC 0.184  detected 54% lead 50 min FA/day 0.47
+[02:48:15] done

@@ -5,6 +5,8 @@
 MadhuTwin builds a living virtual replica of a person with type 2 diabetes. It fuses their electronic health record with wearable streams, simulates their glucose–insulin physiology, stays synchronised with their CGM every 5 minutes, and **warns a doctor up to 2 hours before a glucose spike or a hypoglycaemic episode**, with the reasons and "what-if" simulations to act on it.
 
 <!-- RESULTS_HEADLINE -->
+**Headline results (unseen patients):** 60-min forecast error 19.0 mg/dL vs 35.8 for persistence; 99.4% clinically acceptable (Clarke A+B); 86% of glucose spikes flagged a median 100 min ahead at 0.45 false alerts per patient-day; fusing both streams + the physics twin cuts 60-min error from 24.9 (CGM only) to 18.4 mg/dL. On 45 real people (CGMacros): 23.5 vs 28.3 mg/dL.
+<!-- /RESULTS_HEADLINE -->
 
 | | |
 |---|---|
@@ -82,6 +84,34 @@ A predictive model alone is not a twin. MadhuTwin implements the three defining 
 **Evaluation protocol.** Patient-level splits throughout. Synthetic: 70/10/20 by patient, scored only on days 8–14 after personalisation. Real data: 5-fold CV grouped by patient. Metrics: RMSE / MAE / MARD per horizon, Clarke Error Grid, 80% interval coverage, AUROC / AUPRC with patient-bootstrap CIs, excursions caught, lead time and false alerts per day. Stream-by-stream ablations included.
 
 <!-- RESULTS_TABLE -->
+### Results
+
+| Evaluation | Metric | MadhuTwin (TwinNet) | Persistence baseline |
+|---|---|---:|---:|
+| Synthetic India cohort, 199 unseen patients | RMSE 30 / 60 / 120 min (mg/dL) | 13.6 / 19.0 / 24.9 | 22.9 / 35.8 / 50.4 |
+| | Clarke A+B at 60 min | 99.4% | 98.2% |
+| | Spike >180 within 2 h: AUROC · caught · median lead · false alerts/day | 0.956 · 86% · 100 min · 0.45 | – |
+| | Hypo <70 within 2 h: AUROC | 0.968 | – |
+| | Illness detected from CGM by the synced twin (AUROC) | 0.89 | – |
+| CGMacros, real people, 5-fold patient CV (45) | RMSE 30 / 60 / 120 min · Clarke A+B 60 | 17.1 / 23.5 / 28.8 · 99.4% | 19.6 / 28.3 / 37.8 · 99.1% |
+| ShanghaiT2DM, external, no wearables (109) | RMSE 30 / 60 / 120 min · Clarke A+B 60 | 13.5 / 22.3 / 31.6 · 98.9% | 16.5 / 27.5 / 40.9 · 98.8% |
+| CGM-light, synthetic patients (1 week CGM, then 4 fingersticks/day; upper bound) | MARD of continuous estimate · time-in-range error | 6.4% · ±3.8 pp | carry-forward 23.8% · ±6.7 pp |
+
+Does fusing the two streams help? (LightGBM retrained per combination, synthetic test patients)
+
+| Streams | RMSE 60 min | Spike AUROC |
+|---|---:|---:|
+| CGM only | 24.87 | 0.923 |
+| CGM + EHR | 23.82 | 0.931 |
+| CGM + wearables | 23.99 | 0.930 |
+| CGM + meals/meds | 21.38 | 0.937 |
+| CGM + wearables + meals/meds | 21.12 | 0.941 |
+| Both streams (dynamic + EHR) | 20.12 | 0.949 |
+| Both streams + physics twin | 18.44 | 0.955 |
+
+Full tables, confidence intervals and figures: [`docs/evaluation_report.md`](docs/evaluation_report.md).
+
+<!-- /RESULTS_TABLE -->
 
 ## 7. Run it
 
@@ -141,6 +171,7 @@ tests/             physiology, pipeline, API tests
 
 - Synthetic patients come from a simulator with the same structure as the twin, which flatters physics-based methods there. Real and external validation are the primary evidence.
 - Real cohorts are small (45 + 100 people) and none is Indian. The next step is a prospective pilot with Indian clinics using CGM and wearables.
+- Models trained only on synthetic data do not transfer to a new population without fine-tuning: on ShanghaiT2DM the synthetic-only TwinNet is worse than persistence, while a short fine-tune on real patients (sim-to-real) beats it. Real-world false-alert rates (about 1.3–1.6 per patient-day at the F1-optimal threshold) need tuning with clinicians.
 - Unlogged meals dominate 2-hour error. Forecasts never use future information.
 - This is research software, not a medical device. See the model card for intended use and the regulatory path (CDSCO SaMD).
 

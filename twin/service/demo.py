@@ -212,15 +212,22 @@ def build_bundle(a: PatientArrays, story: str, display: dict, ehr: dict, series:
 def build_demo() -> list[dict]:
     DEMO.mkdir(parents=True, exist_ok=True)
     models = ARTIFACTS / "models"
-    net_path = models / "twinnet_final.pt" if (models / "twinnet_final.pt").exists() else models / "twinnet_synthetic.pt"
-    gbm_path = models / "gbm_final.pkl" if (models / "gbm_final.pkl").exists() else models / "gbm_synthetic.pkl"
-    print(f"demo models: {net_path.name}, {gbm_path.name}")
-    ck = torch.load(net_path, weights_only=False)
-    net = TwinNet(TwinNetConfig(**ck["cfg"]))
-    net.load_state_dict(ck["state"])
-    q_conf = np.asarray(ck["conformal_q"], dtype=float)
-    assert len(q_conf) == H
-    gbm = pickle.load(open(gbm_path, "rb"))
+
+    def load(net_file: str, gbm_file: str):
+        ck = torch.load(models / net_file, weights_only=False)
+        net = TwinNet(TwinNetConfig(**ck["cfg"]))
+        net.load_state_dict(ck["state"])
+        q = np.asarray(ck["conformal_q"], dtype=float)
+        assert len(q) == H
+        return net, q, pickle.load(open(models / gbm_file, "rb"))
+
+    # Each patient is served by the model trained for its domain: synthetic patients by the
+    # synthetic-trained TwinNet (they are held-out test patients), real recordings by the
+    # sim-to-real production model (which excludes the demo hold-outs from its training).
+    net_syn, q_syn, gbm_syn = load("twinnet_synthetic.pt", "gbm_synthetic.pkl")
+    has_final = (models / "twinnet_final.pt").exists() and (models / "gbm_final.pkl").exists()
+    net_real, q_real, gbm_real = load("twinnet_final.pt", "gbm_final.pkl") if has_final else (net_syn, q_syn, gbm_syn)
+    print(f"demo models: synthetic patients -> twinnet_synthetic; real recordings -> {'twinnet_final' if has_final else 'twinnet_synthetic'}")
 
     index = []
     syn = pickle.load(open(ARTIFACTS / "datasets" / "synthetic.pkl", "rb"))
@@ -241,7 +248,7 @@ def build_demo() -> list[dict]:
         disp = {"name": pr["name"], "age": pr["age"], "sex": pr["sex"], "city": pr["city"], "language": pr["language"],
                 "region": pr["region"], "label": "Synthetic patient (India-calibrated)"}
         b = build_bundle(by_id[pid], story, disp, _ehr_synthetic(pr, static.loc[pid], labhist[labhist.patient_id == pid]),
-                         series[series.patient_id == pid], events_all[events_all.patient_id == pid], net, q_conf, gbm,
+                         series[series.patient_id == pid], events_all[events_all.patient_id == pid], net_syn, q_syn, gbm_syn,
                          static.loc[pid].to_dict() | {"patient_id": pid})
         json.dump(b, open(DEMO / f"{pid}.json", "w"), separators=(",", ":"))
         fb = patient_bundle(Profile.from_dict(pr), static.loc[pid], labhist, series[series.patient_id == pid])
@@ -261,7 +268,7 @@ def build_demo() -> list[dict]:
             disp = {"name": f"Participant {pid}", "age": row.get("age"), "sex": row.get("sex"), "city": None,
                     "language": None, "label": label}
             story = "Real-world recording (held out from training)"
-            b = build_bundle(arrs[pid], story, disp, _ehr_real(row), se[se.patient_id == pid], ev[ev.patient_id == pid], net, q_conf, gbm,
+            b = build_bundle(arrs[pid], story, disp, _ehr_real(row), se[se.patient_id == pid], ev[ev.patient_id == pid], net_real, q_real, gbm_real,
                              row.to_dict() | {"patient_id": pid})
             json.dump(b, open(DEMO / f"{pid}.json", "w"), separators=(",", ":"))
             fb = minimal_bundle(pid, row.to_dict() | {"patient_id": pid}, se[se.patient_id == pid])

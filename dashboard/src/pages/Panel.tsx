@@ -66,7 +66,7 @@ export default function Panel({ clock }: { clock: number }) {
                     <RiskMeter p={r.risk_spike} kind="spike" />
                   )}
                 </td>
-                <td><RiskMeter p={r.risk_hypo} kind="hypo" /></td>
+                <td>{r.glucose != null && r.glucose < 70 ? <Status level="critical">Low now</Status> : <RiskMeter p={r.risk_hypo} kind="hypo" />}</td>
                 <td className="num">{r.tir_24h == null ? "–" : `${r.tir_24h.toFixed(0)}%`}</td>
                 <td><Sparkline values={r.sparkline} /></td>
                 <td className="text-[12px]">

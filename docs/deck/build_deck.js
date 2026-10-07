@@ -296,7 +296,7 @@ async function main() {
     stat(s, 0.5, 1.9, 3.9, `${f1(light.twin.mard)}%`, `twin MARD vs true glucose (carry-forward fingersticks: ${f1(light.carry_forward.mard)}%)`);
     stat(s, 4.7, 1.9, 3.9, `${f0(light.twin.within_20pct)}%`, `of twin estimates within 20% of true glucose (carry-forward: ${f0(light.carry_forward.within_20pct)}%)`);
     stat(s, 8.9, 1.9, 3.9, `±${f1(light.twin.tir_abs_error_pp)} pp`, `error in weekly time-in-range (fingersticks alone: ±${f1(light.fingersticks_only_tir_abs_error_pp)} pp)`);
-    card(s, 0.5, 4.2, 12.3, 1.9, "How it works", `Week 1 personalises the twin on CGM. In week 2 only ${light.fingersticks_per_day} fingerstick checks a day remain; the Unscented Kalman Filter fuses them with logged meals, doses and smartwatch activity to estimate glucose in between. Evaluated on ${light.n_patients} held-out synthetic patients against their true glucose.`);
+    card(s, 0.5, 4.2, 12.3, 1.9, "How it works", `Week 1 personalises the twin on CGM. In week 2 only ${light.fingersticks_per_day} fingerstick checks a day remain; the Unscented Kalman Filter fuses them with logged meals, doses and smartwatch activity to estimate glucose in between. Evaluated on ${light.n_patients} held-out synthetic patients against their true glucose; because the simulator shares the twin's structure this is an upper bound until tested on real CGM-off data.`);
     s.addNotes("CGM sensors are expensive for many Indian families. A short CGM period teaches the twin the person's physiology; afterwards the twin uses cheap fingersticks and smartwatch data to keep an estimate of continuous glucose and time in range.");
   }
 

@@ -47,13 +47,18 @@ def save(fig, name: str) -> None:
 def fig_horizon(rows: list[dict], name: str, title: str, methods: list[str]) -> None:
     hz = [30, 60, 90, 120]
     fig, ax = plt.subplots(figsize=(6.4, 3.6))
+    ends = {}
     for m in methods:
         r = next((x for x in rows if x["method"] == m), None)
         if r is None:
             continue
         y = [r[f"rmse_{h}"] for h in hz]
         ax.plot(hz, y, marker="o", ms=6, color=METHOD_COLOR.get(m, GREY), mec="white", mew=1.5, label=m)
-        ax.annotate(m, (hz[-1], y[-1]), xytext=(8, 0), textcoords="offset points", va="center", color=INK2, fontsize=9)
+        ends[m] = y[-1]
+    # direct end labels only where they cannot collide; the legend carries the rest
+    for m, v in ends.items():
+        if all(abs(v - w) > 2.5 for k, w in ends.items() if k != m):
+            ax.annotate(m, (hz[-1], v), xytext=(8, 0), textcoords="offset points", va="center", color=INK2, fontsize=9)
     ax.set_xticks(hz, [f"{h} min" for h in hz])
     ax.set_ylabel("RMSE (mg/dL)")
     ax.set_title(title, loc="left")
@@ -129,9 +134,10 @@ def fig_twin_validity() -> None:
     d = p.merge(s[["patient_id", "status", "hba1c_pct", "homa_ir"]], on="patient_id")
     fig, axes = plt.subplots(1, 2, figsize=(8.0, 3.4))
     colors = {"normal": GREY, "prediabetes": S2, "t2d": S1}
+    LABEL = {"normal": "Normal", "prediabetes": "Prediabetes", "t2d": "T2D"}
     for st, g in d.groupby("status"):
-        axes[0].scatter(g.homa_ir, g.SI * 1e4, s=30, color=colors[st], edgecolors="white", linewidths=1, label=st.replace("t2d", "T2D").capitalize())
-        axes[1].scatter(g.hba1c_pct, g.beta, s=30, color=colors[st], edgecolors="white", linewidths=1, label=st.replace("t2d", "T2D").capitalize())
+        axes[0].scatter(g.homa_ir, g.SI * 1e4, s=30, color=colors[st], edgecolors="white", linewidths=1, label=LABEL[st])
+        axes[1].scatter(g.hba1c_pct, g.beta, s=30, color=colors[st], edgecolors="white", linewidths=1, label=LABEL[st])
     r1 = np.corrcoef(np.log(d.homa_ir), np.log(d.SI))[0, 1]
     r2 = np.corrcoef(d.hba1c_pct, np.log(d.beta))[0, 1]
     axes[0].set_xscale("log"); axes[0].set_yscale("log")  # noqa: E702
@@ -176,7 +182,8 @@ def fig_realism() -> None:
     axes[0].plot([], [], color=GREY, lw=6, alpha=0.5, label="CGMacros (real, n=45)")
     axes[0].plot([], [], color=S1, lw=6, alpha=0.5, label="Synthetic India cohort (n=1000)")
     axes[0].legend(fontsize=8, loc="upper left")
-    fig.suptitle("Synthetic CGM statistics vs real people (5th-95th, IQR, median)", x=0.02, ha="left", fontweight="semibold", fontsize=11)
+    fig.suptitle("Synthetic CGM statistics vs real people (5th-95th, IQR, median); the Indian T2D cohort is deliberately sicker (median HbA1c 8.0% vs 7.1%)",
+                 x=0.02, ha="left", fontweight="semibold", fontsize=10)
     fig.tight_layout()
     save(fig, "synthetic_realism")
 
@@ -244,7 +251,7 @@ def update_readme(syn: dict, real: dict | None) -> None:
             rows.append(f"| {label} ({n}) | RMSE 30 / 60 / 120 min · Clarke A+B 60 | {t['rmse_30']:.1f} / {t['rmse_60']:.1f} / {t['rmse_120']:.1f} · "
                         f"{t['clarkeAB_60']:.1f}% | {b['rmse_30']:.1f} / {b['rmse_60']:.1f} / {b['rmse_120']:.1f} · {b['clarkeAB_60']:.1f}% |")
     if light:
-        rows.append(f"| CGM-light (1 week CGM, then 4 fingersticks/day) | MARD of continuous estimate · time-in-range error | "
+        rows.append(f"| CGM-light, synthetic patients (1 week CGM, then 4 fingersticks/day; upper bound) | MARD of continuous estimate · time-in-range error | "
                     f"{light['twin']['mard']:.1f}% · ±{light['twin']['tir_abs_error_pp']:.1f} pp | carry-forward {light['carry_forward']['mard']:.1f}% · "
                     f"±{light['carry_forward']['tir_abs_error_pp']:.1f} pp |")
     abl_rows = ["", "Does fusing the two streams help? (LightGBM retrained per combination, synthetic test patients)", "",
@@ -294,7 +301,9 @@ def render_video_script(syn: dict, real: dict | None) -> None:
         cg, cgp = by(real["cgmacros"]["forecast"], "TwinNet sim-to-real"), by(real["cgmacros"]["forecast"], "Persistence")
         sh, shp = by(real["shanghai"]["forecast"], "TwinNet sim-to-real"), by(real["shanghai"]["forecast"], "Persistence")
         tok |= {"cg_rmse60": f1(cg.get("rmse_60")), "cg_pers60": f1(cgp.get("rmse_60")), "cg_ab60": f1(cg.get("clarkeAB_60")),
-                "sh_rmse60": f1(sh.get("rmse_60")), "sh_pers60": f1(shp.get("rmse_60"))}
+                "sh_rmse60": f1(sh.get("rmse_60")), "sh_pers60": f1(shp.get("rmse_60")),
+                "cg_spike_real_only": f2(ev(real["cgmacros"]["events"], "spike", "TwinNet real-only").get("auroc")),
+                "cg_spike_s2r": f2(ev(real["cgmacros"]["events"], "spike", "TwinNet sim-to-real").get("auroc"))}
     if light:
         tok |= {"light_mard": f1(light["twin"]["mard"]), "light_carry_mard": f1(light["carry_forward"]["mard"]),
                 "light_tir": f1(light["twin"]["tir_abs_error_pp"])}
@@ -324,6 +333,7 @@ def render_video_script(syn: dict, real: dict | None) -> None:
     tok |= {"ill_id": ip.id, "ill_name": ip.bundle["display"]["name"], "ill_clock": str(iclock), "ill_time": clock_label(iclock),
             "ill_si_today": f2(ip.si_today(ip.bin_at(iclock)))}
 
+    (RES / "demo_tokens.json").write_text(json.dumps(tok, indent=1), encoding="utf-8")
     text = (ROOT / "docs" / "video_script.template.md").read_text(encoding="utf-8")
     for k, v in tok.items():
         text = text.replace("{{" + k + "}}", v)

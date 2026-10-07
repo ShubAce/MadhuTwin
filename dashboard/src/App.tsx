@@ -8,13 +8,13 @@ import Panel from "./pages/Panel";
 import PatientView from "./pages/PatientView";
 import Privacy from "./pages/Privacy";
 
-type Route = { page: "panel" } | { page: "patient"; id: string; params: URLSearchParams } | { page: "companion"; id: string } | { page: "evidence" } | { page: "privacy" };
+type Route = { page: "panel" } | { page: "patient"; id: string; params: URLSearchParams } | { page: "companion"; id: string; params: URLSearchParams } | { page: "evidence" } | { page: "privacy" };
 
 function parseHash(): Route {
   const [h, query = ""] = window.location.hash.replace(/^#\/?/, "").split("?");
   const [a, b] = h.split("/");
   if (a === "patient" && b) return { page: "patient", id: decodeURIComponent(b), params: new URLSearchParams(query) };
-  if (a === "companion" && b) return { page: "companion", id: decodeURIComponent(b) };
+  if (a === "companion" && b) return { page: "companion", id: decodeURIComponent(b), params: new URLSearchParams(query) };
   if (a === "evidence") return { page: "evidence" };
   if (a === "privacy") return { page: "privacy" };
   return { page: "panel" };
@@ -133,7 +133,7 @@ export default function App() {
       <main className="mx-auto max-w-[1440px] px-4 pb-10 pt-3">
         {route.page === "panel" && <Panel clock={clock} />}
         {route.page === "patient" && <PatientView key={route.id} id={route.id} clock={clock} params={route.params} />}
-        {route.page === "companion" && <Companion id={route.id} clock={clock} />}
+        {route.page === "companion" && <Companion id={route.id} clock={clock} initialLang={route.params.get("lang")} />}
         {route.page === "evidence" && <Evidence />}
         {route.page === "privacy" && <Privacy />}
       </main>

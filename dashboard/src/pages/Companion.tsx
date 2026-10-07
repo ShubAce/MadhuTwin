@@ -43,13 +43,13 @@ const LANGS: { key: Lang; label: string }[] = [{ key: "en", label: "English" }, 
 
 const fill = (s: string, v: Record<string, string | number>) => s.replace(/\{(\w+)\}/g, (_, k) => String(v[k] ?? ""));
 
-export default function Companion({ id, clock }: { id: string; clock: number }) {
+export default function Companion({ id, clock, initialLang }: { id: string; clock: number; initialLang?: string | null }) {
   const enc = encodeURIComponent(id);
   const { data: p } = useData<PatientDetail>(`/api/patients/${enc}`);
   const { data: s } = useData<State>(`/api/patients/${enc}/state?clock=${clock}&history_h=3`);
   const { data: ins } = useData<InsightsResponse>(`/api/patients/${enc}/insights?clock=${Math.floor(clock / 60) * 60}`);
   const pref = p?.display.language === "Hindi" ? "hi" : p?.display.language === "Kannada" ? "kn" : "en";
-  const [lang, setLang] = useState<Lang | null>(null);
+  const [lang, setLang] = useState<Lang | null>(initialLang === "en" || initialLang === "hi" || initialLang === "kn" ? initialLang : null);
   const L = T[lang ?? pref];
   if (!p || !s) return <p className="muted">Loading…</p>;
 

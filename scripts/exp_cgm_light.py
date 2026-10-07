@@ -66,7 +66,8 @@ def _one(args):
             "tir_fingersticks": tir(fs_y)}
 
 
-def main() -> None:
+def main(workers: int = 4) -> None:
+    # each worker holds the scientific stack (~0.5 GB); stay well inside 16 GB machines
     t0 = time.time()
     split = json.load(open(ARTIFACTS / "results" / "synthetic" / "split.json"))
     ids = split["test"]
@@ -78,7 +79,7 @@ def main() -> None:
     se_g, ev_g, tr_g = dict(tuple(se.groupby("patient_id"))), dict(tuple(ev.groupby("patient_id"))), dict(tuple(tr.groupby("patient_id")))
     jobs = [(pid, st.loc[pid].to_dict() | {"patient_id": pid}, se_g[pid], ev_g.get(pid, ev.iloc[:0]), tr_g[pid], i) for i, pid in enumerate(ids)]
     res = []
-    with ProcessPoolExecutor() as pool:
+    with ProcessPoolExecutor(max_workers=workers) as pool:
         for f in as_completed([pool.submit(_one, j) for j in jobs]):
             res.append(f.result())
     y = np.concatenate([r["y"] for r in res])

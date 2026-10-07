@@ -1,0 +1,59 @@
+{
+ "n_patients": 199,
+ "n_points": 63778,
+ "fingersticks_per_day": 4,
+ "twin": {
+  "mard": 6.379083682839696,
+  "within_20pct": 95.39653171940168,
+  "clarke": {
+   "A": 95.39653171940168,
+   "B": 4.22716297155759,
+   "C": 0.0,
+   "D": 0.37630530904073506,
+   "E": 0.0,
+   "A+B": 99.62369469095927
+  },
+  "tir_abs_error_pp": 3.828667145250061
+ },
+ "carry_forward": {
+  "mard": 23.81191464748866,
+  "within_20pct": 55.81078114710402,
+  "clarke": {
+   "A": 55.81078114710402,
+   "B": 37.58349274044341,
+   "C": 4.05782558248926,
+   "D": 2.521245570572925,
+   "E": 0.026654959390385397,
+   "A+B": 93.39427388754743
+  },
+  "tir_abs_error_pp": 6.707643971973798
+ },
+ "fingersticks_only_tir_abs_error_pp": 5.385558746111509
+}
+done in 63s
+demo models: twinnet_final.pt, gbm_final.pkl
+  MT-0066: Premixed insulin with hypoglycaemia (110 alerts)
+  MT-0695: Sulfonylurea-related low glucose (96 alerts)
+  MT-0990: Viral illness: insulin resistance detected by the twin (84 alerts)
+  MT-0087: Festival feast: sweets and post-meal spikes (11 alerts)
+  MT-0546: Poorly controlled, frequent spikes (1 alerts)
+  MT-0657: Well controlled on metformin + DPP-4 inhibitor (57 alerts)
+  MT-0235: SGLT2 inhibitor with reduced kidney function (50 alerts)
+  MT-0955: Prediabetes: late dinners and short sleep (117 alerts)
+  CGM-049: Real-world data: CGMacros (PhysioNet, USA) (17 alerts)
+  CGM-036: Real-world data: CGMacros (PhysioNet, USA) (42 alerts)
+  SH-2094-0: External cohort: ShanghaiT2DM (China) (62 alerts)
+11 virtual patients written to artifacts/demo/
+figures:
+  docs/figures/rmse_by_horizon_synthetic.png
+  docs/figures/rmse_by_horizon_cgmacros.png
+  docs/figures/ablation_streams.png
+  docs/figures/clarke_twinnet_synthetic_60.png
+  docs/figures/clarke_twinnet_cgmacros_60.png
+  docs/figures/illness_detection.png
+  docs/figures/twin_validity.png
+  docs/figures/synthetic_realism.png
+  docs/figures/example_forecast.png
+wrote docs/evaluation_report.md
+wrote docs/video_script.md
+updated README.md results

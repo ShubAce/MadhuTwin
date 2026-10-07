@@ -1,6 +1,6 @@
 import type { EChartsOption } from "echarts";
 import { FlaskConical, Play } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Food, InsightsResponse, WhatIfResult, post } from "../api";
 import { useData } from "../hooks";
 import Chart, { Tokens, baseOption, timeAxis, valueAxis } from "./Chart";
@@ -54,11 +54,17 @@ export default function WhatIfPanel({ id, clock, insights, preset }: { id: strin
     }
   };
 
-  // deep link: #/patient/<id>?tab=whatif&food=...&walk=15&run=1 runs the scenario on open
+  // deep link: #/patient/<id>?tab=whatif&food=...&walk=15&run=1[&clock=780] runs the scenario on open,
+  // once the app clock has reached the linked time (the clock is set after metadata loads)
+  const ran = useRef(false);
   useEffect(() => {
-    if (preset?.get("run") === "1") run();
+    if (ran.current || preset?.get("run") !== "1") return;
+    const want = preset.get("clock");
+    if (want != null && Number(want) !== clock) return;
+    ran.current = true;
+    run();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [clock]);
 
   const chart = (t: Tokens): EChartsOption => ({
     ...baseOption(t),
