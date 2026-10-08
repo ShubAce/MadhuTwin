@@ -454,7 +454,7 @@ async function main() {
   s = pres.addSlide({ masterName: "DARK", sectionTitle: "Responsible by design" });
   s.addText("Thank you", { x: 0.8, y: 2.0, w: 11, h: 1.0, fontFace: "Cambria", fontSize: 54, bold: true, color: "FFFFFF", margin: 0, isTextBox: true });
   s.addText("MadhuTwin: model · sync · simulate, for every person living with diabetes", { x: 0.8, y: 3.1, w: 11, h: 0.6, fontSize: 20, color: "DCE4F2", margin: 0, isTextBox: true });
-  s.addText("Code, data pipeline, evaluation and dashboard: github.com/ShubAce/MadhuTwin · Apache-2.0", { x: 0.8, y: 4.4, w: 11, h: 0.5, fontSize: 16, color: "FFFFFF", margin: 0, isTextBox: true });
+  s.addText("Live demo: madhutwin.onrender.com · Code: github.com/ShubAce/MadhuTwin · Apache-2.0", { x: 0.8, y: 4.4, w: 11, h: 0.5, fontSize: 16, color: "FFFFFF", margin: 0, isTextBox: true });
   s.addText("Team ClockItTwin · IIT Kharagpur: Shubham Suman, Krupal Thakre, Durgesh Kumar, Anurag Ranjan", { x: 0.8, y: 5.0, w: 11, h: 0.5, fontSize: 16, color: "AEBBD3", margin: 0, isTextBox: true });
   s.addNotes("Thank the jury and invite questions.");
 

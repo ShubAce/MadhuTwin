@@ -13,7 +13,7 @@ MadhuTwin builds a living virtual replica of a person with type 2 diabetes. It f
 |                                           |                                                                                                                          |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | Demo video (15–20 min, unlisted YouTube) | **TODO(team): unlisted YouTube link**                                                                              |
-| Live demo | Deploy free on Render: [`deploy/render.md`](deploy/render.md); or locally `docker compose up`, then http://localhost:8000 |
+| Live demo | **[madhutwin.onrender.com](https://madhutwin.onrender.com/)** (free hosting: the first visit after a quiet spell can take about a minute to wake) |
 | Architecture diagram                      | [`docs/architecture.pdf`](docs/architecture.pdf) · [`docs/architecture.pptx`](docs/architecture.pptx)                 |
 | Presentation                              | [`docs/presentation.pdf`](docs/presentation.pdf) · [`docs/presentation.pptx`](docs/presentation.pptx)                 |
 | Technical report · Evaluation report     | [`docs/technical_report.pdf`](docs/technical_report.pdf) · [`docs/evaluation_report.md`](docs/evaluation_report.md)   |
