@@ -115,7 +115,7 @@ async function main() {
     s.addShape("roundRect", { x: 0.8 + i * 1.75, y: 4.3, w: 1.6, h: 0.55, rectRadius: 0.1, fill: { color: i === 0 ? C.accent4 : "2A3F66" }, line: { color: i === 0 ? C.accent4 : "2A3F66" } });
     s.addText(t, { x: 0.8 + i * 1.75, y: 4.3, w: 1.6, h: 0.55, fontSize: 14, bold: true, align: "center", valign: "middle", color: i === 0 ? C.dk2 : "FFFFFF", margin: 0, isTextBox: true });
   });
-  s.addText("Team: TODO(team) · College / incubator: TODO(team)", { x: 0.8, y: 5.6, w: 11, h: 0.4, fontSize: 16, color: "FFFFFF", margin: 0, isTextBox: true });
+  s.addText("Team ClockItTwin · IIT Kharagpur", { x: 0.8, y: 5.6, w: 11, h: 0.4, fontSize: 16, color: "FFFFFF", margin: 0, isTextBox: true });
   s.addText("Happiest Health Digital Twin Challenge 2026 · Phase 1", { x: 0.8, y: 6.05, w: 11, h: 0.4, fontSize: 14, color: "AEBBD3", margin: 0, isTextBox: true });
   s.addNotes("Introduce the team. MadhuTwin, from Madhumeha, the classical Indian name for diabetes, is a living virtual replica of each patient: it models their physiology, stays synchronised with their CGM, and simulates the next hours to warn the care team early.");
 
@@ -454,8 +454,8 @@ async function main() {
   s = pres.addSlide({ masterName: "DARK", sectionTitle: "Responsible by design" });
   s.addText("Thank you", { x: 0.8, y: 2.0, w: 11, h: 1.0, fontFace: "Cambria", fontSize: 54, bold: true, color: "FFFFFF", margin: 0, isTextBox: true });
   s.addText("MadhuTwin: model · sync · simulate, for every person living with diabetes", { x: 0.8, y: 3.1, w: 11, h: 0.6, fontSize: 20, color: "DCE4F2", margin: 0, isTextBox: true });
-  s.addText("Code, data pipeline, evaluation and dashboard: GitHub repository TODO(team) · Apache-2.0", { x: 0.8, y: 4.4, w: 11, h: 0.5, fontSize: 16, color: "FFFFFF", margin: 0, isTextBox: true });
-  s.addText("Team: TODO(team)", { x: 0.8, y: 5.0, w: 11, h: 0.5, fontSize: 16, color: "AEBBD3", margin: 0, isTextBox: true });
+  s.addText("Code, data pipeline, evaluation and dashboard: github.com/ShubAce/MadhuTwin · Apache-2.0", { x: 0.8, y: 4.4, w: 11, h: 0.5, fontSize: 16, color: "FFFFFF", margin: 0, isTextBox: true });
+  s.addText("Team ClockItTwin · IIT Kharagpur: Shubham Suman, Krupal Thakre, Durgesh Kumar, Anurag Ranjan", { x: 0.8, y: 5.0, w: 11, h: 0.5, fontSize: 16, color: "AEBBD3", margin: 0, isTextBox: true });
   s.addNotes("Thank the jury and invite questions.");
 
   await pres.writeFile({ fileName: OUT });

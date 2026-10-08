@@ -139,7 +139,7 @@ h2, h3 {{ break-after: avoid; }}
 .keep {{ break-inside: avoid; }}
 </style></head><body>
 <h1>MadhuTwin: a hybrid digital twin for type 2 diabetes</h1>
-<div class="sub">Technical report · Happiest Health Digital Twin Challenge 2026, Phase 1 · Team: TODO(team)</div>
+<div class="sub">Technical report · Happiest Health Digital Twin Challenge 2026, Phase 1 · Team ClockItTwin, IIT Kharagpur: Shubham Suman, Krupal Thakre, Durgesh Kumar, Anurag Ranjan · https://github.com/ShubAce/MadhuTwin</div>
 <div class="abstract"><b>Abstract.</b> {html.escape(abstract)}</div>
 
 <h2>1. Problem and use case</h2>

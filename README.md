@@ -13,7 +13,7 @@ MadhuTwin builds a living virtual replica of a person with type 2 diabetes. It f
 |                                           |                                                                                                                          |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | Demo video (15–20 min, unlisted YouTube) | **TODO(team): unlisted YouTube link**                                                                              |
-| Live demo                                 | **TODO(team): live link** (free on Render: [`deploy/render.md`](deploy/render.md)); locally `docker compose up` |
+| Live demo | Deploy free on Render: [`deploy/render.md`](deploy/render.md); or locally `docker compose up`, then http://localhost:8000 |
 | Architecture diagram                      | [`docs/architecture.pdf`](docs/architecture.pdf) · [`docs/architecture.pptx`](docs/architecture.pptx)                 |
 | Presentation                              | [`docs/presentation.pdf`](docs/presentation.pdf) · [`docs/presentation.pptx`](docs/presentation.pptx)                 |
 | Technical report · Evaluation report     | [`docs/technical_report.pdf`](docs/technical_report.pdf) · [`docs/evaluation_report.md`](docs/evaluation_report.md)   |
@@ -46,10 +46,17 @@ MadhuTwin builds a living virtual replica of a person with type 2 diabetes. It f
 
 |                     |                                                       |
 | ------------------- | ----------------------------------------------------- |
-| Team name           | Praise                                                |
-| College / incubator | IIT Kharagpur                                         |
-| Team leader         | Shubham suman, Shubhamsuman2005@gmail.com, 7318606818 |
-| Members             | **TODO(team)**: name, programme, role           |
+| Team name           | **ClockItTwin**                                            |
+| College / incubator | **IIT Kharagpur**                                         |
+| Team leader         | Shubham Suman                                         |
+| GitHub repository   | [https://github.com/ShubAce/MadhuTwin](https://github.com/ShubAce/MadhuTwin)                                      |
+
+| Member | Role |
+| --- | --- |
+| Shubham Suman (team leader) | Digital-twin modelling and machine learning: TwinNet, personalisation, ensemble and evaluation design |
+| Krupal Thakre | Physiology modelling and data engineering: the mechanistic twin, open datasets, the synthetic India cohort |
+| Durgesh Kumar | Full-stack development: FastAPI service, doctor dashboard, 3D virtual patient, deployment |
+| Anurag Ranjan | Clinical evaluation and documentation: clinical-utility analyses, FHIR/ABDM interoperability, DPDP compliance, reports |
 
 ## 2. Project title
 
