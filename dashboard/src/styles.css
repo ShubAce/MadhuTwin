@@ -159,3 +159,15 @@ table.data tr.row-link:hover td { background: var(--surface-2); }
 .meter > span { display: block; height: 100%; border-radius: 999px; }
 
 input[type="range"] { accent-color: var(--accent); }
+
+/* responsive safety: grid columns shrink to the viewport instead of growing with wide charts/tables */
+.grid > * { min-width: 0; }
+html, body { overflow-x: hidden; }
+@media (max-width: 640px) {
+  table.data { font-size: 12px; }
+  table.data th, table.data td { padding: 6px 8px; }
+}
+@media (max-width: 640px) {
+  /* any data table scrolls inside its own card rather than widening the page */
+  table.data { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}

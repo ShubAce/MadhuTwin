@@ -109,15 +109,15 @@ export default function VirtualPatient({ patient, state }: { patient: PatientDet
   const list = organs(patient, state);
   const [active, setActive] = useState<string | null>(null);
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col gap-4 sm:flex-row">
       {WEBGL ? (
-        <div className="h-[380px] w-[230px] shrink-0">
+        <div className="mx-auto h-[380px] w-full max-w-[300px] shrink-0 sm:mx-0 sm:w-[230px]">
           <Suspense fallback={<div className="grid h-full place-items-center"><Silhouette list={list} /></div>}>
             <Body3D organs={list} sex={patient.display.sex} bmi={patient.ehr.bmi} bpm={nightHeartRate(state)} active={active} onHover={setActive} />
           </Suspense>
         </div>
       ) : <Silhouette list={list} />}
-      <div className="flex-1">
+      <div className="min-w-0 flex-1">
       <ul className="space-y-2.5">
         {list.map((o) => (
           <li key={o.key} className="rounded-md px-1 text-[13px]" onMouseEnter={() => setActive(o.key)} onMouseLeave={() => setActive(null)}

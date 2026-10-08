@@ -125,7 +125,7 @@ function Body({ sex, bmi, xray }: { sex: string | null | undefined; bmi: number 
   return mesh ? <primitive object={mesh} material={material} renderOrder={2} /> : null;
 }
 
-interface OrganFit { scale: number; offset: V3 }
+interface OrganFit { scale_xyz: V3; offset: V3 }
 const ORGAN_FIT = (organsMeta as unknown as { fit: Record<"male" | "female", OrganFit> }).fit;
 // natural tissue tints for organs the twin has no reading for (status colours replace them otherwise)
 const TINT: Record<string, string> = { heart: "#b5443f", liver: "#8e3b2e", pancreas: "#dcae79", gut: "#d98f8a", kidney: "#9a3a3a", muscle: "#bf4f4a" };
@@ -215,18 +215,37 @@ function Organs({ organs, sex, active, onHover, bpm }: {
   const parts = useOrgans();
   const w = sex === "F" ? 1 : sex === "M" ? 0 : 0.5;
   const f = ORGAN_FIT.male, g = ORGAN_FIT.female;
-  const scale = f.scale * (1 - w) + g.scale * w;
+  // per-axis fit for this body shape: organs narrowed / flattened to sit inside a smaller torso
+  const scale = f.scale_xyz.map((x, i) => x * (1 - w) + g.scale_xyz[i] * w) as V3;
   const offset = f.offset.map((x, i) => x * (1 - w) + g.offset[i] * w) as V3;
   const ctxMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({ color: new THREE.Color("#d9a7a7"), transparent: true, opacity: 0.16,
     roughness: 0.6, depthWrite: false }), []);
-  if (!parts) return null;
+  // The thigh muscles follow each leg's own hip -> knee axis (the body stands in an A-pose), so they
+  // get the per-leg transform from organs.json, expressed inside the torso group's frame.
+  const placed = useMemo(() => {
+    if (!parts) return null;
+    const legs = (organsMeta as unknown as { legs: Record<"male" | "female", Record<"left" | "right", number[]>> }).legs;
+    const torso = new THREE.Matrix4().compose(new THREE.Vector3(...offset), new THREE.Quaternion(), new THREE.Vector3(...scale)).invert();
+    const muscle = (parts.muscle ?? []).map((m) => {
+      const side = (m.name || m.parent?.name || "").toLowerCase().includes("_left_") ? "left" : "right";
+      const a = legs.male[side], b = legs.female[side];
+      const leg = new THREE.Matrix4().fromArray(a.map((x, i) => x * (1 - w) + b[i] * w));
+      const c = m.clone();
+      c.geometry = m.geometry.clone().applyMatrix4(leg).applyMatrix4(torso);
+      c.geometry.computeBoundingBox();
+      return c;
+    });
+    return { ...parts, muscle } as Record<string, THREE.Mesh[]>;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [parts, w]);
+  if (!placed) return null;
   const byKey = Object.fromEntries(organs.map((o) => [o.key, o]));
   return (
     <group position={offset} scale={scale}>
-      {Object.entries(parts).filter(([key]) => key !== "ctx").map(([key, meshes]) => (
+      {Object.entries(placed).filter(([key]) => key !== "ctx").map(([key, meshes]) => (
         <Organ key={key} k={key} meshes={meshes} o={byKey[key]} active={active === key} onHover={onHover} bpm={bpm} />
       ))}
-      {(parts.ctx ?? []).map((m) => <mesh key={m.uuid} geometry={m.geometry} material={ctxMaterial} renderOrder={0} />)}
+      {(placed.ctx ?? []).map((m) => <mesh key={m.uuid} geometry={m.geometry} material={ctxMaterial} renderOrder={0} />)}
     </group>
   );
 }

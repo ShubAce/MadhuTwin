@@ -69,7 +69,7 @@ export default function App() {
   const nav = [
     { key: "panel", label: "Patients", icon: <Users size={16} />, href: "/" },
     { key: "evidence", label: "Model evidence", icon: <BookOpenCheck size={16} />, href: "/evidence" },
-    { key: "privacy", label: "Privacy & audit", icon: <ShieldCheck size={16} />, href: "/privacy" },
+    { key: "privacy", label: "Privacy & audit", short: "Privacy", icon: <ShieldCheck size={16} />, href: "/privacy" },
   ];
   const active = route.page === "patient" || route.page === "companion" ? "panel" : route.page;
 
@@ -86,19 +86,23 @@ export default function App() {
               <span className="block text-[11px] muted">Type 2 Diabetes digital twin</span>
             </span>
           </button>
-          <nav className="flex gap-1" aria-label="Main">
+          <span className="ml-auto sm:hidden"><button className="btn" style={{ padding: "6px" }} onClick={toggleTheme} aria-label="Toggle dark mode">
+              {(theme ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+            </button></span>
+          <nav className="flex max-w-full gap-1 overflow-x-auto" aria-label="Main">
             {nav.map((n) => (
               <button key={n.key} className="tab flex items-center gap-1.5" aria-selected={active === n.key} onClick={() => go(n.href)}>
                 {n.icon}
-                {n.label}
+                <span className="hidden sm:inline">{n.label}</span>
+                <span className="sm:hidden">{"short" in n && n.short ? n.short : n.label}</span>
               </button>
             ))}
           </nav>
-          <div className="ml-auto flex flex-wrap items-center gap-2">
-            <div className="flex items-center gap-2 rounded-lg border px-2 py-1" style={{ borderColor: "var(--border)" }}>
+          <div className="flex w-full flex-wrap items-center gap-2 sm:ml-auto sm:w-auto">
+            <div className="flex min-w-0 flex-1 items-center gap-2 rounded-lg border px-2 py-1 sm:flex-none" style={{ borderColor: "var(--border)" }}>
               <button className="btn" style={{ padding: "4px 8px" }} onClick={() => setPlaying((p) => !p)} aria-label={playing ? "Pause live replay" : "Play live replay"}>
                 {playing ? <Pause size={14} /> : <Play size={14} />}
-                {playing ? "Live" : "Replay"}
+                <span className="hidden sm:inline">{playing ? "Live" : "Replay"}</span>
               </button>
               <select className="field" value={speed} onChange={(e) => setSpeed(Number(e.target.value))} aria-label="Replay speed">
                 {SPEEDS.map((s) => (
@@ -115,13 +119,15 @@ export default function App() {
                 value={clock}
                 onChange={(e) => setClock(Number(e.target.value))}
                 aria-label="Demo clock"
-                className="w-36"
+                className="w-full min-w-[60px] flex-1 sm:w-36 sm:flex-none"
               />
-              <span className="tabular min-w-[92px] text-[13px] font-medium">{clockLabel(clock)}</span>
+              <span className="tabular shrink-0 whitespace-nowrap text-[13px] font-medium sm:min-w-[92px]">{clockLabel(clock)}</span>
             </div>
-            <button className="btn" style={{ padding: "6px" }} onClick={toggleTheme} aria-label="Toggle dark mode">
-              {(theme ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
+            <span className="hidden sm:inline-flex">
+              <button className="btn" style={{ padding: "6px" }} onClick={toggleTheme} aria-label="Toggle dark mode">
+                {(theme ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+              </button>
+            </span>
           </div>
         </div>
       </header>

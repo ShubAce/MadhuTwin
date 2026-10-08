@@ -19,10 +19,15 @@ from __future__ import annotations
 import json
 import urllib.request
 
+import sys
+
 import numpy as np
 import trimesh
+from scipy.spatial import cKDTree
 
 from twin.paths import RAW, ROOT
+
+sys.path.insert(0, str(ROOT / "scripts"))  # build_body_model, for the skin surface
 
 COMMIT = "f0eeb6e843380cfe6b83797cf8c3e1af74de5e61"  # github.com/Kevin-Mattheus-Moerman/BodyParts3D (mirror of BodyParts3D 3.0)
 STL_URL = f"https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/{COMMIT}/assets/BodyParts3D_data/stl"
@@ -85,6 +90,25 @@ def axes(liver: trimesh.Trimesh, heart: trimesh.Trimesh, femur: trimesh.Trimesh,
     return R
 
 
+def skin_surface(sex: str) -> tuple[np.ndarray, np.ndarray]:
+    """The MakeHuman skin (vertices, outward normals) for one sex, in the body frame of human.glb."""
+    import build_body_model as bb
+
+    V, groups = bb.read_obj(bb.fetch("3dobjs/base.obj"))
+    n = len(V)
+    shape = {s: np.mean([bb.read_target(bb.fetch(f"targets/macrodetails/{e}-{s}-young.target"), n) for e in bb.ETHNIC], axis=0)
+             for s in ("male", sex)}
+    quads = np.asarray(groups["body"])
+    keep = np.unique(quads)
+    remap = np.full(n, -1)
+    remap[keep] = np.arange(len(keep))
+    q = remap[quads]
+    tri = np.r_[q[:, [0, 1, 2]], q[:, [0, 2, 3]]]
+    floor = (V + shape["male"])[keep][:, 1].min()  # same ground reference as build_body_model
+    skin = ((V + shape[sex])[keep] - [0.0, floor, 0.0]) * 0.1
+    return skin, bb.vertex_normals(skin, tri)
+
+
 def main() -> None:
     meshes = {k: stl(f) for k, (f, _) in PARTS.items()}
     bones = {k: stl(f) for k, f in BONES.items()}
@@ -111,8 +135,66 @@ def main() -> None:
         s = float((ps * qs).sum() / (ps * ps).sum())
         t = dst.mean(0) - s * src.mean(0)
         err = float(np.sqrt(((s * src + t - dst) ** 2).sum(1)).mean())
-        fits[sex] = {"scale": round(s, 5), "offset": [round(float(x), 5) for x in t], "landmark_error_m": round(err, 4)}
-        print(f"{sex}: scale {s:.3f}, mean landmark error {err * 100:.1f} cm")
+        # Landmarks fix position and height; a narrower or shallower torso (the female shape) also
+        # needs the organs narrowed and flattened. Search width and depth factors around the organs'
+        # centre, plus a small front-back shift, for the largest fit with the organs inside the skin.
+        skin, nrm = skin_surface(sex)
+        tree = cKDTree(skin)
+        organ_keys = sorted({k.split("_")[0] if not k.startswith("ctx") else "_".join(k.split("_")[:2]) for k in PARTS if not k.startswith("muscle")})
+        sets = [np.vstack([to_body(meshes[k].vertices)[:: max(1, len(meshes[k].vertices) // 800)] for k in PARTS if k.startswith(g)]) * s + t
+                for g in organ_keys]
+        sizes = np.cumsum([0] + [len(x) for x in sets])
+        base = np.vstack(sets)
+        c = base.mean(0)
+
+        def inside(kx: float, ky: float, kz: float, dz: float) -> float:
+            """Worst organ's share of surface at least 3 mm under the skin (so no single organ pokes out)."""
+            v = (base - c) * [kx, ky, kz] + c + [0.0, 0.0, dz]
+            _, j = tree.query(v)
+            ok = -np.einsum("ij,ij->i", v - skin[j], nrm[j]) > 0.003
+            return min(float(ok[a:b].mean()) for a, b in zip(sizes[:-1], sizes[1:], strict=True))
+
+        best = max(((inside(kx, ky, kz, dz), kx * ky * kz, kx, ky, kz, dz)
+                    for kx in np.arange(1.0, 0.69, -0.02) for kz in np.arange(1.0, 0.69, -0.02)
+                    for ky in (1.0, 0.96, 0.92) for dz in np.arange(-0.02, 0.0301, 0.005)),
+                   key=lambda r: (round(r[0], 2), r[1]))
+        frac, _, kx, ky, kz, dz = best
+        k = np.array([kx, ky, kz])
+        offset = t + c - k * c + [0.0, 0.0, dz]  # v' = s*k*v + offset reproduces (s*v + t - c)*k + c + dz
+        fits[sex] = {"scale": round(s, 5), "scale_xyz": [round(float(x), 5) for x in s * k], "offset": [round(float(x), 5) for x in offset],
+                     "landmark_error_m": round(err, 4), "inside_skin_pct": round(frac * 100, 1)}
+        print(f"{sex}: scale {s:.3f}, mean landmark error {err * 100:.1f} cm; width x{kx:.2f}, height x{ky:.2f}, depth x{kz:.2f}, shift {dz * 100:+.1f} cm "
+              f"-> worst organ {frac * 100:.1f}% inside the skin")
+
+    # The thighs need their own placement: the MakeHuman body stands in an A-pose (legs angled
+    # outwards) while BodyParts3D's legs are almost vertical. Each leg's muscles follow a transform
+    # that maps the BodyParts3D femur (femoral head -> distal end) onto MakeHuman's hip -> knee line:
+    # rotate the axis, scale to the bone length, and thin them slightly so they sit inside the skin.
+    def femur_axis(m: trimesh.Trimesh) -> tuple[np.ndarray, np.ndarray]:
+        v = to_body(m.vertices)
+        return femoral_head(m), v[v[:, 1] <= np.quantile(v[:, 1], 0.04)].mean(0)
+
+    def rotation(a: np.ndarray, b: np.ndarray) -> np.ndarray:
+        a, b = a / np.linalg.norm(a), b / np.linalg.norm(b)
+        v, c = np.cross(a, b), float(a @ b)
+        k = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
+        return np.eye(3) + k + k @ k / (1 + c)
+
+    legs = {}
+    for sex in ("male", "female"):
+        L = body["landmarks"][sex]
+        legs[sex] = {}
+        for side, mh in (("left", "l"), ("right", "r")):
+            hb, kb = femur_axis(bones[f"femur_{side}"])
+            hm, km = np.array(L[f"{mh}-upper-leg"]), np.array(L[f"{mh}-knee"])
+            ub = (kb - hb) / np.linalg.norm(kb - hb)
+            s = np.linalg.norm(km - hm) / np.linalg.norm(kb - hb)
+            A = s * (0.85 * np.eye(3) + 0.15 * np.outer(ub, ub))  # full length along the bone, 85% girth
+            M = np.eye(4)
+            M[:3, :3] = rotation(kb - hb, km - hm) @ A
+            M[:3, 3] = hm - M[:3, :3] @ hb
+            legs[sex][side] = [round(float(x), 6) for x in M.T.ravel()]  # column-major, as three.js Matrix4.fromArray
+        print(f"{sex}: thigh muscles follow the hip-knee axis of each leg")
 
     scene = trimesh.Scene()
     tris = 0
@@ -128,7 +210,8 @@ def main() -> None:
     (ASSETS / "organs.glb").write_bytes(glb)
     meta = {"source": f"BodyParts3D 3.0 (CC BY-SA 2.1 JP), mirror commit {COMMIT}", "units": "metres",
             "frame": "body: +y up, +z front, +x patient's left; apply scale then offset per body shape",
-            "fit": fits, "parts": {k: v[0] for k, v in PARTS.items()}}
+            "fit": fits, "legs": legs, "legs_note": "muscle_<side>_* meshes use legs[sex][side] (column-major 4x4) instead of fit",
+            "parts": {k: v[0] for k, v in PARTS.items()}}
     (ASSETS / "organs.json").write_text(json.dumps(meta, indent=1), encoding="utf-8")
     print(f"wrote organs.glb ({len(glb) / 1e6:.1f} MB, {tris} triangles, {len(PARTS)} parts)")
 

@@ -171,7 +171,7 @@ export default function WhatIfPanel({ id, clock, insights, preset }: { id: strin
           {res ? (
             <>
               <Chart option={chart} height={260} ariaLabel="What-if simulation" deps={[res]} />
-              <div className="mt-2 grid grid-cols-3 gap-2 text-[13px]">
+              <div className="mt-2 grid grid-cols-1 gap-2 text-[13px] sm:grid-cols-3">
                 <div className="card px-3 py-2"><div className="muted text-[12px]">Peak glucose</div><div className="font-semibold">{res.baseline_peak} → {res.scenario_peak} mg/dL</div></div>
                 <div className="card px-3 py-2"><div className="muted text-[12px]">Minutes above 180</div><div className="font-semibold">{res.baseline_above_180_min} → {res.scenario_above_180_min}</div></div>
                 <div className="card px-3 py-2"><div className="muted text-[12px]">Minutes below 70</div><div className="font-semibold">{res.baseline_below_70_min} → {res.scenario_below_70_min}</div></div>

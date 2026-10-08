@@ -28,7 +28,43 @@ export default function Panel({ clock }: { clock: number }) {
         <Stat label="Predicted lows" value={hypo.length} level={hypo.length ? "critical" : "good"} sub={hypo.length ? "Hypoglycaemia risk" : "None predicted"} />
         <Stat label="Average time in range (24 h)" value={avgTir == null ? "–" : `${avgTir.toFixed(0)}%`} sub="Target >70%" />
       </div>
-      <div className="card overflow-x-auto" style={{ opacity: loading && data ? 0.7 : 1 }}>
+      {/* phones: one card per patient, same ranking and the same information */}
+      <ul className="space-y-2 md:hidden" style={{ opacity: loading && data ? 0.7 : 1 }}>
+        {rows.map((r) => (
+          <li key={r.id}>
+            <button className="card w-full p-3 text-left" onClick={() => go(`/patient/${encodeURIComponent(r.id)}`)}>
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <div className="font-medium">{r.display.name}</div>
+                  <div className="text-[12px] muted">
+                    {[r.display.age && `${Math.round(r.display.age)} y`, r.display.sex, r.display.city, SOURCE_LABEL[r.source]].filter(Boolean).join(" · ")}
+                  </div>
+                </div>
+                <div className="inline-flex shrink-0 items-center gap-1">
+                  <Status level={glucoseLevel(r.glucose)}>{r.glucose == null ? "–" : Math.round(r.glucose)}</Status>
+                  <TrendArrow rate={r.trend} />
+                </div>
+              </div>
+              <div className="mt-1 text-[12px] ink-2">{r.story}</div>
+              <div className="mt-2 grid grid-cols-2 gap-3 text-[12px]">
+                <div>
+                  <div className="muted">Spike risk (2 h)</div>
+                  {r.glucose != null && r.glucose > 180 ? <Status level={r.glucose > 250 ? "serious" : "warning"}>Already high</Status> : <RiskMeter p={r.risk_spike} kind="spike" />}
+                </div>
+                <div>
+                  <div className="muted">Hypo risk (2 h)</div>
+                  {r.glucose != null && r.glucose < 70 ? <Status level="critical">Low now</Status> : <RiskMeter p={r.risk_hypo} kind="hypo" />}
+                </div>
+              </div>
+              <div className="mt-2 flex items-center justify-between gap-2 text-[12px]">
+                <span className="muted">TIR 24 h {r.tir_24h == null ? "–" : `${r.tir_24h.toFixed(0)}%`}</span>
+                <Sparkline values={r.sparkline} />
+              </div>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div className="card hidden overflow-x-auto md:block" style={{ opacity: loading && data ? 0.7 : 1 }}>
         <table className="data min-w-[980px]">
           <thead>
             <tr>
