@@ -104,13 +104,21 @@ class Windows:
 
     FIELDS = ("physics", "ukf", "y", "spike", "spike_ok", "hypo", "hypo_ok", "now", "anchor")
 
-    def __init__(self, arrays: list[PatientArrays], after_calibration: bool = False, physics: str = "physics"):
+    def __init__(self, arrays: list[PatientArrays], after_calibration: bool = False, physics: str = "physics",
+                 before_calibration: bool = False, max_bin: int | None = None):
         dyn, gbin, pat = [], [], []
         cols: dict[str, list] = {k: [] for k in self.FIELDS}
         off = 0
         pad = np.zeros((HISTORY, len(DYN_CHANNELS)), dtype=np.float32)  # "no data" before each record
         for i, a in enumerate(arrays):
-            sel = np.flatnonzero(a.anchors >= a.calib_bins) if after_calibration else np.arange(len(a.anchors))
+            if after_calibration:
+                sel = np.flatnonzero(a.anchors >= a.calib_bins)
+            elif before_calibration:  # the patient's own calibration period (for personal fine-tuning)
+                # targets look 2 h ahead, so stop early enough that no label crosses into the evaluation period
+                limit = (a.calib_bins if max_bin is None else max_bin) - H
+                sel = np.flatnonzero(a.anchors < limit)
+            else:
+                sel = np.arange(len(a.anchors))
             dyn.append(pad)
             off += HISTORY
             dyn.append(a.dyn)
@@ -259,3 +267,17 @@ def train(model: TwinNet, train_data: Windows, val_data: Windows | None = None, 
     if best_state is not None:
         model.load_state_dict(best_state)
     return {"history": history, "best_val_rmse": best}
+
+
+def personalise(base: TwinNet, arr: PatientArrays, epochs: int = 3, lr: float = 3e-4, max_bin: int | None = None,
+                min_windows: int = 40) -> TwinNet:
+    """'The twin learns you': fine-tune a copy of the population model on one patient's own
+    calibration-period data (no labels from the evaluation period are used)."""
+    import copy
+
+    w = Windows([arr], before_calibration=True, max_bin=max_bin)
+    if len(w) < min_windows:
+        return base
+    net = copy.deepcopy(base)
+    train(net, w, None, epochs=epochs, samples_per_epoch=len(w), batch=128, lr=lr, log=lambda m: None)
+    return net

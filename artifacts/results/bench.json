@@ -1,0 +1,12 @@
+{
+ "cpu": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+ "threads": 8,
+ "twinnet_single_forecast_ms": 2.189084999554325,
+ "twinnet_throughput_per_s": 9522.869907559387,
+ "lightgbm_throughput_per_s": 32207.299959359225,
+ "personalise_twinnet_s": 0.8845603500012658,
+ "mechanistic_fit_7_days_s": 0.9632919000141555,
+ "ukf_sync_ms_per_day": 10.963914285509547,
+ "therapy_sim_10_plans_24h_ms": 1.9725600024685261,
+ "patients_refreshed_per_5_min": 2204922
+}

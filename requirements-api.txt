@@ -1,6 +1,6 @@
 # Serving only: the API needs the physics engine and precomputed demo bundles, not the ML stack
 numpy>=1.26
-pandas>=2.1
+pandas>=2.1,<3
 pyarrow>=14
 scipy>=1.11
 numba>=0.59

@@ -2,7 +2,7 @@ import type { EChartsOption } from "echarts";
 import { ArrowLeft, BadgeCheck, Lightbulb, Smartphone } from "lucide-react";
 import { useState } from "react";
 import { go } from "../App";
-import { Agp, InsightsResponse, PatientDetail, State } from "../api";
+import { Agp, InsightsResponse, PatientDetail, State, TrackRecord } from "../api";
 import AgpPanel from "../components/AgpPanel";
 import AskPanel from "../components/AskPanel";
 import Chart, { Tokens, baseOption, valueAxis } from "../components/Chart";
@@ -11,12 +11,13 @@ import GlucoseChart from "../components/GlucoseChart";
 import LabsPanel from "../components/LabsPanel";
 import VirtualPatient from "../components/VirtualPatient";
 import WearablesPanel from "../components/WearablesPanel";
+import TherapyPanel from "../components/TherapyPanel";
 import WhatIfPanel from "../components/WhatIfPanel";
 import { RiskMeter, Section, Status, glucoseLevel, riskLevel } from "../components/ui";
 import { fmtTime, useData } from "../hooks";
 
-const TABS = ["What-if simulator", "AGP report", "Wearables", "Clinical record", "Ask the twin", "Interoperability (FHIR)"] as const;
-const TAB_KEYS: Record<string, (typeof TABS)[number]> = { whatif: "What-if simulator", agp: "AGP report", wearables: "Wearables", record: "Clinical record", ask: "Ask the twin", fhir: "Interoperability (FHIR)" };
+const TABS = ["What-if simulator", "Therapy simulator", "AGP report", "Wearables", "Clinical record", "Ask the twin", "Interoperability (FHIR)"] as const;
+const TAB_KEYS: Record<string, (typeof TABS)[number]> = { whatif: "What-if simulator", therapy: "Therapy simulator", agp: "AGP report", wearables: "Wearables", record: "Clinical record", ask: "Ask the twin", fhir: "Interoperability (FHIR)" };
 type Tab = (typeof TABS)[number];
 
 function RiskCard({ state }: { state: State }) {
@@ -61,6 +62,31 @@ function RiskCard({ state }: { state: State }) {
         <Status level="good">No excursion expected in the next 2 hours</Status>
       )}
       <p className="text-[11px] muted">Forecast issued {fmtTime(fc.anchor_time)}. Reasons: SHAP attributions from the event model.</p>
+      {state.track_record && <TrackRecordView t={state.track_record} />}
+    </div>
+  );
+}
+
+/** How this patient's own past alerts turned out: the reason to trust (or question) today's alert. */
+function TrackRecordView({ t }: { t: TrackRecord }) {
+  const rows = (["hypo", "spike"] as const).filter((k) => t[k].alerts > 0 || t[k].excursions > 0);
+  return (
+    <div className="border-t pt-2" style={{ borderColor: "var(--border)" }}>
+      <div className="mb-1 text-[12px] font-medium">This patient's alert track record <span className="font-normal muted">· last {Math.round(t.hours)} h of monitoring</span></div>
+      {rows.length === 0 ? <p className="text-[12px] muted">No alerts or excursions yet since monitoring began.</p> : (
+        <ul className="space-y-0.5 text-[12px] ink-2">
+          {rows.map((k) => {
+            const s = t[k];
+            return (
+              <li key={k}>
+                <span className="font-medium">{k === "hypo" ? "Lows" : "Highs"}:</span>{" "}
+                {s.alerts > 0 ? `${s.confirmed} of ${s.alerts} alerts came true${s.median_lead_min != null ? `, median ${s.median_lead_min} min ahead` : ""}` : "no alerts"}
+                {s.excursions > 0 && ` · ${s.caught} of ${s.excursions} episodes warned in advance`}
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }
@@ -181,6 +207,7 @@ export default function PatientView({ id, clock, params }: { id: string; clock: 
         </div>
         <div className="p-4">
           {tab === "What-if simulator" && <WhatIfPanel id={id} clock={clock} insights={ins} preset={params} />}
+          {tab === "Therapy simulator" && <TherapyPanel id={id} clock={clock} preset={params} />}
           {tab === "AGP report" && (agp ? <AgpPanel agp={agp} /> : <p className="muted text-[13px]">Loading…</p>)}
           {tab === "Wearables" && state && <WearablesPanel state={state} />}
           {tab === "Clinical record" && <LabsPanel p={p} />}

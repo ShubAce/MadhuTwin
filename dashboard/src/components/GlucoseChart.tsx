@@ -80,7 +80,7 @@ export default function GlucoseChart({ state, showTwin = true }: { state: State;
           markArea: { silent: true, itemStyle: { color: t.rangeWash }, data: [[{ yAxis: 70 }, { yAxis: 180 }]] },
           markLine: {
             silent: true, symbol: "none",
-            label: { color: t.muted, fontSize: 11, position: "end", formatter: (p: { value?: unknown; name?: string }) => p.name ?? "" },
+            label: { color: t.muted, fontSize: 11, position: "insideStartTop", formatter: (p: { value?: unknown; name?: string }) => p.name ?? "" },
             lineStyle: { color: t.axis, width: 1, type: "solid" },
             data: [
               { yAxis: 180, name: "180" },
@@ -99,7 +99,6 @@ export default function GlucoseChart({ state, showTwin = true }: { state: State;
         ...(showTwin ? [{
           name: "Physics twin", type: "line" as const, xAxisIndex: 0, yAxisIndex: 0, data: fTimes.map((ts, i) => [ts, tw[i]]), showSymbol: false,
           lineStyle: { width: 2, color: t.s3 }, itemStyle: { color: t.s3 }, z: 4,
-          endLabel: { show: !!fc, color: t.ink2, fontSize: 11, formatter: "Twin", offset: [0, 12] as [number, number] },
         }] : []),
         { name: "sleep", type: "scatter", xAxisIndex: 1, yAxisIndex: 1, data: sleepPts, symbol: "rect", symbolSize: [4, 10], itemStyle: { color: alpha(t.deemph, 0.6) }, silent: true, tooltip: { show: false } },
         { name: "meals", type: "scatter", xAxisIndex: 1, yAxisIndex: 1, data: meals, symbol: "circle", symbolSize: 10,
@@ -116,7 +115,7 @@ export default function GlucoseChart({ state, showTwin = true }: { state: State;
       <div className="mb-2">
         <Legend items={[
           { label: "Observed CGM", color: "var(--series-1)" },
-          { label: "TwinNet forecast (median)", color: "var(--series-2)" },
+          { label: "MadhuTwin forecast (median)", color: "var(--series-2)" },
           { label: "80% interval (conformal)", color: "rgba(235,104,52,0.25)", kind: "area" },
           ...(showTwin ? [{ label: "Physics twin projection", color: "var(--series-3)" }] : []),
           { label: "Target 70–180 mg/dL", color: "var(--range-wash)", kind: "area" as const },

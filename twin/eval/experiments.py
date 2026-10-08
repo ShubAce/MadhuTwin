@@ -21,6 +21,20 @@ from .metrics import (
 )
 
 
+def strict_json(obj):
+    """Results as standard JSON: numpy scalars to Python, NaN/inf to null (JSON has no NaN, and
+    browsers and Node reject it)."""
+    if isinstance(obj, dict):
+        return {k: strict_json(v) for k, v in obj.items()}
+    if isinstance(obj, list | tuple | np.ndarray):
+        return [strict_json(v) for v in obj]
+    if isinstance(obj, np.generic):
+        obj = obj.item()
+    if isinstance(obj, float) and not np.isfinite(obj):
+        return None
+    return obj
+
+
 def split_patients(arrays: list[PatientArrays], fractions=(0.7, 0.1, 0.2), seed: int = 0) -> tuple[list, list, list]:
     """Stratified (by glycaemic status) patient-level split."""
     rng = np.random.default_rng(seed)

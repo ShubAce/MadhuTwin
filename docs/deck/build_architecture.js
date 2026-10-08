@@ -57,7 +57,7 @@ async function main() {
   card(s, { x: 0.5, y: 3.95, w: 3.5, h: 1.75, fill: "FDF0EA", line: "F4CDB9", title: "Dynamic / real-time: wearables & IoT",
     lines: ["CGM every 5–15 min", "Heart rate, HRV (RMSSD), steps, METs", "Sleep stages (hypnogram)", "Logged meals (Indian foods) and doses"], name: "wearables" });
   card(s, { x: 0.5, y: 5.8, w: 3.5, h: 0.95, fill: "F3F4F6", line: "DADDE2", title: "Sources",
-    lines: ["Synthetic India cohort 1,000 × 14 d · CGMacros (45, real) · ShanghaiT2DM (100, external)"], size: 10, name: "sources" });
+    lines: ["Synthetic India cohort 1,000 × 14 d · CGMacros (45, real) · BIG IDEAs (16, real HRV) · ShanghaiT2DM (100, external)"], size: 10, name: "sources" });
 
   // 2. twin core
   card(s, { x: 4.45, y: 1.8, w: 4.75, h: 0.8, fill: "F3F4F6", line: "DADDE2", title: "Ingest & fuse",
@@ -75,7 +75,7 @@ async function main() {
   arrow(s, 5.92, 3.52, 6.08, 3.52, H.accent4);
   arrow(s, 7.57, 3.52, 7.73, 3.52, H.accent4);
   card(s, { x: 4.45, y: 4.45, w: 4.75, h: 2.3, fill: "EAF2FC", line: "BFD5F2", title: "TwinNet: physics-gated fusion network",
-    lines: ["Causal dilated TCN over 6 h × 21 channels", "EHR encoder conditions the dynamics (FiLM)", "Gate learns how much to trust the physics twin per horizon", "Outputs: 5–120 min quantiles (conformal 80% band) + spike / hypo probability", "LightGBM + SHAP: plain-language reasons"], name: "twinnet" });
+    lines: ["Causal dilated TCN over 6 h × 21 channels", "EHR encoder conditions the dynamics (FiLM)", "Gate learns how much to trust the physics twin per horizon", "Outputs: 5–120 min quantiles (conformal 80% band) + spike / hypo probability", "Fine-tuned per person, averaged with LightGBM; SHAP reasons"], name: "twinnet" });
 
   // 3. experience
   card(s, { x: 9.65, y: 1.8, w: 3.2, h: 0.8, fill: "F3F4F6", line: "DADDE2", title: "FastAPI + WebSocket",

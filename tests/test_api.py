@@ -32,6 +32,22 @@ def test_whatif_walk_lowers_peak(client):
     assert walk["scenario_peak"] <= no_walk["scenario_peak"]
 
 
+def test_therapy_simulator_dose_response(client):
+    idx = [p["id"] for p in client.get("/api/patients").json()]
+    plans = {pid: client.get(f"/api/patients/{pid}/therapy?clock=1830").json() for pid in idx}
+    pid = next(p for p, pl in plans.items() if any(d["unit"] == "IU" for d in pl["doses"]))
+    usual = plans[pid]["doses"]
+    r = client.post(f"/api/patients/{pid}/therapy", json={"clock": 1830, "doses": usual}).json()
+    assert r["usual"] == r["scenario"]  # an unchanged plan reproduces the usual day
+    less = client.post(f"/api/patients/{pid}/therapy", json={"clock": 1830, "doses": [d | {"amount": d["amount"] * 0.5} for d in usual]}).json()
+    assert less["scenario_stats"]["mean"] >= less["usual_stats"]["mean"]  # less insulin, higher glucose
+    rows = r["dose_response"]["rows"]
+    assert rows[0]["mean"] >= rows[-1]["mean"]  # monotone dose response
+    skip = client.post(f"/api/patients/{pid}/therapy", json={"clock": 1830, "pattern": "skip_lunch"}).json()
+    assert skip["usual_stats"]["mean"] <= r["usual_stats"]["mean"]
+    assert client.post(f"/api/patients/{pid}/therapy", json={"pattern": "bogus"}).status_code == 422
+
+
 def test_fhir_has_risk_assessment(client):
     pid = client.get("/api/patients").json()[0]["id"]
     b = client.get(f"/api/patients/{pid}/fhir?clock=500").json()

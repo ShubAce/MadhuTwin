@@ -23,6 +23,13 @@ import numpy as np
 import torch
 
 from twin.data.windows import G_SCALE, HORIZONS, H
+from twin.eval.clinical import (
+    calibration_curve,
+    crossfit_recalibrate,
+    decision_curve,
+    platt_fit,
+    sensitivity_at_false_alerts,
+)
 from twin.eval.experiments import (
     baselines,
     best_threshold,
@@ -32,10 +39,11 @@ from twin.eval.experiments import (
     linear_event_score,
     physics_event_score,
     slope_now,
+    strict_json,
 )
 from twin.models.gbm import GBMForecaster
 from twin.models.tabular import stack
-from twin.models.twinnet import TwinNet, TwinNetConfig, Windows, predict, train
+from twin.models.twinnet import TwinNet, TwinNetConfig, Windows, personalise, predict, train
 from twin.paths import ARTIFACTS
 from twin.service import DEMO_REAL_HOLDOUT
 
@@ -105,13 +113,13 @@ def cross_validate(name: str, arrays: list, pre: TwinNet, gbm_syn: GBMForecaster
         preds["LightGBM (real-trained)"] = expand(gp["quantiles"][:, :, 1])
         gz = gbm_syn.predict(d_te["X"], d_te["now"])
         preds["LightGBM (synthetic-only)"] = expand(gz["quantiles"][:, :, 1])
+        gtr_all = g.predict(d_tr["X"], d_tr["now"])
         for e in ("spike", "hypo"):
             # a fold can lack enough events to train a classifier: keep arrays aligned with NaN
             ev_scores[e]["LightGBM (real-trained)"] = gp.get(e, np.full(len(w_te), np.nan))
             if e in gp:
-                gtr = g.predict(d_tr["X"], d_tr["now"])[e]
                 ok_tr = d_tr[f"{e}_ok"]
-                alert_pool[e].setdefault("LightGBM (real-trained)", []).append(_rescale(gp[e], best_threshold(d_tr[e][ok_tr], gtr[ok_tr])))
+                alert_pool[e].setdefault("LightGBM (real-trained)", []).append(_rescale(gp[e], best_threshold(d_tr[e][ok_tr], gtr_all[e][ok_tr])))
 
         nets = {}
         if "zero-shot" in regimes:
@@ -120,20 +128,51 @@ def cross_validate(name: str, arrays: list, pre: TwinNet, gbm_syn: GBMForecaster
             nets["TwinNet real-only"] = scratch(w_tr)
         if "sim-to-real" in regimes:
             nets["TwinNet sim-to-real"] = finetune(pre, w_tr)
+        thr_base, thr_ens = {}, {}
         for nm, net in nets.items():
             p = predict(net, w_te)
             if nm == "TwinNet sim-to-real":
                 p_tr = predict(net, w_tr)
+                # training-patient LightGBM scores share the tabular stack's row order with w_tr only when
+                # no extra training arrays are stacked; otherwise fall back to the TwinNet threshold
+                gb_tr = {e: gtr_all.get(e) for e in ("spike", "hypo")} if not gbm_extra_train else {}
                 for e in ("spike", "hypo"):
                     ok_tr = getattr(w_tr, f"{e}_ok") > 0
-                    thr = best_threshold(getattr(w_tr, e)[ok_tr] > 0, p_tr[e][ok_tr])
-                    alert_pool[e].setdefault(nm, []).append(_rescale(p[e], thr))
+                    lab_tr = getattr(w_tr, e)[ok_tr] > 0
+                    thr_base[e] = best_threshold(lab_tr, p_tr[e][ok_tr])
+                    alert_pool[e].setdefault(nm, []).append(_rescale(p[e], thr_base[e]))
+                    if gb_tr.get(e) is not None and len(gb_tr[e]) == len(p_tr[e]):
+                        thr_ens[e] = best_threshold(lab_tr, ((p_tr[e] + gb_tr[e]) / 2)[ok_tr])
+                    else:
+                        thr_ens[e] = thr_base[e]
             q = w_te.now[:, None, None] + p["q"] * G_SCALE
             preds[nm] = q[..., 1]
             pool.setdefault(nm + "|lo", []).append(q[..., 0])
             pool.setdefault(nm + "|hi", []).append(q[..., 2])
             for e in ("spike", "hypo"):
                 ev_scores[e][nm] = p[e]
+
+        if "TwinNet sim-to-real" in nets:
+            # "the twin learns you": fine-tune the fold model on each test patient's own first days
+            base = nets["TwinNet sim-to-real"]
+            parts = [predict(personalise(base, a), Windows([a], after_calibration=True)) for a in te
+                     if np.any(a.anchors >= a.calib_bins)]
+            pp = {k2: np.concatenate([x[k2] for x in parts]) for k2 in ("q", "spike", "hypo")}
+            q = w_te.now[:, None, None] + pp["q"] * G_SCALE
+            preds["TwinNet personalised"] = q[..., 1]
+            pool.setdefault("TwinNet personalised|lo", []).append(q[..., 0])
+            pool.setdefault("TwinNet personalised|hi", []).append(q[..., 2])
+            gb = preds["LightGBM (real-trained)"]
+            preds["MadhuTwin ensemble"] = np.where(np.isfinite(gb), (q[..., 1] + gb) / 2, q[..., 1])
+            pool.setdefault("MadhuTwin ensemble|lo", []).append(q[..., 0])
+            pool.setdefault("MadhuTwin ensemble|hi", []).append(q[..., 2])
+            for e in ("spike", "hypo"):
+                ev_scores[e]["TwinNet personalised"] = pp[e]
+                gpe = ev_scores[e]["LightGBM (real-trained)"]
+                ens = np.where(np.isfinite(gpe), (pp[e] + gpe) / 2, pp[e])
+                ev_scores[e]["MadhuTwin ensemble"] = ens
+                alert_pool[e].setdefault("TwinNet personalised", []).append(_rescale(pp[e], thr_base[e]))
+                alert_pool[e].setdefault("MadhuTwin ensemble", []).append(_rescale(ens, thr_ens[e]))
         for nm, v in preds.items():
             pool.setdefault(nm, []).append(v)
         for e in ("spike", "hypo"):
@@ -141,7 +180,7 @@ def cross_validate(name: str, arrays: list, pre: TwinNet, gbm_syn: GBMForecaster
                 events_pool[e].setdefault(nm, []).append(v)
         y_all.append(y)
         groups.append(w_te.group)
-        index_parts.append({"patient": w_te.patient + offset, "anchor": w_te.anchor, "group": w_te.group,
+        index_parts.append({"patient": w_te.patient + offset, "anchor": w_te.anchor, "group": w_te.group, "fold": np.full(len(w_te), f),
                             "spike": w_te.spike, "spike_ok": w_te.spike_ok, "hypo": w_te.hypo, "hypo_ok": w_te.hypo_ok})
         test_arrays += te
         offset += len(te)
@@ -151,14 +190,26 @@ def cross_validate(name: str, arrays: list, pre: TwinNet, gbm_syn: GBMForecaster
     preds = {nm: np.concatenate(v) for nm, v in pool.items() if "|" not in nm}
     quant = {nm: (np.concatenate(pool[nm + "|lo"]), np.concatenate(pool[nm + "|hi"])) for nm in preds if nm + "|lo" in pool}
     idx = {k2: np.concatenate([p[k2] for p in index_parts]) for k2 in index_parts[0]}
-    ev_rows = []
+    ev_rows, ev_scores_all, raw_ensemble = [], {}, {}
     for e in ("spike", "hypo"):
         scores = {nm: np.concatenate(v) for nm, v in events_pool[e].items()}
+        if "MadhuTwin ensemble" in scores:
+            # site-level recalibration of the ensemble's probabilities, cross-fitted by patient fold;
+            # monotone within a fold, so the fold's alerts (training-fold thresholds) are unchanged
+            raw_ensemble[e] = scores["MadhuTwin ensemble"]
+            scores["MadhuTwin ensemble"] = crossfit_recalibrate(raw_ensemble[e], idx[e] > 0, idx[f"{e}_ok"] > 0, idx["fold"])
+        ev_scores_all[e] = scores
         # operating points use thresholds chosen on each fold's *training* patients (rescaled to 0.5)
         alerts = {nm: np.concatenate(v) for nm, v in alert_pool[e].items() if len(v) == len(index_parts)}
-        ev_rows += event_rows(test_arrays, idx, scores, e, {nm: 0.5 for nm in alerts}, alert_scores=alerts)
+        rows = event_rows(test_arrays, idx, scores, e, {nm: 0.5 for nm in alerts}, alert_scores=alerts)
+        for r in rows:  # point on the alert-burden curve: best detection at <= 1 false alert per patient-day
+            fa = sensitivity_at_false_alerts(test_arrays, idx, scores[r["method"]], e, 1.0)
+            r["caught_at_1fa_pct"] = fa.get("detected_pct")
+            r["lead_at_1fa_min"] = fa.get("median_lead_min")
+        ev_rows += rows
     return {"forecast": forecast_rows(y, preds, grp, quantiles=quant), "events": ev_rows, "y": y, "preds": preds,
-            "quant": quant, "n_recordings": len(test_arrays), "n_anchors": int(len(y))}
+            "quant": quant, "n_recordings": len(test_arrays), "n_anchors": int(len(y)), "idx": idx,
+            "event_scores": ev_scores_all, "raw_ensemble": raw_ensemble, "test_arrays": test_arrays}
 
 
 def _rescale(prob: np.ndarray, thr: float) -> np.ndarray:
@@ -180,34 +231,59 @@ def main() -> None:
     syn_train = [a for a in syn if a.pid in set(split["train"])]
     pre, ck = load_net(MODELS / "twinnet_synthetic.pt")
     gbm_syn = pickle.load(open(MODELS / "gbm_synthetic.pkl", "rb"))
-    cgm, sh = load("cgmacros"), load("shanghai")
+    cgm, sh, big = load("cgmacros"), load("shanghai"), load("bigideas")
 
     log("CGMacros 5-fold cross-validation")
     res_c = cross_validate("CGMacros", cgm, pre, gbm_syn)
     log("ShanghaiT2DM 5-fold cross-validation (external population, no wearables)")
     res_s = cross_validate("Shanghai", sh, pre, gbm_syn, regimes=("zero-shot", "sim-to-real"))
+    log("BIG IDEAs 5-fold cross-validation (real heart rate and HRV from an Empatica wristband)")
+    res_b = cross_validate("BIG IDEAs", big, pre, gbm_syn, regimes=("zero-shot", "sim-to-real"))
 
     # production models: synthetic-pretrained TwinNet fine-tuned on all real data
     log("training production models")
-    real_train = [a for a in cgm + sh if a.pid not in DEMO_REAL_HOLDOUT]
+    real_train = [a for a in cgm + sh + big if a.pid not in DEMO_REAL_HOLDOUT]
     final = finetune(pre, Windows(real_train), epochs=5)
     lo, hi = res_c["quant"]["TwinNet sim-to-real"]
     q_conf = conformal_from(res_c["y"], lo, hi)
     torch.save({"state": final.state_dict(), "cfg": final.cfg.__dict__, "conformal_q": q_conf,
-                "trained_on": ["synthetic (700 patients)", "CGMacros + ShanghaiT2DM (minus demo hold-outs)"],
+                "trained_on": ["synthetic (700 patients)", "CGMacros + ShanghaiT2DM + BIG IDEAs (minus demo hold-outs)"],
                 "holdout": list(DEMO_REAL_HOLDOUT)},
                MODELS / "twinnet_final.pt")
-    gbm_final = GBMForecaster.fit(stack(syn_train[:300] + [a for a in cgm if a.pid not in DEMO_REAL_HOLDOUT]), max_rows=500_000)
+    gbm_final = GBMForecaster.fit(stack(syn_train[:300] + [a for a in cgm + big if a.pid not in DEMO_REAL_HOLDOUT]), max_rows=500_000)
     pickle.dump(gbm_final, open(MODELS / "gbm_final.pkl", "wb"))
 
     def strip(r: dict) -> dict:
         return {k: v for k, v in r.items() if k in ("forecast", "events", "n_recordings", "n_anchors")}
 
-    json.dump({"cgmacros": strip(res_c), "shanghai": strip(res_s), "conformal_q_real": q_conf},
+    clinical, recal = {}, {}
+    for key, res in (("cgmacros", res_c), ("shanghai", res_s), ("bigideas", res_b)):
+        ix, sc = res["idx"], res["event_scores"]["spike"]
+        ok = ix["spike_ok"] > 0
+        best = "MadhuTwin ensemble" if "MadhuTwin ensemble" in sc else "TwinNet sim-to-real"
+        clinical[key] = {"method": best, "spike_calibration": calibration_curve(ix["spike"][ok] > 0, sc[best][ok]),
+                         "spike_decision_curve": decision_curve(ix["spike"][ok] > 0, sc[best][ok])}
+        raw = res["raw_ensemble"].get("spike")
+        if raw is not None:
+            clinical[key]["spike_calibration_uncalibrated"] = calibration_curve(ix["spike"][ok] > 0, raw[ok])
+            clinical[key]["spike_decision_curve_uncalibrated"] = decision_curve(ix["spike"][ok] > 0, raw[ok])
+        # deployment map for this site: fitted on all of its out-of-fold predictions
+        recal[key] = {e: platt_fit(ix[e][ix[f"{e}_ok"] > 0] > 0, r[ix[f"{e}_ok"] > 0]) for e, r in res["raw_ensemble"].items()}
+    old = json.load(open(MODELS / "recalibration.json")) if (MODELS / "recalibration.json").exists() else {}
+    json.dump(old | recal, open(MODELS / "recalibration.json", "w"), indent=1)
+    for key, res in (("cgmacros", res_c), ("shanghai", res_s), ("bigideas", res_b)):
+        # out-of-fold scores, so calibration or threshold analyses never need the models re-run
+        np.savez_compressed(OUT / "real" / f"oof_{key}.npz",
+                            **{f"idx_{k}": np.asarray(v, dtype=str if v.dtype == object else v.dtype) for k, v in res["idx"].items()},
+                            **{f"{e}|{nm}": v for e, sc in res["event_scores"].items() for nm, v in sc.items()},
+                            **{f"{e}|MadhuTwin ensemble (uncalibrated)": v for e, v in res["raw_ensemble"].items()})
+    json.dump(strict_json({"cgmacros": strip(res_c), "shanghai": strip(res_s), "bigideas": strip(res_b), "clinical": clinical,
+               "conformal_q_real": q_conf}),
               open(OUT / "real" / "results.json", "w"), indent=1, default=float)
     np.savez_compressed(OUT / "real" / "clarke_cgmacros_60.npz", ref=res_c["y"][:, 11].astype(np.float32),
-                        twinnet=res_c["preds"]["TwinNet sim-to-real"][:, 11].astype(np.float32))
-    for nm, res in (("CGMacros", res_c), ("Shanghai", res_s)):
+                        twinnet=res_c["preds"]["TwinNet sim-to-real"][:, 11].astype(np.float32),
+                        ensemble=res_c["preds"]["MadhuTwin ensemble"][:, 11].astype(np.float32))
+    for nm, res in (("CGMacros", res_c), ("Shanghai", res_s), ("BIG IDEAs", res_b)):
         print(f"\n{nm}: {res['n_recordings']} recordings, {res['n_anchors']} evaluation anchors")
         for r in res["forecast"]:
             print(f"  {r['method']:30s} RMSE 30/60/120: {r['rmse_30']:.1f} / {r['rmse_60']:.1f} / {r['rmse_120']:.1f}   A+B@60 {r['clarkeAB_60']:.1f}%")

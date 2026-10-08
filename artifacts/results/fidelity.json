@@ -1,0 +1,58 @@
+{
+ "synthetic": {
+  "patients": 50,
+  "days": 350,
+  "mean_abs_error_median": 13.707413341932478,
+  "mean_glucose_error_median": 5.5065126340511625,
+  "tir_error_median_pp": 4.861111111111111,
+  "rating_pct": {
+   "good": 69.14285714285714,
+   "fair": 28.57142857142857,
+   "poor": 2.2857142857142856
+  },
+  "days_with_lows": 3,
+  "lows_reproduced_pct": 0.0
+ },
+ "cgmacros": {
+  "patients": 45,
+  "days": 212,
+  "mean_abs_error_median": 17.90929284874274,
+  "mean_glucose_error_median": 7.017447210559972,
+  "tir_error_median_pp": 2.7777777777777857,
+  "rating_pct": {
+   "good": 54.71698113207547,
+   "fair": 31.60377358490566,
+   "poor": 13.679245283018867
+  },
+  "days_with_lows": 9,
+  "lows_reproduced_pct": 0.0
+ },
+ "bigideas": {
+  "patients": 16,
+  "days": 55,
+  "mean_abs_error_median": 14.360658464512792,
+  "mean_glucose_error_median": 5.098788426196634,
+  "tir_error_median_pp": 0.6944444444444429,
+  "rating_pct": {
+   "good": 80.0,
+   "fair": 18.181818181818183,
+   "poor": 1.8181818181818181
+  },
+  "days_with_lows": 7,
+  "lows_reproduced_pct": 0.0
+ },
+ "shanghai": {
+  "patients": 109,
+  "days": 511,
+  "mean_abs_error_median": 26.158728838065667,
+  "mean_glucose_error_median": 11.739965837341714,
+  "tir_error_median_pp": 7.291666666666686,
+  "rating_pct": {
+   "good": 24.65753424657534,
+   "fair": 46.1839530332681,
+   "poor": 29.158512720156555
+  },
+  "days_with_lows": 109,
+  "lows_reproduced_pct": 6.422018348623854
+ }
+}

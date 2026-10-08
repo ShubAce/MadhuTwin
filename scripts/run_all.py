@@ -22,9 +22,15 @@ STEPS = [
     ("build_dataset", []),
     ("exp_synthetic", ["--twinnet-ablations"]),
     ("exp_real", []),
+    ("exp_extra", []),
+    ("exp_learning", []),
     ("exp_cgm_light", []),
+    ("exp_fidelity", []),
+    ("exp_robustness", []),
+    ("bench", []),
     ("build_demo", []),
     ("make_report", []),
+    ("make_techreport", []),
 ]
 
 

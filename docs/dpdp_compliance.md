@@ -23,3 +23,4 @@ MadhuTwin handles health data, the most sensitive category of personal data. Thi
 
 - CGMacros: PhysioNet, CC BY-NC-SA 4.0. Not redistributed in raw form; downloaded by `scripts/download_data.py`. The two CGMacros-derived demo bundles in `artifacts/demo/` carry the same licence.
 - ShanghaiT2DM: Figshare, CC BY 4.0, with attribution.
+- BIG IDEAs Glycemic Variability and Wearable Device Data: PhysioNet, ODC-By 1.0, with attribution. Not redistributed; only CGM, heart rate, inter-beat intervals and food logs are downloaded (data minimisation).

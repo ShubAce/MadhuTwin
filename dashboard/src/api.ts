@@ -114,6 +114,9 @@ export interface Forecast {
   why_hypo: string[] | null;
 }
 
+export interface TrackStats { alerts: number; confirmed: number; median_lead_min: Num; excursions: number; caught: number }
+export interface TrackRecord { days: number; since: string; hours: number; spike: TrackStats; hypo: TrackStats }
+
 export interface State {
   id: string;
   now: string;
@@ -125,6 +128,7 @@ export interface State {
   alerts: Alert[];
   si_today: Num;
   gate: Num[] | null;
+  track_record?: TrackRecord;
 }
 
 export interface Agp {
@@ -201,6 +205,51 @@ export interface WhatIfResult {
   scenario_above_180_min: number;
   baseline_below_70_min: number;
   scenario_below_70_min: number;
+}
+
+export interface TherapyDose {
+  drug: string;
+  display: string;
+  kind: string;
+  offset_min: number;
+  time: string;
+  amount: number;
+  unit: string;
+}
+
+export interface TherapyPlan {
+  start: string;
+  doses: TherapyDose[];
+  dpp4: boolean;
+  sglt2: boolean;
+  egfr: Num;
+  reduced_su_clearance: boolean;
+  meals_replayed: number;
+}
+
+export interface DayStats {
+  mean: number;
+  tir_pct: number;
+  below_70_min: number;
+  below_54_min: number;
+  night_below_70_min: number;
+  above_180_pct: number;
+  above_250_min: number;
+  min: number;
+  max: number;
+  min_time: string;
+}
+
+export interface TherapyResult {
+  times: string[];
+  usual: number[];
+  scenario: number[];
+  usual_stats: DayStats;
+  scenario_stats: DayStats;
+  dose_response: { what: string; rows: (DayStats & { scale: number })[] };
+  pattern: string;
+  fidelity: { mean_twin: number; mean_cgm: number; tir_twin: number; tir_cgm: number; below_70_twin_min: number; below_70_cgm_min: number; mae: number; rating: "good" | "fair" | "poor" } | null;
+  assumptions: string;
 }
 
 export interface AskResponse {

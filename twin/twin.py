@@ -146,6 +146,72 @@ class DigitalTwin:
         gi, g = self._rollout(x0, self._past_only_inputs(anchors, horizon, mets_now))
         return Forecast(anchors, gi, g)
 
+    def template_day(self, minute: int, horizon: int = 1440) -> tuple[list[Meal], list[Dose], np.ndarray]:
+        """'Tomorrow looks like yesterday': the meals, doses and activity logged in the `horizon`
+        minutes before `minute`, re-timed to start at `minute` (offsets in [0, horizon))."""
+        rec = self._record
+        lo = minute - horizon
+        meals = [Meal(m.t - lo, m.carbs, m.protein, m.fat, m.fiber, m.gi, m.name, tau_scale=self.tau_scale)
+                 for m in rec.meals if lo <= m.t < minute]
+        doses = [Dose(d.t - lo, d.drug, d.amount) for d in rec.doses if lo <= d.t < minute]
+        mets = np.full(horizon, REST_METS)
+        src = rec.mets[max(lo, 0) : minute]
+        mets[horizon - len(src) :] = src
+        return meals, doses, mets
+
+    def therapy_day(self, minute: int, plans: list[dict], horizon: int = 1440, meals: list[Meal] | None = None,
+                    mets: np.ndarray | None = None) -> np.ndarray:
+        """Simulate the next `horizon` minutes from the synced state under several therapy plans.
+
+        Meals and activity default to `template_day` (the same for every plan). Each plan is
+        {"doses": [Dose] (minute offsets from `minute`), "therapy": set of "dpp4"/"sglt2"}.
+        The sulfonylurea effect is expressed against the patient's *usual* exposure (as during
+        personalisation), so reducing or stopping it also moves the fasting equilibrium.
+        Returns interstitial glucose, shape (len(plans), horizon).
+        """
+        n = len(plans)
+        anchors = np.full(n, minute)
+        x0 = self._states_at(anchors)
+        if meals is None or mets is None:
+            t_meals, _, t_mets = self.template_day(minute, horizon)
+            meals = t_meals if meals is None else meals
+            mets = t_mets if mets is None else mets
+        rec, p = self._record, self.params
+        u = self._past_only_inputs(anchors, horizon, np.full(n, mets[0]))
+        # inputs hold read-only broadcast views
+        u.ra, u.iex, u.su, u.m_beta = u.ra.copy(), u.iex.copy(), u.su.copy(), u.m_beta.copy()
+        u.m_inc, u.renal_thr = np.array(u.m_inc, dtype=float), np.array(u.renal_thr, dtype=float)
+        u.mets = np.repeat(mets[None, :], n, axis=0)
+        w, VG = float(p.weight[0]), float(p.VG[0])
+        for m in meals:
+            u.ra[:, m.t :] += float(p.f_bio[0]) * m.carbs * 1000.0 / (VG * w) * gamma2_kernel(horizon - m.t, m.tau)
+        scale = INSULIN_BIOAVAILABILITY * 1e6 / (float(p.VI[0]) * w)
+        su_doses = [d for d in rec.doses if DRUG_CLASSES.get(d.drug) == "sulfonylurea"]
+        su_mean = sum(d.amount / SU_REFERENCE_DOSE.get(d.drug, 1.0) * 600.0 * rec.su_clearance for d in su_doses) / max(rec.T, 1)
+        level = u.su / 1.1 + su_mean if su_doses else np.zeros((n, horizon))  # past doses' tails, absolute
+        for i, plan in enumerate(plans):
+            for d in plan.get("doses", []):
+                kind = DRUG_CLASSES.get(d.drug)
+                if not 0 <= d.t < horizon or d.amount <= 0:
+                    continue
+                k = horizon - d.t
+                if kind in INSULIN_TAU:
+                    u.iex[i, d.t :] += d.amount * scale * gamma2_kernel(k, INSULIN_TAU[kind])
+                elif kind == "premix":
+                    u.iex[i, d.t :] += PREMIX_REGULAR_FRACTION * d.amount * scale * gamma2_kernel(k, INSULIN_TAU["regular"])
+                    u.iex[i, d.t :] += (1 - PREMIX_REGULAR_FRACTION) * d.amount * scale * gamma2_kernel(k, INSULIN_TAU["nph"])
+                elif kind == "sulfonylurea":
+                    rel = d.amount / SU_REFERENCE_DOSE.get(d.drug, 1.0)
+                    level[i, d.t :] += rel * 600.0 * rec.su_clearance * gamma2_kernel(k, 150.0 * rec.su_clearance)
+            therapy = plan.get("therapy", rec.therapy)
+            u.m_inc[i] = 1.7 if "dpp4" in therapy else 1.0
+            u.renal_thr[i] = 90.0 if "sglt2" in therapy else 180.0
+        if su_doses:
+            u.su = 1.1 * (level - su_mean)
+            u.m_beta = 1.0 + 0.35 * level / max(float(level[0].max()), 1e-9)  # plan 0 = the usual regimen
+        gi, _ = self._rollout(x0, u)
+        return gi
+
     def what_if(self, minute: int, meals: list[Meal] | None = None, doses: list[Dose] | None = None,
                 walk_minutes: int = 0, walk_mets: float = 3.5, walk_delay: int = 30,
                 si_multiplier: float | None = None, horizon: int = 240) -> dict:

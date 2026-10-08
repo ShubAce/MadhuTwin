@@ -13,7 +13,6 @@ from __future__ import annotations
 from collections.abc import Callable
 
 import numpy as np
-from sklearn.metrics import average_precision_score, roc_auc_score
 
 
 def rmse(y: np.ndarray, p: np.ndarray) -> float:
@@ -61,6 +60,11 @@ def coverage(y: np.ndarray, lo: np.ndarray, hi: np.ndarray) -> tuple[float, floa
 
 
 def event_scores(label: np.ndarray, prob: np.ndarray) -> dict[str, float]:
+    from sklearn.metrics import (  # lazy: the serving image has no scikit-learn
+        average_precision_score,
+        roc_auc_score,
+    )
+
     m = np.isfinite(prob)
     y, p = label[m].astype(int), prob[m]
     if y.min() == y.max():

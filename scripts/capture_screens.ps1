@@ -14,6 +14,7 @@ function Story($word) { ($index | Where-Object { $_.story -like "*$word*" } | Se
 $hypo = Story "Premixed"
 $fest = Story "Festival"
 $ill = Story "illness"
+$sglt = Story "SGLT2"
 # moments chosen by scripts/make_report.py: the first hypo alert, and the illness patient's worst day
 $tok = Get-Content (Join-Path $root "artifacts\results\demo_tokens.json") -Raw | ConvertFrom-Json
 $hc = $tok.hypo_clock
@@ -25,6 +26,7 @@ $shots = @(
   @{ name = "patient_light.png";   w = 1440; h = 1240; url = "/?theme=light#/patient/$hypo" + "?clock=$hc" },
   @{ name = "patient_full.png";    w = 1440; h = 2300; url = "/?theme=light#/patient/$ill" + "?clock=$ic" },
   @{ name = "whatif_light.png";    w = 1440; h = 2300; url = "/?theme=light#/patient/$hypo" + "?tab=whatif&food=rice_dal&walk=15&run=1&clock=780" },
+  @{ name = "therapy_light.png";   w = 1440; h = 2300; url = "/?theme=light#/patient/$sglt" + "?tab=therapy&sglt2=0&clock=390" },
   @{ name = "agp_light.png";       w = 1440; h = 2000; url = "/?theme=light#/patient/$fest" + "?tab=agp" },
   @{ name = "fhir_light.png";      w = 1440; h = 2000; url = "/?theme=light#/patient/$hypo" + "?tab=fhir" },
   @{ name = "companion_hi.png";    w = 460;  h = 980;  url = "/?theme=light#/companion/$ill" + "?lang=hi&clock=$ic" },

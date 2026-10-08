@@ -152,6 +152,43 @@ def download_cgmacros(workers: int = 12) -> None:
     print(f"CGMacros ready in {out}  (zip sha256 {CGMACROS_ZIP_SHA256[:12]}..., CC BY-NC-SA 4.0)")
 
 
+# PhysioNet's AWS open-data mirror is ~35x faster than physionet.org for this dataset (v1.1.2;
+# v1.1.3 on physionet.org differs only in documentation).
+BIGIDEAS_BASE = "https://physionet-open.s3.amazonaws.com/big-ideas-glycemic-wearable/1.1.2/"
+BIGIDEAS_FILES = ("Dexcom", "HR", "IBI", "Food_Log")  # skip ACC/BVP/EDA/TEMP (30+ GB of raw signal)
+
+
+def _parallel_file(url: str, dest: Path, session: requests.Session, pool: ThreadPoolExecutor, chunk: int = 2 << 20) -> None:
+    """Download one file as concurrent byte ranges (PhysioNet throttles each connection)."""
+    head = session.head(url, timeout=60)
+    head.raise_for_status()
+    size = int(head.headers["Content-Length"])
+    if dest.exists() and dest.stat().st_size == size:
+        return
+    ranges = [(s, min(s + chunk, size) - 1) for s in range(0, size, chunk)]
+    parts = list(pool.map(lambda r: range_get(requests.Session(), url, r[0], r[1]), ranges))
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_bytes(b"".join(parts))
+
+
+def download_bigideas(workers: int = 32) -> None:
+    """BIG IDEAs Lab glycemic + wearable data (PhysioNet, ODC-By 1.0): CGM, heart rate, beat-to-beat
+    intervals and food logs for 16 adults; the large raw accelerometer/BVP/EDA/temperature files are skipped."""
+    out = RAW / "bigideas"
+    session = requests.Session()
+    (out / "Demographics.csv").parent.mkdir(parents=True, exist_ok=True)
+    (out / "Demographics.csv").write_bytes(session.get(BIGIDEAS_BASE + "Demographics.csv", timeout=120).content)
+    jobs = [(f"{pid:03d}", kind) for pid in range(1, 17) for kind in BIGIDEAS_FILES]
+    with ThreadPoolExecutor(max_workers=workers) as pool, ThreadPoolExecutor(max_workers=8) as files:
+        futures = {files.submit(_parallel_file, f"{BIGIDEAS_BASE}{pid}/{kind}_{pid}.csv", out / pid / f"{kind}_{pid}.csv",
+                                session, pool): (pid, kind) for pid, kind in jobs}
+        for k, f in enumerate(as_completed(futures), 1):
+            f.result()
+            if k % 8 == 0 or k == len(jobs):
+                print(f"  BIG IDEAs: {k}/{len(jobs)} files")
+    print(f"BIG IDEAs ready in {out}  (ODC-By 1.0)")
+
+
 def download_shanghai() -> None:
     out = RAW / "shanghai"
     target = out / "ShanghaiDM"
@@ -175,13 +212,15 @@ def download_shanghai() -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("datasets", nargs="*", default=["cgmacros", "shanghai"], choices=["cgmacros", "shanghai"])
+    ap.add_argument("datasets", nargs="*", default=["cgmacros", "shanghai", "bigideas"], choices=["cgmacros", "shanghai", "bigideas"])
     ap.add_argument("--workers", type=int, default=12)
     args = ap.parse_args()
     if "shanghai" in args.datasets:
         download_shanghai()
     if "cgmacros" in args.datasets:
         download_cgmacros(args.workers)
+    if "bigideas" in args.datasets:
+        download_bigideas()
     return 0
 
 

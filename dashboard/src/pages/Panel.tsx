@@ -84,7 +84,7 @@ export default function Panel({ clock }: { clock: number }) {
         </table>
       </div>
       <p className="text-[12px] muted">
-        Ranking uses the TwinNet event heads (hypoglycaemia weighted 2.5x). Thresholds: spike alert at 50%, hypo alert at 30%. Status colours always carry an icon and label.
+        Ranking uses MadhuTwin's recalibrated event risks (TwinNet + LightGBM; hypoglycaemia weighted 2.5x). Thresholds: spike alert at 50%, hypo alert at 30%. Status colours always carry an icon and label.
       </p>
     </div>
   );

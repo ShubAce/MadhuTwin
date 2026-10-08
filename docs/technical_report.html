@@ -1,0 +1,183 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>MadhuTwin technical report</title><style>
+@page { size: A4; margin: 16mm 16mm 18mm 16mm; }
+body { font-family: Calibri, "Segoe UI", Arial, sans-serif; font-size: 10.5pt; line-height: 1.42; color: #1d2330; background: #fff; }
+h1 { font-family: Cambria, Georgia, serif; font-size: 22pt; margin: 0 0 4pt; color: #13284a; }
+h2 { font-family: Cambria, Georgia, serif; font-size: 14pt; margin: 16pt 0 5pt; color: #13284a; border-bottom: 1px solid #d9dee8; padding-bottom: 2pt; }
+h3 { font-size: 11pt; margin: 10pt 0 3pt; color: #13284a; }
+p { margin: 0 0 6pt; text-align: justify; }
+.sub { color: #4a5260; font-size: 11pt; margin-bottom: 10pt; }
+.abstract { background: #f2f5fa; padding: 8pt 10pt; border-radius: 4pt; margin: 8pt 0 6pt; }
+table { border-collapse: collapse; width: 100%; margin: 4pt 0 8pt; font-size: 9pt; break-inside: avoid; }
+th, td { border-bottom: 1px solid #e2e6ee; padding: 2.5pt 5pt; text-align: left; }
+th { background: #f2f5fa; font-weight: 600; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr.best td { font-weight: 700; }
+figure { margin: 6pt 0 10pt; text-align: center; break-inside: avoid; }
+figcaption { font-size: 9pt; color: #4a5260; margin-top: 2pt; }
+.eq { font-family: Consolas, "Cambria Math", monospace; font-size: 9.5pt; background: #fafbfd; border-left: 3px solid #2a78d6; padding: 4pt 8pt; margin: 4pt 0 8pt; white-space: pre; }
+.two { display: flex; gap: 10pt; } .two > * { flex: 1; }
+ul { margin: 0 0 6pt 16pt; padding: 0; } li { margin-bottom: 2pt; }
+.small { font-size: 9pt; color: #4a5260; }
+h2, h3 { break-after: avoid; }
+.keep { break-inside: avoid; }
+</style></head><body>
+<h1>MadhuTwin: a hybrid digital twin for type 2 diabetes</h1>
+<div class="sub">Technical report · Happiest Health Digital Twin Challenge 2026, Phase 1 · Team: TODO(team)</div>
+<div class="abstract"><b>Abstract.</b> MadhuTwin is a hybrid digital twin for people with type 2 diabetes. A mechanistic glucose–insulin model is personalised to each person from their EHR and first days of data, kept synchronised with their continuous glucose monitor by an Unscented Kalman Filter, and run forward to forecast glucose and simulate what-ifs. A physics-gated neural network (TwinNet) fuses the EHR, wearable streams and the twin&#x27;s own forecast; it is fine-tuned on each person and averaged with a gradient-boosted model. On 199 unseen synthetic Indian patients, the 60-minute forecast error is 18.0 mg/dL against 35.8 for persistence, 99.5% of forecasts are clinically acceptable (Clarke A+B), and 90% of sustained spikes above 180 mg/dL are flagged a median 110 minutes ahead with at most one false alert per patient-day. On real people with patient-level cross-validation, CGMacros (45): 22.4 vs 28.3 mg/dL; BIG IDEAs (16): 19.0 vs 23.0 mg/dL; ShanghaiT2DM (109): 21.1 vs 27.5 mg/dL (MadhuTwin vs persistence, 60 min). With a week of personal data, the 2-hour error falls from 31.4 to 27.2 mg/dL. The synchronised twin detects illness days from CGM alone (AUROC 0.89). Results are reported with patient-bootstrap confidence intervals, calibration and decision curves, a subgroup audit and stated limitations.</div>
+
+<h2>1. Problem and use case</h2>
+<p>India has about 101 million adults with diabetes and 136 million with prediabetes (ICMR-INDIAB, 2023). Care is visit-based: a quarterly
+HbA1c summarises the past, while the dangerous moments (post-meal spikes, night-time lows on sulfonylureas or premixed insulin, loss of
+control during illness) happen between visits. CGMs and smartwatches now record them, but a care team cannot watch hundreds of streams.
+MadhuTwin targets <b>remote monitoring by a diabetes care team</b>: forecast glucose 5–120 minutes ahead with an 80% interval, estimate the
+probability of a sustained excursion above 180 or below 70 mg/dL within two hours, rank the panel by risk, explain each alert, and let the
+clinician test meals, walks, sleep or illness on the patient's own twin.</p>
+
+<div class="keep"><h2>2. System overview</h2>
+<figure><img src="figures/architecture.png" style="width:100%"><figcaption>Figure 1. Two data streams (EHR and wearables) are ingested into one 5-minute schema; the twin models, synchronises and simulates; TwinNet fuses everything; the dashboard and a FHIR R4 RiskAssessment deliver the result.</figcaption></figure></div>
+<p>The system has three digital-twin properties. <b>Model</b>: a personalised mechanistic model of glucose–insulin physiology.
+<b>Sync</b>: the model's hidden state and a drifting insulin-sensitivity factor are re-estimated from every CGM reading.
+<b>Simulate</b>: the synchronised twin is run forward for forecasts and counterfactual what-ifs. On top, TwinNet learns the residual the
+physics misses and how much to trust the physics at each horizon.</p>
+
+<h2>3. Data</h2>
+<table><thead><tr><th>Source</th><th>People</th><th>Streams</th><th>Role</th></tr></thead><tbody>
+<tr><td>Synthetic India-calibrated cohort (this project)</td><td class=num>1,000 × 14 days</td><td>FHIR R4 EHR (labs, ATC drugs, SNOMED diagnoses, genetics), CGM, HR, HRV, steps, sleep, meals, doses</td><td>Training at scale; controlled ablations; illness ground truth</td></tr>
+<tr><td>CGMacros (PhysioNet, CC BY-NC-SA 4.0)</td><td class=num>45</td><td>Dexcom/Libre CGM, Fitbit HR and steps, meal macros, labs</td><td>Real-world validation; twin-validity analysis</td></tr>
+<tr><td>BIG IDEAs (PhysioNet, ODC-By 1.0)</td><td class=num>16</td><td>Dexcom G6 CGM, Empatica E4 heart rate and beat intervals (HRV computed), food logs</td><td>Real wristband HR and HRV</td></tr>
+<tr><td>ShanghaiT2DM (Figshare, CC BY 4.0)</td><td class=num>100 (109 recordings)</td><td>15-min CGM, diet, insulin and oral drugs, labs; no wearables</td><td>External population; missing-modality test</td></tr>
+</tbody></table>
+<p>The synthetic EHR follows Indian epidemiology (status mix from ICMR-INDIAB, South-Asian BMI phenotype, Indian prescribing such as premixed
+30/70 insulin, gliclazide and teneligliptin) and regional meals from the Indian Food Composition Tables. Crucially, the wearable streams are
+generated by the same simulated body, and labs are measured from it (HbA1c from mean glucose via ADAG), so the two streams are causally
+coupled. Realistic imperfections are injected: unlogged meals, carbohydrate misestimation, CGM noise and compression lows, missed doses,
+illness and stress days. Physiological parameter distributions come from twins fitted to the 45 CGMacros participants.</p>
+<figure><img src="figures/synthetic_realism.png" style="width:92%"><figcaption>Figure 2. Synthetic CGM statistics against real people by glycaemic status.</figcaption></figure>
+
+<h2>4. Methods</h2>
+<h3>4.1 Mechanistic model</h3>
+<div class="eq">dG/dt  = −SG (G − Gb·egp) − SI·m_si·X·G + Ra(t) − k_ex·E1·G − renal(G) + counterreg(G)
+dX/dt  = −p2 (X − (I − Ib))
+dI/dt  = −n (I − Ib) + β·m_β·[G − Gb]₊ + k_inc·m_inc·Ra(t) + I_ex(t) + SU(t)
+dGi/dt = (G − Gi) / τ_isf          (interstitial glucose seen by the CGM)
+dE1/dt = (A(t) − E1)/10 ;  dE2/dt = (A(t) − E2)/360   (acute and lingering exercise)</div>
+<p>Meal appearance Ra(t) depends on carbohydrate, glycaemic index, fat and fibre. Time-varying multipliers encode sleep loss, illness and
+stress (m_si), the dawn phenomenon (egp), sulfonylurea secretion, DPP-4 incretin enhancement (m_inc), the SGLT2-lowered renal threshold, and
+rapid, regular, basal and premixed insulin kernels. A Numba-compiled integrator (verified against the NumPy reference) makes a patient fit
+about 12× faster.</p>
+<h3>4.2 Personalisation (Model)</h3>
+<p>Five parameters (fasting set-point Gb, insulin sensitivity SI, beta-cell response β, dawn amplitude, absorption-speed scale) are fitted
+by maximum a posteriori estimation with EHR-derived priors, using a multiple-shooting objective over 4-hour windows (1-hour burn-in, 3 hours
+scored). On the 45 CGMacros participants the twin's error falls from 37.7 mg/dL with EHR priors to
+26.6 mg/dL once personalised, and the fitted SI and β track laboratory HOMA-IR and HbA1c (Figure 3).</p>
+<figure><img src="figures/twin_validity.png" style="width:88%"><figcaption>Figure 3. Fitted parameters recover known physiology on 45 real people.</figcaption></figure>
+<h3>4.3 Synchronisation (Sync)</h3>
+<p>An Unscented Kalman Filter estimates seven states every 5 minutes: the six model states and a log insulin-sensitivity multiplier that
+follows a bounded random walk. A sustained fall in that multiplier is surfaced as an insight (possible infection, stress or steroid use).</p>
+<h3>4.4 TwinNet and the MadhuTwin ensemble (Simulate)</h3>
+<p>TwinNet reads 6 hours × 21 dynamic channels (CGM, heart rate, HRV, steps, METs, sleep, carbohydrate and insulin on board, logged events,
+time of day) through a causal dilated temporal convolution (dilations 1–16). An EHR encoder conditions the sequence features through FiLM,
+so the same meal is read differently for different bodies. The synchronised twin's 2-hour forecast and hidden state enter through a learned
+per-horizon gate; heads output P10/P50/P90 glucose at 5–120 minutes and the probabilities of a spike or a low within 2 hours. Modality dropout
+lets one model run without wearables or EHR, and conformalised quantile regression calibrates the 80% band. The learned trust in physics
+rises from 0.71 at 30 minutes to 0.92 at 2 hours.</p>
+<p>The twin then learns the individual: TwinNet is fine-tuned for a few epochs on the person's own earlier windows only, and its median and
+event probabilities are averaged with a LightGBM model on hand-crafted features of the same inputs. LightGBM's TreeSHAP values give the
+plain-language reasons attached to every alert. Both models are trained with class weighting so that rare events are learned, which
+inflates raw probabilities; the ensemble's risks are therefore recalibrated with Platt scaling, fitted on validation patients for the
+synthetic cohort and, for each real-data site, on other patients only (cross-fitted by fold in evaluation).</p>
+
+<h2>5. Evaluation protocol</h2>
+<ul>
+<li><b>Splits.</b> Patient-level throughout. Synthetic: 70/10/20 split by patient; scored only on days 8–14, after the twin and TwinNet were personalised on days 1–7. Real data: 5-fold cross-validation grouped by patient; models are pretrained on synthetic data and fine-tuned on training folds only (sim-to-real).</li>
+<li><b>Forecasts.</b> RMSE, MARD, Clarke Error Grid zones and 80% interval coverage at 30, 60, 90 and 120 minutes; confidence intervals by patient bootstrap.</li>
+<li><b>Events.</b> A spike is glucose above 180 mg/dL (a low: below 70) sustained for at least 15 minutes within the next 2 hours. AUROC and AUPRC; the share of excursions alerted in the 2 hours before onset at the operating point with at most one false-alert episode per patient-day, and the median lead time. Alert thresholds on real data are chosen on the training folds.</li>
+<li><b>Clinical utility.</b> Calibration curves, decision-curve net benefit (Vickers and Elkin, 2006) and a subgroup audit.</li>
+</ul>
+
+<h2>6. Results</h2>
+<h3>6.1 Forecasting on unseen synthetic patients</h3>
+<table><thead><tr><th>Method</th><th class=num>RMSE 30</th><th class=num>RMSE 60</th><th class=num>RMSE 120</th><th class=num>MARD 60 %</th><th class=num>Clarke A+B 60 %</th><th class=num>PI80 cov. 60 %</th></tr></thead><tbody><tr><td>Persistence</td><td class=num>22.9</td><td class=num>35.8</td><td class=num>50.4</td><td class=num>14.7</td><td class=num>98.2</td><td class=num>–</td></tr><tr><td>TwinNet hybrid</td><td class=num>13.6</td><td class=num>19.0</td><td class=num>24.9</td><td class=num>8.2</td><td class=num>99.4</td><td class=num>–</td></tr><tr><td>LightGBM fusion</td><td class=num>13.1</td><td class=num>18.4</td><td class=num>24.4</td><td class=num>8.3</td><td class=num>99.5</td><td class=num>–</td></tr><tr><td>TwinNet personalised</td><td class=num>13.4</td><td class=num>18.6</td><td class=num>24.2</td><td class=num>8.1</td><td class=num>99.5</td><td class=num>79</td></tr><tr class=best><td>MadhuTwin ensemble</td><td class=num>13.0</td><td class=num>18.0</td><td class=num>23.3</td><td class=num>8.0</td><td class=num>99.5</td><td class=num>79</td></tr></tbody></table>
+<figure><img src="figures/rmse_by_horizon_synthetic.png" style="width:72%"><figcaption>Figure 4. Forecast error by horizon on unseen synthetic patients.</figcaption></figure>
+<h3>6.2 Adverse-event prediction</h3>
+<table><thead><tr><th>Method</th><th class=num>AUROC</th><th class=num>AUPRC</th><th class=num>Prev. %</th><th class=num>Caught at ≤1 FA/day %</th><th class=num>Lead (min)</th></tr></thead><tbody><tr><td>TwinNet hybrid</td><td class=num>0.956</td><td class=num>0.859</td><td class=num>20.0</td><td class=num>90</td><td class=num>110</td></tr><tr><td>LightGBM fusion</td><td class=num>0.956</td><td class=num>0.860</td><td class=num>20.0</td><td class=num>90</td><td class=num>110</td></tr><tr><td>TwinNet personalised</td><td class=num>0.947</td><td class=num>0.829</td><td class=num>20.0</td><td class=num>89</td><td class=num>110</td></tr><tr class=best><td>MadhuTwin ensemble</td><td class=num>0.961</td><td class=num>0.871</td><td class=num>20.0</td><td class=num>90</td><td class=num>110</td></tr></tbody></table>
+<p class="small">Spike above 180 mg/dL within 2 hours. Hypoglycaemia: AUROC 0.968 for MadhuTwin ensemble.</p>
+<h3>6.3 Does fusing the two streams help?</h3>
+<div class="two"><div><table><thead><tr><th>Streams (LightGBM retrained)</th><th class=num>RMSE 60</th><th class=num>Spike AUROC</th></tr></thead><tbody><tr><td>CGM only</td><td class=num>24.87</td><td class=num>0.923</td></tr><tr><td>CGM + EHR</td><td class=num>23.82</td><td class=num>0.931</td></tr><tr><td>CGM + wearables</td><td class=num>23.99</td><td class=num>0.930</td></tr><tr><td>CGM + meals/meds</td><td class=num>21.38</td><td class=num>0.937</td></tr><tr><td>CGM + wearables + meals/meds</td><td class=num>21.12</td><td class=num>0.941</td></tr><tr><td>Both streams (dynamic + EHR)</td><td class=num>20.12</td><td class=num>0.949</td></tr><tr><td>Both streams + physics twin</td><td class=num>18.44</td><td class=num>0.955</td></tr></tbody></table></div>
+<div><p>Every stream adds information, and the EHR helps most in combination: it tells the model whose body the wearables describe. Adding the
+physics twin's forecast as a feature cuts the 60-minute error from 24.9 (CGM only) to 18.4 mg/dL.</p></div></div>
+
+<h3>6.4 The twin learns you</h3>
+<div class="two"><div><figure><img src="figures/twin_learns_you.png" style="width:100%"><figcaption>Figure 5. Error on days 8–14 against days of personal data used to fit the twin and fine-tune TwinNet (50 unseen T2D patients; day 0 = population model).</figcaption></figure></div>
+<div><table><thead><tr><th>Days of personal data</th><th class=num>RMSE 60</th><th class=num>RMSE 120</th></tr></thead><tbody><tr><td>0</td><td class=num>23.81</td><td class=num>31.38</td></tr><tr><td>1</td><td class=num>22.05</td><td class=num>28.21</td></tr><tr><td>2</td><td class=num>21.53</td><td class=num>27.89</td></tr><tr><td>3</td><td class=num>21.41</td><td class=num>27.40</td></tr><tr><td>5</td><td class=num>21.10</td><td class=num>27.38</td></tr><tr><td>7</td><td class=num>20.98</td><td class=num>27.22</td></tr></tbody></table></div></div>
+
+<h3>6.5 Calibration, net benefit and subgroups</h3>
+<div class="two"><div><figure><img src="figures/calibration_spike.png" style="width:100%"><figcaption>Figure 6. Calibration of spike risk (deciles of predicted risk).</figcaption></figure></div>
+<div><figure><img src="figures/subgroups.png" style="width:100%"><figcaption>Figure 7. One-hour error by subgroup (synthetic test patients; groups with at least 5 patients).</figcaption></figure></div></div>
+<figure><img src="figures/decision_curve_spike.png" style="width:92%"><figcaption>Figure 8. Decision curves: net benefit of alerting on MadhuTwin&#x27;s spike risk against alerting everyone or no one.</figcaption></figure>
+<p>Across 19 subgroups the 1-hour error ranges from 12.8 to 22.7 mg/dL.</p>
+<h3>6.6 Real people and an external population</h3>
+<table><thead><tr><th>Cohort (recordings)</th><th class=num>Persistence RMSE 60</th><th class=num>MadhuTwin RMSE 30</th><th class=num>RMSE 60</th><th class=num>RMSE 120</th><th class=num>Clarke A+B 60 %</th><th class=num>Spike AUROC</th><th class=num>Caught at ≤1 FA/day %</th></tr></thead><tbody><tr><td>CGMacros (45)</td><td class=num>28.3</td><td class=num>15.9</td><td class=num>22.4</td><td class=num>27.6</td><td class=num>99.5</td><td class=num>0.822</td><td class=num>82</td></tr><tr><td>BIG IDEAs (16)</td><td class=num>23.0</td><td class=num>13.9</td><td class=num>19.0</td><td class=num>21.8</td><td class=num>99.3</td><td class=num>0.765</td><td class=num>58</td></tr><tr><td>ShanghaiT2DM (109)</td><td class=num>27.5</td><td class=num>12.2</td><td class=num>21.1</td><td class=num>30.1</td><td class=num>98.9</td><td class=num>0.893</td><td class=num>89</td></tr></tbody></table>
+<p>All real-data results use 5-fold patient-level cross-validation. A model trained only on synthetic data does not transfer to a new
+population without a short fine-tune (zero-shot rows in the evaluation report), while synthetic pretraining followed by fine-tuning on a
+few real patients is the regime we recommend.</p>
+<figure><img src="figures/rmse_by_horizon_cgmacros.png" style="width:72%"><figcaption>Figure 9. Forecast error by horizon on 45 real people (CGMacros, 5-fold patient CV).</figcaption></figure>
+
+<h3>6.7 Illness detection by the synchronised twin</h3>
+<div class="two"><div><figure><img src="figures/illness_detection.png" style="width:100%"><figcaption>Figure 10. Daily insulin sensitivity estimated by the UKF on ill and well days.</figcaption></figure></div>
+<div><p>Using the daily mean of the UKF's insulin-sensitivity multiplier as a score, ill days are separated from well days with AUROC
+<b>0.885</b> (55 ill days of 2786); the multiplier averages 0.57 on ill days
+against 0.87 on well days, without any symptom being entered.</p></div></div>
+
+<h3>6.8 CGM-light: an affordability mode</h3>
+<p>After one week of CGM, only 4 fingersticks a day and a smartwatch remain. The synchronised twin estimates continuous
+glucose with a MARD of 6.4% (carrying the last fingerstick forward: 23.8%) and weekly time in range
+within ±3.8 percentage points, on 199 unseen synthetic patients. Because the simulator shares the twin's
+structure, this is an upper bound until tested on real CGM-off data.</p>
+
+<h3>6.9 Can the twin be trusted for a whole day?</h3>
+<p>The therapy simulator (section 7) runs the mechanistic twin open-loop for 24 hours, so we test exactly that: from the synced state at the
+start of every day after calibration, the twin replays the day with the logged meals, doses and activity, and the result is compared with
+the CGM.</p>
+<table><thead><tr><th>Cohort</th><th class=num>Days</th><th class=num>Median MAE</th><th class=num>Daily-mean error</th><th class=num>TIR error (pp)</th><th class=num>Good %</th><th class=num>Poor %</th></tr></thead><tbody><tr><td>Synthetic test</td><td class=num>350</td><td class=num>13.7</td><td class=num>5.5</td><td class=num>4.9</td><td class=num>69</td><td class=num>2</td></tr><tr><td>CGMacros</td><td class=num>212</td><td class=num>17.9</td><td class=num>7.0</td><td class=num>2.8</td><td class=num>55</td><td class=num>14</td></tr><tr><td>BIG IDEAs</td><td class=num>55</td><td class=num>14.4</td><td class=num>5.1</td><td class=num>0.7</td><td class=num>80</td><td class=num>2</td></tr><tr><td>ShanghaiT2DM</td><td class=num>511</td><td class=num>26.2</td><td class=num>11.7</td><td class=num>7.3</td><td class=num>25</td><td class=num>29</td></tr></tbody></table>
+<p>The twin tracks daily mean glucose and time in range closely but rarely reproduces short lows. The simulator therefore reports means,
+time in range and time above range, shows this replay check for each patient (with a warning when agreement is poor), and leaves
+hypoglycaemia warnings to the validated 2-hour forecast.</p>
+
+<h3>6.10 Robust to missing data</h3>
+<p>One deployed model (trained with modality dropout) scored with data removed at inference, 129,956 synthetic test forecasts:</p>
+<table><thead><tr><th>Missing at inference</th><th class=num>RMSE 60</th><th class=num>RMSE 120</th><th class=num>Spike AUROC</th></tr></thead><tbody><tr><td>All data</td><td class=num>19.04</td><td class=num>24.95</td><td class=num>0.956</td></tr><tr><td>No smartwatch (wearables missing)</td><td class=num>19.51</td><td class=num>26.05</td><td class=num>0.950</td></tr><tr><td>No EHR</td><td class=num>19.40</td><td class=num>25.33</td><td class=num>0.953</td></tr><tr><td>No meal or dose logs</td><td class=num>19.09</td><td class=num>25.13</td><td class=num>0.955</td></tr><tr><td>No physics twin</td><td class=num>21.21</td><td class=num>27.41</td><td class=num>0.946</td></tr><tr><td>Only CGM (no smartwatch, EHR, logs or twin)</td><td class=num>27.25</td><td class=num>31.97</td><td class=num>0.916</td></tr><tr><td>10% of past CGM readings lost</td><td class=num>19.08</td><td class=num>24.98</td><td class=num>0.955</td></tr><tr><td>25% of past CGM readings lost</td><td class=num>19.12</td><td class=num>25.08</td><td class=num>0.954</td></tr><tr><td>50% of past CGM readings lost</td><td class=num>19.29</td><td class=num>25.44</td><td class=num>0.951</td></tr></tbody></table>
+
+<h3>6.11 Speed</h3>
+<p>On one laptop CPU (8 threads, no GPU): a 2-hour forecast takes 2.2 ms
+(9523 per second batched); personalising a new patient takes 1.8 s
+(twin fit on 7 days plus TwinNet fine-tuning); syncing the twin costs 11.0 ms per patient-day; and a 24-hour therapy
+simulation takes 0.20 ms per plan. Compute alone would refresh about
+2.2 million patients every 5 minutes, so data handling, not the model, limits scale.</p>
+
+<h2>7. Dashboard, interoperability and governance</h2>
+<p>The doctor-facing dashboard (React, TypeScript, ECharts) shows a risk-ranked panel, a virtual-patient view (24-hour CGM, the 2-hour forecast
+cone, the physics twin's projection, alerts with reasons and each patient's own alert track record, organ-level physiology), an AGP report, a
+what-if simulator with Indian meals, a 24-hour therapy simulator (insulin and sulfonylurea doses and timing, DPP-4 and SGLT2 inhibitors, with
+stress tests such as a skipped lunch, and a dose-response table), and a grounded "Ask the twin" assistant (offline by default). Forecasts are exported as FHIR R4 RiskAssessment resources with SNOMED CT, LOINC and
+WHO ATC codes, aligned with ABDM. The design follows the DPDP Act 2023: consent, purpose limitation, data minimisation and a purpose-tagged
+audit trail of every access. Only synthetic and openly licensed, de-identified data are used.</p>
+<h2>8. Limitations</h2>
+<ul>
+<li>Synthetic patients come from a simulator with the same structure as the twin, which flatters physics-based methods there; real and external results are the primary evidence.</li>
+<li>The real cohorts are small (45, 16 and 100 people) and none is Indian. A prospective pilot in Indian clinics is required.</li>
+<li>Real-world hypoglycaemia events are rare and mostly in people without diabetes (CGMacros), so hypoglycaemia precision on real data is not established.</li>
+<li>Raw risks from class-weighted training are too high; each site must recalibrate on its own past patients before going live. On BIG IDEAs (people without diabetes, few spikes) spike prediction is weak (AUROC about 0.77) and adds little net benefit.</li>
+<li>Unlogged meals dominate 2-hour error; forecasts never use future information. Alert thresholds must be tuned with clinicians.</li>
+<li>The 24-hour therapy simulator rests on the mechanistic twin: it tracks daily mean glucose and time in range but rarely short lows, does not model metformin (which acts on the fasting set-point over weeks), and has not yet been validated against real dose changes.</li>
+<li>Subgroup performance is audited on synthetic patients only. This is research software, not a medical device; the regulatory path is CDSCO Software as a Medical Device with prospective validation.</li>
+</ul>
+<h2>References</h2>
+<p class="small">Anjana RM et al. Metabolic non-communicable disease health report of India: the ICMR-INDIAB national cross-sectional study. <i>Lancet Diabetes Endocrinol</i> 2023.
+Bergman RN et al. Quantitative estimation of insulin sensitivity. <i>Am J Physiol</i> 1979. Dalla Man C, Rizza RA, Cobelli C. Meal simulation model of the glucose-insulin system. <i>IEEE TBME</i> 2007.
+Battelino T et al. Clinical targets for continuous glucose monitoring data interpretation: recommendations from the international consensus on time in range. <i>Diabetes Care</i> 2019.
+Clarke WL et al. Evaluating clinical accuracy of systems for self-monitoring of blood glucose. <i>Diabetes Care</i> 1987.
+Romano Y, Patterson E, Candès E. Conformalized quantile regression. <i>NeurIPS</i> 2019. Perez E et al. FiLM: visual reasoning with a general conditioning layer. <i>AAAI</i> 2018.
+Vickers AJ, Elkin EB. Decision curve analysis. <i>Med Decis Making</i> 2006. Das A et al. CGMacros, PhysioNet 2025. Cho P, Kim J, Bent B, Dunn J. BIG IDEAs Lab Glycemic Variability and Wearable Device Data, PhysioNet 2023.
+Zhao Q et al. Chinese diabetes datasets for data-driven machine learning (ShanghaiT1DM/T2DM). <i>Sci Data</i> 2023. Longvah T et al. Indian Food Composition Tables, NIN 2017.</p>
+</body></html>

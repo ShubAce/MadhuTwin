@@ -3,20 +3,30 @@
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from functools import cached_property
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
+from twin.ehr.codes import DRUGS
+from twin.eval.metrics import excursion_onsets
 from twin.physiology.foods import FOODS
-from twin.physiology.inputs import Dose, Meal, build_inputs
+from twin.physiology.inputs import DRUG_CLASSES, Dose, Meal, build_inputs
 from twin.physiology.model import Physiology, default_physiology, initial_state, simulate
 from twin.record import PatientRecord
 from twin.twin import DigitalTwin
 
 STEP = 5
+
+
+def fidelity_rating(f: dict) -> str:
+    """How far to trust a 24-h simulation, from the twin's replay of the last 24 h."""
+    d_mean, d_tir = abs(f["mean_twin"] - f["mean_cgm"]), abs(f["tir_twin"] - f["tir_cgm"])
+    if f["mae"] <= 20 and d_mean <= 15 and d_tir <= 15:
+        return "good"
+    return "fair" if f["mae"] <= 35 and d_mean <= 30 else "poor"
 DAY_BINS = 1440 // STEP
 DEMO_DAYS = 4
 
@@ -113,8 +123,39 @@ class Patient:
             "times": [self.time_of(i).isoformat() for i in range(lo, b + 1)],
             "series": {k2: v[lo : b + 1] for k2, v in s.items()},
             "events": events, "forecast": fc, "alerts": alerts[-20:], "si_today": self.si_today(b),
-            "gate": pr.get("gate"),
+            "gate": pr.get("gate"), "track_record": self.track_record(clock),
         }
+
+    def track_record(self, clock: float, days: int = 7) -> dict:
+        """How this patient's past alerts turned out (only alerts whose 2-h outcome is already known).
+
+        An alert is confirmed when a sustained excursion (>= 15 min beyond the threshold, as in the
+        evaluation) is under way within the next 2 h; an excursion is caught when an alert of
+        that kind was raised in the 2 h before it began."""
+        b = self.bin_at(clock)
+        # only out-of-sample alerts: after the calibration days the twin and TwinNet were personalised on
+        lo = max(b - days * DAY_BINS, int(self.bundle["calib_bins"]))
+        c = pd.Series(self.cgm).interpolate(limit=2, limit_area="inside").to_numpy()  # bridge 15-min sensor gaps
+        out = {"days": days, "since": self.time_of(lo).isoformat(), "hours": round((b - lo) * STEP / 60, 1)}
+        for kind, high in (("spike", True), ("hypo", False)):
+            onsets = excursion_onsets(c, high=high)
+            flag = np.nan_to_num(c, nan=0.0 if high else 999.0)
+            flag = flag > 180 if high else flag < 70
+            sustained = np.zeros(len(c), bool)
+            for o in onsets:
+                j = o
+                while j < len(c) and flag[j]:
+                    j += 1
+                sustained[o:j] = True
+            bins = [a["bin"] for a in self.bundle["alerts"] if a["kind"] == kind]
+            known = [a for a in bins if lo <= a and a + 24 <= b]
+            confirmed = [a for a in known if sustained[a + 1 : a + 25].any()]
+            leads = [int(o - a) * STEP for a in confirmed for o in onsets[(onsets > a) & (onsets <= a + 24)][:1]]
+            exc = onsets[(onsets >= lo) & (onsets + 3 <= b)]
+            caught = [o for o in exc if any(o - 24 <= a < o for a in bins)]
+            out[kind] = {"alerts": len(known), "confirmed": len(confirmed), "median_lead_min": int(np.median(leads)) if leads else None,
+                         "excursions": int(len(exc)), "caught": len(caught)}
+        return out
 
     def si_today(self, b: int) -> float | None:
         si = self.bundle["twin"].get("si_daily") or []
@@ -206,6 +247,95 @@ class Patient:
             "baseline_above_180_min": int((base > 180).sum()), "scenario_above_180_min": int((scen > 180).sum()),
             "baseline_below_70_min": int((base < 70).sum()), "scenario_below_70_min": int((scen < 70).sum()),
         }
+
+    # ---------------------------------------------------------- therapy simulator
+    def therapy_plan(self, clock: float) -> dict:
+        """The starting plan: medication doses logged in the last 24 h, re-timed to the next 24 h."""
+        b = self.bin_at(clock)
+        now = self.time_of(b)
+        _, doses, _ = self.twin.template_day(b * STEP + 2)
+        rec = self.twin.record
+        names = {"insulin_rapid": "Rapid-acting insulin", "insulin_regular": "Regular insulin", "insulin_nph": "NPH insulin"}
+        rows = [{"drug": d.drug, "display": DRUGS[d.drug][1] if d.drug in DRUGS else names.get(d.drug, d.drug), "kind": DRUG_CLASSES[d.drug],
+                 "offset_min": int(d.t), "time": (now + pd.Timedelta(minutes=int(d.t))).strftime("%H:%M"),
+                 "amount": float(d.amount), "unit": "IU" if DRUG_CLASSES[d.drug] in ("rapid", "regular", "nph", "premix") else "mg"}
+                for d in sorted(doses, key=lambda d: d.t)]
+        egfr = self.bundle["static"].get("egfr")
+        return {"start": now.isoformat(), "doses": rows, "dpp4": "dpp4" in rec.therapy, "sglt2": "sglt2" in rec.therapy,
+                "egfr": egfr, "reduced_su_clearance": rec.su_clearance > 1.0,
+                "meals_replayed": len(self.twin.template_day(b * STEP + 2)[0])}
+
+    def therapy_whatif(self, clock: float, doses: list[dict] | None = None, dpp4: bool | None = None,
+                       sglt2: bool | None = None, pattern: str = "yesterday") -> dict:
+        """Compare the usual regimen with a modified one over the next 24 h on this patient's twin,
+        plus a dose-response sweep of the usual insulin (or sulfonylurea) doses.
+
+        `pattern` stress-tests the day: "yesterday" (replayed as logged), "skip_lunch",
+        "late_dinner" (2 h later) or "big_dinner" (+50% carbohydrate, e.g. a festival).
+        """
+        b = self.bin_at(clock)
+        minute = b * STEP + 2
+        tw = self.twin
+        meals, usual, mets = tw.template_day(minute)
+        tod0 = self.time_of(b).hour * 60 + self.time_of(b).minute
+        at = lambda m: (tod0 + m.t) % 1440  # noqa: E731
+        if pattern == "skip_lunch":
+            meals = [m for m in meals if not 11 * 60 <= at(m) < 15 * 60 + 30]
+        elif pattern == "late_dinner":
+            meals = [replace(m, t=min(m.t + 120, 1439)) if 18 * 60 <= at(m) < 22 * 60 + 30 else m for m in meals]
+        elif pattern == "big_dinner":
+            meals = [replace(m, carbs=m.carbs * 1.5) if 18 * 60 <= at(m) < 22 * 60 + 30 else m for m in meals]
+        therapy = set(tw.record.therapy)
+        new_doses = usual if doses is None else [Dose(int(d["offset_min"]), str(d["drug"]), float(d["amount"]))
+                                                 for d in doses if str(d.get("drug")) in DRUG_CLASSES]
+        new_therapy = {c for c, on in (("dpp4", "dpp4" in therapy if dpp4 is None else dpp4),
+                                       ("sglt2", "sglt2" in therapy if sglt2 is None else sglt2)) if on}
+        insulin = [d for d in usual if DRUG_CLASSES[d.drug] in ("rapid", "regular", "nph", "premix")]
+        group, sweep_name = (insulin, "usual insulin doses") if insulin else (
+            [d for d in usual if DRUG_CLASSES[d.drug] == "sulfonylurea"], "usual sulfonylurea dose")
+        scales = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2] if group else []
+        sweep = [[Dose(d.t, d.drug, d.amount * s) if d in group else d for d in usual] for s in scales]
+        plans = [{"doses": usual, "therapy": therapy}, {"doses": new_doses, "therapy": new_therapy}]
+        plans += [{"doses": s, "therapy": therapy} for s in sweep]
+        gi = tw.therapy_day(minute, plans, meals=meals, mets=mets)
+        tod = (self.time_of(b).hour * 60 + self.time_of(b).minute + np.arange(gi.shape[1])) % 1440
+
+        def stats(g: np.ndarray) -> dict:
+            night = tod < 360
+            return {"mean": round(float(g.mean())), "tir_pct": round(float(np.mean((g >= 70) & (g <= 180)) * 100), 1),
+                    "below_70_min": int((g < 70).sum()), "below_54_min": int((g < 54).sum()),
+                    "night_below_70_min": int(((g < 70) & night).sum()), "above_180_pct": round(float(np.mean(g > 180) * 100), 1),
+                    "above_250_min": int((g > 250).sum()), "min": round(float(g.min())), "max": round(float(g.max())),
+                    "min_time": (self.time_of(b) + pd.Timedelta(minutes=int(np.argmin(g)))).strftime("%H:%M")}
+
+        times = [(self.time_of(b) + pd.Timedelta(minutes=int(m))).isoformat() for m in range(4, gi.shape[1], 5)]
+        return {"times": times, "usual": np.round(gi[0, 4::5]).tolist(), "scenario": np.round(gi[1, 4::5]).tolist(),
+                "usual_stats": stats(gi[0]), "scenario_stats": stats(gi[1]),
+                "dose_response": {"what": sweep_name, "rows": [{"scale": s, **stats(gi[2 + i])} for i, s in enumerate(scales)]},
+                "pattern": pattern, "fidelity": self.replay_fidelity(clock),
+                "assumptions": "Meals, activity and dose times of the last 24 h are replayed; insulin sensitivity stays at "
+                               "today's synced value. Educational decision support, not a dosing calculator."}
+
+    def replay_fidelity(self, clock: float) -> dict | None:
+        """How well the twin reproduces the last 24 h when it replays them open-loop from the state it
+        had 24 h ago with the logged meals, doses and activity: the trust check for the simulator."""
+        b = self.bin_at(clock)
+        minute = b * STEP + 2
+        if minute < 2 * 1440:
+            return None
+        tw = self.twin
+        meals, doses, mets = tw.template_day(minute)
+        sim = tw.therapy_day(minute - 1440, [{"doses": doses, "therapy": set(tw.record.therapy)}], meals=meals, mets=mets)[0][::STEP]
+        obs = self.cgm[b - DAY_BINS : b]
+        ok = np.isfinite(obs)
+        if ok.sum() < 48:  # at least 12 h of readings, also for 15-minute sensors
+            return None
+        s, o = sim[: len(obs)][ok], obs[ok]
+        tir = lambda x: round(float(np.mean((x >= 70) & (x <= 180)) * 100), 1)  # noqa: E731
+        out = {"mean_twin": round(float(s.mean())), "mean_cgm": round(float(o.mean())), "tir_twin": tir(s), "tir_cgm": tir(o),
+               "below_70_twin_min": int((s < 70).sum() * STEP), "below_70_cgm_min": int((o < 70).sum() * STEP),
+               "mae": round(float(np.abs(s - o).mean()), 1)}
+        return out | {"rating": fidelity_rating(out)}
 
     def meal_ranking(self, region_first: bool = True) -> list[dict]:
         """Personal glycaemic response of this twin to common Indian meals (from fasting set-point)."""
@@ -301,11 +431,8 @@ class Store:
         return DEMO_DAYS * 1440
 
     def evidence(self) -> dict:
-        out = {}
-        for name in ("synthetic", "real"):
-            f = self.results_dir / name / "results.json"
-            if f.exists():
-                out[name] = json.load(open(f))
-        if (self.results_dir / "cgm_light.json").exists():
-            out["cgm_light"] = json.load(open(self.results_dir / "cgm_light.json"))
-        return out
+        files = {"synthetic": "synthetic/results.json", "real": "real/results.json", "cgm_light": "cgm_light.json", "extra": "synthetic/extra.json",
+                 "fidelity": "fidelity.json", "robustness": "robustness.json", "bench": "bench.json"}
+        # results files may hold NaN (e.g. no lead time when nothing was caught); JSON has no NaN, so send null
+        return {k: json.load(open(self.results_dir / f), parse_constant=lambda c: None)
+                for k, f in files.items() if (self.results_dir / f).exists()}

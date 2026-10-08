@@ -29,6 +29,9 @@ def _load(source: str) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     if source == "cgmacros":
         from twin.ingest import cgmacros
         st, se, ev = cgmacros.load()
+    elif source == "bigideas":
+        from twin.ingest import bigideas
+        st, se, ev = bigideas.load()
     else:
         from twin.ingest import shanghai
         st, se, ev = shanghai.load()

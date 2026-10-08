@@ -34,6 +34,23 @@ def _features(tw: DigitalTwin, anchors_min: np.ndarray, cgm_now: np.ndarray) -> 
     return phys.astype(np.float32), ukf.astype(np.float32)
 
 
+def twin_features(arr: PatientArrays, static_row: dict, series: pd.DataFrame, events: pd.DataFrame,
+                  calib_minutes: int) -> tuple[np.ndarray, np.ndarray, int]:
+    """Physics and UKF features from a twin personalised on the first `calib_minutes` of the record
+    (0 = the EHR-prior twin), without modifying `arr`. Returns (physics, ukf, calibration bins)."""
+    rec = PatientRecord.from_frames(static_row, series, events)
+    offset = int((arr.start - rec.start).total_seconds() // 60)
+    tw = DigitalTwin.from_record(rec)
+    if calib_minutes > 0:
+        try:
+            tw.personalize(calib_minutes)
+        except ValueError:  # too little calibration data: stay on the EHR prior
+            pass
+    tw.sync()
+    phys, ukf = _features(tw, arr.anchors * 5 + 2 + offset, arr.cgm[arr.anchors])
+    return phys, ukf, max((calib_minutes - offset) // 5, 0)
+
+
 def attach_physics(arr: PatientArrays, static_row: dict, series: pd.DataFrame, events: pd.DataFrame,
                    calib_minutes: int) -> PatientArrays:
     rec = PatientRecord.from_frames(static_row, series, events)

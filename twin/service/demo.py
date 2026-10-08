@@ -1,8 +1,9 @@
 """Build the demo cohort shown in the doctor dashboard.
 
 Each virtual patient becomes one JSON bundle with: EHR, personalised twin parameters, wearable
-streams, out-of-sample TwinNet forecasts (with conformal intervals) and spike/hypo
-probabilities at every anchor, plus plain-language reasons from LightGBM SHAP values.
+streams, out-of-sample MadhuTwin forecasts (personalised TwinNet averaged with LightGBM, with
+conformal intervals) and spike/hypo probabilities at every anchor (recalibrated for each real-data
+site), plus plain-language reasons from LightGBM SHAP values.
 
 Synthetic patients are drawn from the held-out *test* split and selected for clinically
 distinct stories; real-world recordings are excluded from production-model training.
@@ -17,13 +18,14 @@ import numpy as np
 import pandas as pd
 import torch
 
-from twin.data.windows import G_SCALE, H, PatientArrays
+from twin.data.windows import G_SCALE, HORIZONS, H, PatientArrays
 from twin.ehr.codes import CONDITIONS, DRUGS, LABS
 from twin.ehr.fhir import minimal_bundle, patient_bundle
 from twin.ehr.population import Profile
+from twin.eval.clinical import platt_apply
 from twin.models.gbm import GBMForecaster
 from twin.models.tabular import features
-from twin.models.twinnet import TwinNet, TwinNetConfig, Windows, predict
+from twin.models.twinnet import TwinNet, TwinNetConfig, Windows, personalise, predict
 from twin.paths import ARTIFACTS, PROCESSED, SYNTHETIC
 
 from . import DEMO_REAL_HOLDOUT
@@ -148,13 +150,35 @@ RECORD_STATIC = ("patient_id", "status", "age", "sex", "weight_kg", "fpg_mgdl", 
                  "on_metformin", "on_sulfonylurea", "on_dpp4", "on_sglt2", "on_insulin")
 
 
+def _gbm_path(q50: np.ndarray, now: np.ndarray) -> np.ndarray:
+    """LightGBM medians at 30/60/90/120 min, linearly interpolated to every 5-min step from now."""
+    assert HORIZONS == (6, 12, 18, 24) and H == 24
+    knots = np.column_stack([now, q50])
+    steps = np.arange(1, H + 1)
+    j = np.minimum((steps - 1) // 6, 3)
+    return knots[:, j] + (steps - 6 * j) / 6 * (knots[:, j + 1] - knots[:, j])
+
+
 def build_bundle(a: PatientArrays, story: str, display: dict, ehr: dict, series: pd.DataFrame, events: pd.DataFrame,
-                 net: TwinNet, q_conf: np.ndarray, gbm: GBMForecaster, static_row: dict) -> dict:
+                 net: TwinNet, q_conf: np.ndarray, gbm: GBMForecaster, static_row: dict, recal: dict | None = None) -> dict:
     w = Windows([a])
-    pr = predict(net, w)
+    # the twin learns you: fine-tune on this patient's own calibration days, then forecast (no
+    # labels from the replayed evaluation period are used)
+    pr = predict(personalise(net, a), w)
     q = w.now[:, None, None] + pr["q"] * G_SCALE
     lo, med, hi = q[..., 0] - q_conf[None, :], q[..., 1], q[..., 2] + q_conf[None, :]
     X, names = features(a)
+    # MadhuTwin ensemble: average the median and the event risks with LightGBM; the cone keeps
+    # TwinNet's conformal width around the ensemble median
+    gp = gbm.predict(X, a.cgm[a.anchors])
+    path = _gbm_path(gp["quantiles"][:, :, 1], w.now)
+    shift = np.where(np.isfinite(path), (path - med) / 2, 0.0)
+    lo, med, hi = lo + shift, med + shift, hi + shift
+    for ev in ("spike", "hypo"):
+        if ev in gp:
+            pr[ev] = np.where(np.isfinite(gp[ev]), (pr[ev] + gp[ev]) / 2, pr[ev])
+        if recal and ev in recal:  # the site's own recalibration map (see scripts/exp_real.py)
+            pr[ev] = platt_apply(pr[ev], recal[ev])
     vals = [dict(zip(names, row, strict=True)) for row in X]
     why = {}
     for ev in ("spike", "hypo"):
@@ -228,6 +252,8 @@ def build_demo() -> list[dict]:
     has_final = (models / "twinnet_final.pt").exists() and (models / "gbm_final.pkl").exists()
     net_real, q_real, gbm_real = load("twinnet_final.pt", "gbm_final.pkl") if has_final else (net_syn, q_syn, gbm_syn)
     print(f"demo models: synthetic patients -> twinnet_synthetic; real recordings -> {'twinnet_final' if has_final else 'twinnet_synthetic'}")
+    recal_file = models / "recalibration.json"
+    recal = json.load(open(recal_file)) if recal_file.exists() else {}
 
     index = []
     syn = pickle.load(open(ARTIFACTS / "datasets" / "synthetic.pkl", "rb"))
@@ -249,7 +275,7 @@ def build_demo() -> list[dict]:
                 "region": pr["region"], "label": "Synthetic patient (India-calibrated)"}
         b = build_bundle(by_id[pid], story, disp, _ehr_synthetic(pr, static.loc[pid], labhist[labhist.patient_id == pid]),
                          series[series.patient_id == pid], events_all[events_all.patient_id == pid], net_syn, q_syn, gbm_syn,
-                         static.loc[pid].to_dict() | {"patient_id": pid})
+                         static.loc[pid].to_dict() | {"patient_id": pid}, recal.get("synthetic"))
         json.dump(b, open(DEMO / f"{pid}.json", "w"), separators=(",", ":"))
         fb = patient_bundle(Profile.from_dict(pr), static.loc[pid], labhist, series[series.patient_id == pid])
         json.dump(fb, open(DEMO / f"{pid}.fhir.json", "w"), separators=(",", ":"))
@@ -269,7 +295,7 @@ def build_demo() -> list[dict]:
                     "language": None, "label": label}
             story = "Real-world recording (held out from training)"
             b = build_bundle(arrs[pid], story, disp, _ehr_real(row), se[se.patient_id == pid], ev[ev.patient_id == pid], net_real, q_real, gbm_real,
-                             row.to_dict() | {"patient_id": pid})
+                             row.to_dict() | {"patient_id": pid}, recal.get(name))
             json.dump(b, open(DEMO / f"{pid}.json", "w"), separators=(",", ":"))
             fb = minimal_bundle(pid, row.to_dict() | {"patient_id": pid}, se[se.patient_id == pid])
             json.dump(fb, open(DEMO / f"{pid}.fhir.json", "w"), separators=(",", ":"))

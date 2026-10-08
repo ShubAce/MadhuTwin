@@ -1,16 +1,22 @@
-[01:59:58] CGMacros 5-fold cross-validation
-[01:59:58]   CGMacros fold 1/5: 36 train / 9 test recordings
-[02:04:24]   CGMacros fold 2/5: 36 train / 9 test recordings
-[02:09:13]   CGMacros fold 3/5: 36 train / 9 test recordings
-[02:13:41]   CGMacros fold 4/5: 36 train / 9 test recordings
-[02:17:59]   CGMacros fold 5/5: 36 train / 9 test recordings
-[02:22:40] ShanghaiT2DM 5-fold cross-validation (external population, no wearables)
-[02:22:40]   Shanghai fold 1/5: 86 train / 23 test recordings
-[02:26:35]   Shanghai fold 2/5: 87 train / 22 test recordings
-[02:30:28]   Shanghai fold 3/5: 88 train / 21 test recordings
-[02:34:21]   Shanghai fold 4/5: 88 train / 21 test recordings
-[02:38:12]   Shanghai fold 5/5: 87 train / 22 test recordings
-[02:42:36] training production models
+[06:18:40] CGMacros 5-fold cross-validation
+[06:18:40]   CGMacros fold 1/5: 36 train / 9 test recordings
+[06:23:39]   CGMacros fold 2/5: 36 train / 9 test recordings
+[06:29:13]   CGMacros fold 3/5: 36 train / 9 test recordings
+[06:34:28]   CGMacros fold 4/5: 36 train / 9 test recordings
+[06:40:24]   CGMacros fold 5/5: 36 train / 9 test recordings
+[06:47:21] ShanghaiT2DM 5-fold cross-validation (external population, no wearables)
+[06:47:21]   Shanghai fold 1/5: 86 train / 23 test recordings
+[06:52:21]   Shanghai fold 2/5: 87 train / 22 test recordings
+[06:56:02]   Shanghai fold 3/5: 88 train / 21 test recordings
+[06:59:45]   Shanghai fold 4/5: 88 train / 21 test recordings
+[07:03:25]   Shanghai fold 5/5: 87 train / 22 test recordings
+[07:07:58] BIG IDEAs 5-fold cross-validation (real heart rate and HRV from an Empatica wristband)
+[07:07:58]   BIG IDEAs fold 1/5: 12 train / 4 test recordings
+[07:08:28]   BIG IDEAs fold 2/5: 13 train / 3 test recordings
+[07:09:02]   BIG IDEAs fold 3/5: 13 train / 3 test recordings
+[07:09:36]   BIG IDEAs fold 4/5: 13 train / 3 test recordings
+[07:10:10]   BIG IDEAs fold 5/5: 13 train / 3 test recordings
+[07:10:52] training production models
 
 CGMacros: 45 recordings, 21474 evaluation anchors
   Persistence                    RMSE 30/60/120: 19.6 / 28.3 / 37.8   A+B@60 99.1%
@@ -20,20 +26,26 @@ CGMacros: 45 recordings, 21474 evaluation anchors
   LightGBM (real-trained)        RMSE 30/60/120: 15.9 / 23.2 / 29.1   A+B@60 99.6%
   LightGBM (synthetic-only)      RMSE 30/60/120: 20.0 / 26.7 / 32.1   A+B@60 99.6%
   TwinNet zero-shot (synthetic)  RMSE 30/60/120: 20.0 / 26.4 / 33.1   A+B@60 99.4%
-  TwinNet real-only              RMSE 30/60/120: 17.0 / 23.5 / 28.8   A+B@60 99.5%
+  TwinNet real-only              RMSE 30/60/120: 17.1 / 23.7 / 28.9   A+B@60 99.5%
   TwinNet sim-to-real            RMSE 30/60/120: 17.1 / 23.5 / 28.8   A+B@60 99.4%
+  TwinNet personalised           RMSE 30/60/120: 17.1 / 23.1 / 28.1   A+B@60 99.4%
+  MadhuTwin ensemble             RMSE 30/60/120: 15.9 / 22.4 / 27.6   A+B@60 99.5%
   spike Linear trend                   AUROC 0.690 AUPRC 0.276
   spike Twin (personalised)            AUROC 0.731 AUPRC 0.350
   spike LightGBM (real-trained)        AUROC 0.797 AUPRC 0.455  detected 60% lead 50 min FA/day 0.46
   spike TwinNet zero-shot (synthetic)  AUROC 0.735 AUPRC 0.361
-  spike TwinNet real-only              AUROC 0.759 AUPRC 0.377
+  spike TwinNet real-only              AUROC 0.764 AUPRC 0.374
   spike TwinNet sim-to-real            AUROC 0.832 AUPRC 0.476  detected 85% lead 92 min FA/day 1.26
+  spike TwinNet personalised           AUROC 0.819 AUPRC 0.453  detected 78% lead 75 min FA/day 1.21
+  spike MadhuTwin ensemble             AUROC 0.822 AUPRC 0.493  detected 73% lead 65 min FA/day 0.73
   hypo  Linear trend                   AUROC 0.752 AUPRC 0.030
   hypo  Twin (personalised)            AUROC 0.653 AUPRC 0.030
   hypo  LightGBM (real-trained)        AUROC 0.732 AUPRC 0.013  detected 18% lead 28 min FA/day 0.23
   hypo  TwinNet zero-shot (synthetic)  AUROC 0.644 AUPRC 0.008
-  hypo  TwinNet real-only              AUROC 0.794 AUPRC 0.030
+  hypo  TwinNet real-only              AUROC 0.799 AUPRC 0.027
   hypo  TwinNet sim-to-real            AUROC 0.762 AUPRC 0.079  detected 27% lead 110 min FA/day 0.09
+  hypo  TwinNet personalised           AUROC 0.868 AUPRC 0.199  detected 64% lead 50 min FA/day 0.09
+  hypo  MadhuTwin ensemble             AUROC 0.847 AUPRC 0.033  detected 36% lead 95 min FA/day 0.04
 
 Shanghai: 109 recordings, 55303 evaluation anchors
   Persistence                    RMSE 30/60/120: 16.5 / 27.5 / 40.9   A+B@60 98.8%
@@ -44,14 +56,46 @@ Shanghai: 109 recordings, 55303 evaluation anchors
   LightGBM (synthetic-only)      RMSE 30/60/120: 22.1 / 35.9 / 49.7   A+B@60 96.9%
   TwinNet zero-shot (synthetic)  RMSE 30/60/120: 22.3 / 32.9 / 48.9   A+B@60 97.3%
   TwinNet sim-to-real            RMSE 30/60/120: 13.5 / 22.3 / 31.6   A+B@60 98.9%
+  TwinNet personalised           RMSE 30/60/120: 13.2 / 21.7 / 30.4   A+B@60 99.0%
+  MadhuTwin ensemble             RMSE 30/60/120: 12.2 / 21.1 / 30.1   A+B@60 98.9%
   spike Linear trend                   AUROC 0.760 AUPRC 0.348
   spike Twin (personalised)            AUROC 0.744 AUPRC 0.306
   spike LightGBM (real-trained)        AUROC 0.867 AUPRC 0.540  detected 84% lead 50 min FA/day 0.75
   spike TwinNet zero-shot (synthetic)  AUROC 0.746 AUPRC 0.319
   spike TwinNet sim-to-real            AUROC 0.870 AUPRC 0.523  detected 93% lead 85 min FA/day 1.61
+  spike TwinNet personalised           AUROC 0.888 AUPRC 0.558  detected 92% lead 85 min FA/day 1.38
+  spike MadhuTwin ensemble             AUROC 0.893 AUPRC 0.586  detected 90% lead 70 min FA/day 1.01
   hypo  Linear trend                   AUROC 0.840 AUPRC 0.183
   hypo  Twin (personalised)            AUROC 0.779 AUPRC 0.110
   hypo  LightGBM (real-trained)        AUROC 0.866 AUPRC 0.220  detected 16% lead 52 min FA/day 0.08
   hypo  TwinNet zero-shot (synthetic)  AUROC 0.810 AUPRC 0.114
   hypo  TwinNet sim-to-real            AUROC 0.860 AUPRC 0.184  detected 54% lead 50 min FA/day 0.47
-[02:48:15] done
+  hypo  TwinNet personalised           AUROC 0.874 AUPRC 0.264  detected 57% lead 62 min FA/day 0.29
+  hypo  MadhuTwin ensemble             AUROC 0.899 AUPRC 0.278  detected 30% lead 15 min FA/day 0.09
+
+BIG IDEAs: 16 recordings, 5985 evaluation anchors
+  Persistence                    RMSE 30/60/120: 16.6 / 23.0 / 28.2   A+B@60 99.5%
+  Linear trend                   RMSE 30/60/120: 23.6 / 35.8 / 40.5   A+B@60 98.4%
+  Twin (EHR prior)               RMSE 30/60/120: 22.8 / 24.7 / 24.0   A+B@60 99.2%
+  Twin (personalised)            RMSE 30/60/120: 20.7 / 22.7 / 22.8   A+B@60 99.2%
+  LightGBM (real-trained)        RMSE 30/60/120: 13.8 / 19.9 / 23.0   A+B@60 99.4%
+  LightGBM (synthetic-only)      RMSE 30/60/120: 17.2 / 21.1 / 23.5   A+B@60 99.2%
+  TwinNet zero-shot (synthetic)  RMSE 30/60/120: 16.9 / 20.7 / 23.3   A+B@60 99.2%
+  TwinNet sim-to-real            RMSE 30/60/120: 15.3 / 19.6 / 22.5   A+B@60 99.4%
+  TwinNet personalised           RMSE 30/60/120: 15.1 / 19.4 / 22.3   A+B@60 99.3%
+  MadhuTwin ensemble             RMSE 30/60/120: 13.9 / 19.0 / 21.8   A+B@60 99.3%
+  spike Linear trend                   AUROC 0.667 AUPRC 0.142
+  spike Twin (personalised)            AUROC 0.700 AUPRC 0.113
+  spike LightGBM (real-trained)        AUROC 0.661 AUPRC 0.105  detected 19% lead 20 min FA/day 0.26
+  spike TwinNet zero-shot (synthetic)  AUROC 0.668 AUPRC 0.089
+  spike TwinNet sim-to-real            AUROC 0.688 AUPRC 0.104  detected 67% lead 30 min FA/day 1.21
+  spike TwinNet personalised           AUROC 0.774 AUPRC 0.131  detected 61% lead 25 min FA/day 1.03
+  spike MadhuTwin ensemble             AUROC 0.765 AUPRC 0.124  detected 31% lead 10 min FA/day 0.33
+  hypo  Linear trend                   AUROC 0.727 AUPRC 0.084
+  hypo  Twin (personalised)            AUROC 0.894 AUPRC 0.196
+  hypo  LightGBM (real-trained)        AUROC 0.715 AUPRC 0.029  detected 0% lead nan min FA/day 0.17
+  hypo  TwinNet zero-shot (synthetic)  AUROC 0.791 AUPRC 0.106
+  hypo  TwinNet sim-to-real            AUROC 0.834 AUPRC 0.103  detected 38% lead 80 min FA/day 0.32
+  hypo  TwinNet personalised           AUROC 0.921 AUPRC 0.156  detected 69% lead 70 min FA/day 0.30
+  hypo  MadhuTwin ensemble             AUROC 0.901 AUPRC 0.146  detected 46% lead 110 min FA/day 0.24
+[07:16:53] done

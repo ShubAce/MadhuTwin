@@ -27,6 +27,7 @@ from twin.eval.experiments import (
     physics_event_score,
     slope_now,
     split_patients,
+    strict_json,
 )
 from twin.eval.metrics import event_scores, rmse
 from twin.models.gbm import GBMForecaster
@@ -220,9 +221,9 @@ def main() -> None:
                                "lo": lo[m].tolist(), "hi": hi[m].tolist(), "twin": preds["Twin (personalised)"][m].tolist()}
     clarke_pairs = {"ref": y_te[:, 11].tolist(), "TwinNet hybrid": med[:, 11].tolist(), "Persistence": preds["Persistence"][:, 11].tolist()}
 
-    json.dump({"forecast": f_rows, "events": results_events, "ablation_gbm": abl, "ablation_twinnet": tn_abl,
+    json.dump(strict_json({"forecast": f_rows, "events": results_events, "ablation_gbm": abl, "ablation_twinnet": tn_abl,
                "illness_detection": ill_res, "gate_by_horizon": gate, "twinnet_history": hist,
-               "n_test_patients": len(te), "n_test_anchors": int(len(w_te))}, open(OUT / "results.json", "w"), indent=1, default=float)
+               "n_test_patients": len(te), "n_test_anchors": int(len(w_te))}), open(OUT / "results.json", "w"), indent=1, default=float)
     json.dump(sample, open(OUT / "sample_trajectories.json", "w"))
     np.savez_compressed(OUT / "clarke_60.npz", **{k: np.asarray(v, dtype=np.float32) for k, v in clarke_pairs.items()})
     log("done")

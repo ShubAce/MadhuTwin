@@ -130,6 +130,26 @@ def whatif(pid: str, body: WhatIf):
                      illness=body.illness, horizon=min(max(body.horizon, 60), 480))
 
 
+@app.get("/api/patients/{pid}/therapy")
+def therapy_plan(pid: str, clock: float | None = None):
+    return _patient(pid).therapy_plan(store.default_clock if clock is None else clock)
+
+
+class Therapy(BaseModel):
+    clock: float | None = None
+    doses: list[dict] | None = Field(default=None, examples=[[{"drug": "insulin_premix_30_70", "offset_min": 33, "amount": 12}]])
+    dpp4: bool | None = None
+    sglt2: bool | None = None
+    pattern: str = Field(default="yesterday", pattern="^(yesterday|skip_lunch|late_dinner|big_dinner)$")
+
+
+@app.post("/api/patients/{pid}/therapy")
+def therapy_whatif(pid: str, body: Therapy):
+    p = _patient(pid)
+    c = store.default_clock if body.clock is None else body.clock
+    return p.therapy_whatif(c, doses=body.doses, dpp4=body.dpp4, sglt2=body.sglt2, pattern=body.pattern)
+
+
 class Ask(BaseModel):
     question: str
     clock: float | None = None
