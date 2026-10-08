@@ -10,29 +10,46 @@ MadhuTwin builds a living virtual replica of a person with type 2 diabetes. It f
 
 <!-- /RESULTS_HEADLINE -->
 
-|                                       |                                                                                                                                          |
-| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Video (≥ 20 min)                     | **TODO(team): unlisted YouTube link**                                                                                              |
-| Live demo                             | **TODO(team): live link** (free on Render: [`deploy/render.md`](deploy/render.md)); locally `docker compose up` |
-| Architecture diagram                  | [`docs/architecture.pdf`](docs/architecture.pdf) · [`docs/architecture.pptx`](docs/architecture.pptx)                                 |
-| Presentation                          | [`docs/presentation.pdf`](docs/presentation.pdf) · [`docs/presentation.pptx`](docs/presentation.pptx)                                 |
-| Technical report · Evaluation report | [`docs/technical_report.pdf`](docs/technical_report.pdf) · [`docs/evaluation_report.md`](docs/evaluation_report.md)                   |
-| Model card · Privacy (DPDP)          | [`docs/model_card.md`](docs/model_card.md) · [`docs/dpdp_compliance.md`](docs/dpdp_compliance.md)                                     |
+|                                           |                                                                                                                          |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Demo video (15–20 min, unlisted YouTube) | **TODO(team): unlisted YouTube link**                                                                              |
+| Live demo                                 | **TODO(team): live link** (free on Render: [`deploy/render.md`](deploy/render.md)); locally `docker compose up` |
+| Architecture diagram                      | [`docs/architecture.pdf`](docs/architecture.pdf) · [`docs/architecture.pptx`](docs/architecture.pptx)                 |
+| Presentation                              | [`docs/presentation.pdf`](docs/presentation.pdf) · [`docs/presentation.pptx`](docs/presentation.pptx)                 |
+| Technical report · Evaluation report     | [`docs/technical_report.pdf`](docs/technical_report.pdf) · [`docs/evaluation_report.md`](docs/evaluation_report.md)   |
+| Model card · Privacy (DPDP)              | [`docs/model_card.md`](docs/model_card.md) · [`docs/dpdp_compliance.md`](docs/dpdp_compliance.md)                     |
 
 ![The doctor's view of a virtual patient: 24-hour CGM, 2-hour forecast cone, alert with reasons, twin insights](docs/screenshots/patient_crop.png)
 
 ![Architecture](docs/figures/architecture.png)
 
+## Submission checklist
+
+| Required item                             | Where                                                                                                                                       |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Team details                              | [1. Team details](<Shubham suman>)                                                                                                           |
+| College / incubator information           | [1. Team details](#1-team-details)                                                                                                           |
+| Project title                             | [2. Project title](#2-project-title)                                                                                                         |
+| Problem statement                         | [3. Problem statement and healthcare use case](#3-problem-statement-and-healthcare-use-case)                                                 |
+| Healthcare use case                       | [Healthcare use case](#healthcare-use-case)                                                                                                  |
+| Technical stack                           | [6. Technical stack, AI/ML models and frameworks](#6-technical-stack-aiml-models-and-frameworks)                                             |
+| AI/ML model and framework details         | [AI/ML models](#aiml-models), [4. What makes it a digital twin](#4-what-makes-it-a-digital-twin), [`docs/model_card.md`](docs/model_card.md) |
+| Demo video (15–20 min, unlisted YouTube) | Link in the table above                                                                                                                     |
+| Open-source licence                       | [10. Open-source licence](#10-open-source-licence) (Apache-2.0, [`LICENSE`](LICENSE))                                                       |
+| Architecture diagram (PDF and PPT)        | [`docs/architecture.pdf`](docs/architecture.pdf) · [`docs/architecture.pptx`](docs/architecture.pptx)                                    |
+| Presentation (PDF and PPT)                | [`docs/presentation.pdf`](docs/presentation.pdf) · [`docs/presentation.pptx`](docs/presentation.pptx)                                    |
+| All files and links publicly accessible   | Everything is in this public repository; the video is an unlisted YouTube link                                                              |
+
 ---
 
 ## 1. Team details
 
-|                     |                                                                 |
-| ------------------- | --------------------------------------------------------------- |
-| Team name           | **TODO(team)**                                            |
-| College / incubator | **TODO(team)**                                            |
-| Team leader         | **TODO(team)**: name, email, phone (submission form only) |
-| Members             | **TODO(team)**: name, programme, role                     |
+|                     |                                                       |
+| ------------------- | ----------------------------------------------------- |
+| Team name           | Praise                                                |
+| College / incubator | IIT Kharagpur                                         |
+| Team leader         | Shubham suman, Shubhamsuman2005@gmail.com, 7318606818 |
+| Members             | **TODO(team)**: name, programme, role           |
 
 ## 2. Project title
 
@@ -42,9 +59,13 @@ MadhuTwin builds a living virtual replica of a person with type 2 diabetes. It f
 
 ## 3. Problem statement and healthcare use case
 
+### Problem statement
+
 India has about **101 million people with diabetes and 136 million with prediabetes** (ICMR-INDIAB, *Lancet Diabetes & Endocrinology* 2023). Care is reactive: a quarterly HbA1c shows what already happened, while day-to-day risk sits unseen between visits. That risk includes post-meal spikes from high-carbohydrate meals, night-time lows from sulfonylureas or premixed insulin, and loss of control during illness. CGMs and smartwatches now produce the data to see it, but a clinician cannot watch hundreds of streams.
 
-**Use case: remote monitoring by a diabetes care team.** For every patient, MadhuTwin:
+### Healthcare use case
+
+**Remote monitoring by a diabetes care team.** For every patient, MadhuTwin:
 
 1. **Predicts** glucose for the next 5–120 minutes with an 80% interval, and the probability of a sustained excursion above 180 mg/dL or below 70 mg/dL within 2 hours.
 2. **Prioritises** the panel by risk, raising alerts with plain-language reasons and each patient's own alert track record (how many past alerts came true, and how early). Example: *"62 g carbohydrate still being absorbed · Rising 18 mg/dL over 30 min · Insulin sensitivity 34% below personal baseline"*.
@@ -80,13 +101,26 @@ A predictive model alone is not a twin. MadhuTwin implements the three defining 
 
 ## 6. Technical stack, AI/ML models and frameworks
 
+### AI/ML models
+
+| Model                           | Type                                                                                                                                                        | Role                                                               |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Personalised physiological twin | Extended Bergman minimal model (ODEs), MAP-fitted per patient with EHR priors                                                                               | MODEL: the patient's glucose–insulin physiology                   |
+| Synchronisation                 | Unscented Kalman Filter (7 states incl. drifting insulin sensitivity)                                                                                       | SYNC: hidden state from every CGM reading; illness detection       |
+| TwinNet                         | PyTorch deep network: causal dilated temporal convolution, FiLM conditioning on the EHR, physics-gated residual, quantile and event heads, modality dropout | 5–120 min glucose forecast with 80% interval; spike and hypo risk |
+| LightGBM fusion                 | Gradient-boosted quantile regressors and event classifiers with TreeSHAP                                                                                    | Second forecaster; plain-language reasons for every alert          |
+| MadhuTwin ensemble              | TwinNet fine-tuned per patient, averaged with LightGBM; Platt recalibration; conformal intervals                                                            | What the dashboard shows                                           |
+| Therapy simulator               | 24-h open-loop simulation on the synced twin, with a replay trust check                                                                                     | Try dose and drug changes before prescribing                       |
+
+### Technical stack
+
 | Layer               | Stack                                                                                                                                                                                                                                                 |
 | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Physiology and sync | Python 3.12, NumPy, SciPy (Powell MAP fit), Numba-compiled ODE integrator (verified equal to the NumPy reference; 12× faster end-to-end per patient), custom vectorised UKF                                                                          |
 | ML                  | PyTorch (TwinNet: causal dilated TCN + FiLM EHR conditioning + physics-gated residual + quantile and event heads + modality dropout), conformalised quantile intervals; LightGBM (quantile regressors, event classifiers) + TreeSHAP for explanations |
 | Health standards    | HL7 FHIR R4 (validated with`fhir.resources`), SNOMED CT, LOINC, UCUM, WHO ATC, dbSNP                                                                                                                                                                |
 | Serving             | FastAPI, WebSocket live replay, purpose-tagged audit trail; optional grounded LLM assistant (Claude via the Anthropic SDK, tool use over the twin; off by default)                                                                                    |
-| Dashboard           | React 18 + TypeScript + Vite, Tailwind CSS 4, Apache ECharts (palette validated for colour-vision deficiency; light and dark themes)                                                                                                                  |
+| Dashboard           | React 18 + TypeScript + Vite, Tailwind CSS 4, Apache ECharts (palette validated for colour-vision deficiency; light and dark themes); three.js + React Three Fiber for the 3D virtual patient                                                         |
 | Ops                 | Docker (multi-stage), docker-compose, GitHub Actions CI (pytest + ruff + dashboard build)                                                                                                                                                             |
 
 **Evaluation protocol.** Patient-level splits throughout. Synthetic: 70/10/20 by patient, scored only on days 8–14 after personalisation. Real data: 5-fold CV grouped by patient. Metrics: RMSE / MAE / MARD per horizon, Clarke Error Grid, 80% interval coverage, AUROC / AUPRC with patient-bootstrap CIs, excursions caught, lead time and false alerts per day, and the share of excursions caught with at most one false alert per patient-day (alert thresholds chosen on training folds only). Clinical utility: calibration, decision curves and a subgroup audit (sex, age, BMI by Asian cut-offs, status, therapy, region). Stream-by-stream ablations and a learning curve of error against days of personal data are included.
@@ -233,7 +267,7 @@ tests/             physiology, pipeline, API tests
 - The 24-hour therapy simulator rests on the mechanistic twin: it tracks daily mean glucose and time in range but rarely short lows, does not model metformin (which acts on the fasting set-point over weeks), and has not yet been validated against real dose changes.
 - This is research software, not a medical device. See the model card for intended use and the regulatory path (CDSCO SaMD).
 
-## 10. Licence
+## 10. Open-source licence
 
 - **Code:** Apache License 2.0, see [`LICENSE`](LICENSE).
 - **3D virtual patient:** body mesh from MakeHuman (CC0); organ meshes from BodyParts3D (© 2008 Life Science Integrated Database Center, CC BY-SA 2.1 JP), see [`NOTICE.md`](NOTICE.md).

@@ -7,11 +7,11 @@ Two presenters: **P1** (clinical story and demo) and **P2** (technical). Slide n
 - Run the app (`docker compose up`, or API + `npm run dev`) and open the dashboard at 1440 px width.
 - Set the demo clock to **Day 1 · 06:30**.
 - Record the screen at 1080p; keep slides and dashboard in the same browser profile.
-- **Timing:** the narration is about 14 minutes at a natural pace and the demo is 7–8 minutes. The brief requires at least 20 minutes, so time a rehearsal. If it runs short, extend the demo: replay a full day at 15 min/s on the panel, open the Wearables and Clinical record tabs, try two more what-ifs (jowar roti instead of rice; a 4.5 h night), and walk through the Model evidence page.
+- **Timing:** the submission requires a **15–20 minute** video; this plan runs about 18 minutes (narration about 14 minutes at a natural pace, the rest is demo clicking). Rehearse with a timer. If it runs over 20 minutes, shorten the Results section first (drop the CGM-light paragraph, then the robustness paragraph); if under 15, replay a full day on the panel at 15 min/s and open the Model evidence page.
 
 ---
 
-## 0:00–1:30 · Hook (slide 1–2) · P1
+## 0:00–1:00 · Hook (slide 1–2) · P1
 
 "Meet {{hypo_first}}, one of the virtual patients in our demo. {{hypo_pronoun_cap}} is {{hypo_age}}, lives in {{hypo_city}}, has type 2 diabetes and takes premixed insulin twice a day. On a busy morning, insulin taken and breakfast delayed, glucose can slide below 70 within two hours, and today nobody would know until {{hypo_pronoun}} felt shaky or confused.
 
@@ -19,7 +19,7 @@ India has {{india_dm}} adults with diabetes and {{india_pre}} more with prediabe
 
 We built MadhuTwin to change that."
 
-## 1:30–3:30 · What a digital twin is (slide 3) · P2
+## 1:00–2:00 · What a digital twin is (slide 3) · P2
 
 "MadhuTwin creates a living virtual replica of each patient. Three properties make it a twin and not just a prediction model.
 
@@ -31,13 +31,13 @@ We built MadhuTwin to change that."
 
 On top sits TwinNet, a neural network that fuses both data streams with the twin's own forecast and learns how much to trust physics at each horizon."
 
-## 3:30–5:00 · Architecture (slide 4) · P2
+## 2:00–2:50 · Architecture (slide 4) · P2
 
 "On the left, the two streams the challenge asks for. The static EHR: demographics, diagnoses coded in SNOMED CT, labs in LOINC including HbA1c, fasting glucose and insulin, two years of history, medications with timing, family history and genetic markers, the TCF7L2 risk allele and a polygenic score. The dynamic stream: CGM, heart rate, HRV, steps, sleep stages, and logged meals and doses.
 
 In the middle, the twin core: ingest into one five-minute schema, then model, sync, simulate, then TwinNet. On the right, the clinician dashboard and a FHIR export that carries the forecast as a RiskAssessment to any hospital system. Governance runs across everything: consent, purpose-tagged audit, de-identified data."
 
-## 5:00–7:00 · Data (slides 5–6) · P2
+## 2:50–4:05 · Data (slides 5–6) · P2
 
 "We followed the sandbox rules strictly: no real Indian patient data. We used four sources.
 
@@ -45,17 +45,17 @@ First, a synthetic India-calibrated cohort of 1,000 patients over 14 days. The E
 
 Second, CGMacros: 45 real people with two CGMs, a Fitbit, logged meals and lab tests. Third, BIG IDEAs: 16 real people with a CGM and a research wristband; from its raw heartbeat intervals we compute heart-rate variability ourselves, so this is our test with real wearable physiology. Fourth, ShanghaiT2DM: 100 patients from a different country, on a rice-based diet, many on insulin, and with no wearables at all. That is our external test."
 
-## 7:00–9:00 · Model (slide 7) · P2
+## 4:05–4:50 · Model (slide 7) · P2
 
 "Each twin is personalised from about a week of data, with priors from the EHR: fasting glucose and insulin give us a starting insulin sensitivity. When we fitted twins to the 45 real CGMacros participants, the twin's error over 1–4 hour windows fell from {{fit_prior}} to {{fit_pers}} mg/dL, {{fit_gain}} percent lower.
 
 More importantly, the fitted parameters mean something. Without ever being told, the twin's insulin sensitivity tracks the lab HOMA-IR and its beta-cell response tracks HbA1c. That is our evidence this is physiology, not curve fitting. We then used these real-world relationships to generate the synthetic Indian cohort."
 
-## 9:00–10:30 · Sync (slide 8) · P2
+## 4:50–5:25 · Sync (slide 8) · P2
 
 "Synchronisation keeps the twin alive. Besides glucose and insulin, our filter estimates a slowly drifting insulin-sensitivity factor. When someone catches a viral fever, insulin stops working as well. On unseen synthetic patients, the synced twin separates ill days from well days with an AUROC of {{ill_auroc}}: average sensitivity drops to {{ill_si_ill}} times baseline on ill days, versus {{ill_si_well}} on well days. The twin notices illness from CGM alone, without a single symptom being typed."
 
-## 10:30–12:30 · TwinNet (slide 9) · P2
+## 5:25–6:30 · TwinNet (slide 9) · P2
 
 "TwinNet takes six hours of 21 channels through a causal temporal convolution; the EHR conditions those features through FiLM, so the same meal is read differently for a lean 30-year-old and an insulin-resistant 60-year-old; and the twin's own forecast enters through a gate.
 
@@ -63,7 +63,7 @@ That gate is interpretable. The network trusts physics {{gate30}} at 30 minutes 
 
 Then the twin learns the individual. Each night, the twin is refitted and TwinNet is fine-tuned for a few seconds on that person's own recent days, and its forecast is averaged with a gradient-boosted model that sees the same inputs. We call the result MadhuTwin."
 
-## 12:30–17:30 · Results (slides 10–17) · P1 and P2
+## 6:30–11:15 · Results (slides 10–17) · P1 and P2
 
 **P2:** "Everything is evaluated on patients the models never saw, and for synthetic patients only on the second week, after personalisation. On {{n_test}} unseen patients, MadhuTwin's 60-minute error is {{tn_rmse60}} mg/dL, against {{pers_rmse60}} for assuming glucose stays flat: {{gain60}} percent lower. {{tn_clarkeAB60}} percent of 60-minute forecasts fall in the clinically acceptable zones of the Clarke Error Grid, and {{tn_cov60}} percent of outcomes land inside the 80 percent band.
 
@@ -81,7 +81,7 @@ One more result for India. CGM sensors are expensive. In our CGM-light mode the 
 
 **P1:** "We are honest about limits. Synthetic patients share the twin's structure, which flatters physics there; real and external data are the primary evidence; our real cohorts are small and not Indian. In CGMacros, the few lows occur mostly in people without diabetes and look like sensor artefacts, so hypoglycaemia performance on real data is not yet established. That is why our next step is a pilot in Indian clinics."
 
-## 17:30–24:30 · Live demo · P1 (P2 explains as needed)
+## 11:15–17:00 · Live demo · P1 (P2 explains as needed)
 
 1. **Panel (Day 1 · 06:30).** "Eleven virtual patients: eight synthetic Indian patients, two real CGMacros participants and one ShanghaiT2DM recording held out from training. The ranking puts current lows first, then predicted lows, patients already high, and predicted new spikes. Status always shows an icon and a label." Press **Replay** at *15 min/s* and let the risks update for a few seconds, then pause.
 2. **{{hypo_name}}, premixed insulin** (`#/patient/{{hypo_id}}?clock={{hypo_clock}}`, {{hypo_time}}). "The twin warns of a low before it happens: {{hypo_prob}} risk in the next two hours, and the 80% cone dips below 70. The reasons list what drives it." Under the risk card, the patient's **alert track record**: "how many of this patient's own past alerts came true, and how early, so the doctor knows how far to trust today's." Show the **3D virtual patient** (slide 20): "a real body shaped from her sex and BMI, with the organs coloured by what her twin has learned: beta-cell response, insulin sensitivity, kidney function"; drag to rotate and hover the liver and the **twin engine** card: personalisation error, today's synced insulin sensitivity, trust in physics.
@@ -94,10 +94,10 @@ One more result for India. CGM sensors are expensive. In our CGM-light mode the 
 9. **Patient companion** (*Patient app view*). Switch **हिन्दी → ಕನ್ನಡ**: "the same nudge in the patient's language."
 10. **Privacy & audit.** Show the consent principles and the audit trail of every access we just made. End on **Model evidence**.
 
-## 24:30–25:30 · Responsible design and roadmap (slides 23–24) · P1
+## 17:00–17:40 · Responsible design and roadmap (slides 23–24) · P1
 
 "MadhuTwin is decision support, not an autopilot. It follows the DPDP Act: consent, purpose limitation, data minimisation and audit. It speaks ABDM's language: FHIR R4 with SNOMED CT and LOINC. Our path: co-design with diabetologists in three months, a pilot with 50 to 100 people in Bengaluru clinics at six months, and a prospective validation with a CDSCO submission at twelve. The goal is measurable: fewer lows, more time in range, and a care team that sees risk before it becomes an emergency."
 
-## 25:30 · Close (slide 25) · P1 and P2
+## 17:40 · Close (slide 25) · P1 and P2
 
 "MadhuTwin: model, sync, simulate, for every person living with diabetes. Thank you."
