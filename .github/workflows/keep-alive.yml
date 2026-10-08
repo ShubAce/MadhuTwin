@@ -1,0 +1,29 @@
+# Keeps the free Render deployment awake by requesting it every 5 minutes (Render sleeps a free
+# service after 15 minutes without traffic). One always-on service uses at most 744 of Render's
+# 750 free instance hours a month.
+#
+# Setup: GitHub repo -> Settings -> Secrets and variables -> Actions -> Variables -> New repository
+# variable: name RENDER_URL, value e.g. https://madhutwin.onrender.com (no trailing slash).
+# The workflow does nothing until RENDER_URL is set.
+#
+# GitHub may start scheduled runs a few minutes late and pauses schedules after 60 days without
+# commits; deploy/render.md describes a free external pinger as a backup.
+name: keep-alive
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    if: ${{ vars.RENDER_URL != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping the health endpoint (allows a cold start of up to 2 minutes)
+        run: |
+          curl --fail --silent --show-error --max-time 120 --retry 3 --retry-delay 10 \
+            "${{ vars.RENDER_URL }}/api/meta" -o /dev/null -w "HTTP %{http_code} in %{time_total}s\n"

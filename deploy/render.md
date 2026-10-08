@@ -41,6 +41,26 @@ Open the link yourself shortly before judges look at it.
 
 Every `git push` to `main` redeploys automatically.
 
+## Keep it awake (optional)
+
+A free service sleeps after 15 minutes without visitors. To keep it awake, something must request
+it more often than that. One always-on service uses at most 744 of Render's 750 free hours a month.
+
+**Option A: GitHub Actions (included).** `.github/workflows/keep-alive.yml` pings the app every
+5 minutes. Turn it on by telling it your app's address:
+GitHub repository → **Settings → Secrets and variables → Actions → Variables → New repository variable**,
+name `RENDER_URL`, value your Render address (for example `https://madhutwin.onrender.com`, no
+trailing slash). Check it under **Actions → keep-alive → Run workflow**.
+Caveats: GitHub can start scheduled runs several minutes late, and it pauses schedules in
+repositories with no commits for 60 days. On a *private* repository every run costs one minute of
+the 2,000 free Actions minutes a month (about 8,600 runs a month would exceed them); public
+repositories are free.
+
+**Option B: a free external pinger (more punctual).** Create a free account at https://cron-job.org,
+add a cron job with URL `https://<your-app>.onrender.com/api/meta`, schedule *every 5 minutes*, and
+save. UptimeRobot (https://uptimerobot.com, free 5-minute HTTP monitor) works the same way and also
+emails you if the site goes down. Using A and B together is fine.
+
 ## Notes
 
 - **No API key:** "Ask the twin" uses the built-in offline engine. Do not add `ANTHROPIC_API_KEY`
