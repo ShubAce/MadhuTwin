@@ -5,17 +5,19 @@
 MadhuTwin builds a living virtual replica of a person with type 2 diabetes. It fuses their electronic health record with wearable streams, simulates their glucose–insulin physiology, stays synchronised with their CGM every 5 minutes, and **warns a doctor up to 2 hours before a glucose spike or a hypoglycaemic episode**, with the reasons and "what-if" simulations to act on it.
 
 <!-- RESULTS_HEADLINE -->
+
 **Headline results (unseen patients):** 60-min forecast error 18.0 mg/dL vs 35.8 for persistence; 99.5% clinically acceptable (Clarke A+B); 90% of glucose spikes flagged a median 110 min ahead with at most 1 false alert per patient-day; fusing both streams + the physics twin cuts 60-min error from 24.9 (CGM only) to 18.4 mg/dL. The twin learns each person: 2-hour error falls from 31.4 to 27.2 mg/dL after a week of their data. On 45 real people (CGMacros): 22.4 vs 28.3 mg/dL.
+
 <!-- /RESULTS_HEADLINE -->
 
-| | |
-|---|---|
-| Video (≥ 20 min) | **TODO(team): unlisted YouTube link** |
-| Live demo | **TODO(team): Hugging Face Space link** (how to: [`deploy/huggingface.md`](deploy/huggingface.md)); locally `docker compose up` |
-| Architecture diagram | [`docs/architecture.pdf`](docs/architecture.pdf) · [`docs/architecture.pptx`](docs/architecture.pptx) |
-| Presentation | [`docs/presentation.pdf`](docs/presentation.pdf) · [`docs/presentation.pptx`](docs/presentation.pptx) |
-| Technical report · Evaluation report | [`docs/technical_report.pdf`](docs/technical_report.pdf) · [`docs/evaluation_report.md`](docs/evaluation_report.md) |
-| Model card · Privacy (DPDP) | [`docs/model_card.md`](docs/model_card.md) · [`docs/dpdp_compliance.md`](docs/dpdp_compliance.md) |
+|                                       |                                                                                                                                          |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Video (≥ 20 min)                     | **TODO(team): unlisted YouTube link**                                                                                              |
+| Live demo                             | **TODO(team): live link** (free on Render: [`deploy/render.md`](deploy/render.md)); locally `docker compose up` |
+| Architecture diagram                  | [`docs/architecture.pdf`](docs/architecture.pdf) · [`docs/architecture.pptx`](docs/architecture.pptx)                                 |
+| Presentation                          | [`docs/presentation.pdf`](docs/presentation.pdf) · [`docs/presentation.pptx`](docs/presentation.pptx)                                 |
+| Technical report · Evaluation report | [`docs/technical_report.pdf`](docs/technical_report.pdf) · [`docs/evaluation_report.md`](docs/evaluation_report.md)                   |
+| Model card · Privacy (DPDP)          | [`docs/model_card.md`](docs/model_card.md) · [`docs/dpdp_compliance.md`](docs/dpdp_compliance.md)                                     |
 
 ![The doctor's view of a virtual patient: 24-hour CGM, 2-hour forecast cone, alert with reasons, twin insights](docs/screenshots/patient_crop.png)
 
@@ -25,12 +27,12 @@ MadhuTwin builds a living virtual replica of a person with type 2 diabetes. It f
 
 ## 1. Team details
 
-| | |
-|---|---|
-| Team name | **TODO(team)** |
-| College / incubator | **TODO(team)** |
-| Team leader | **TODO(team)**: name, email, phone (submission form only) |
-| Members | **TODO(team)**: name, programme, role |
+|                     |                                                                 |
+| ------------------- | --------------------------------------------------------------- |
+| Team name           | **TODO(team)**                                            |
+| College / incubator | **TODO(team)**                                            |
+| Team leader         | **TODO(team)**: name, email, phone (submission form only) |
+| Members             | **TODO(team)**: name, programme, role                     |
 
 ## 2. Project title
 
@@ -54,20 +56,20 @@ India has about **101 million people with diabetes and 136 million with prediabe
 
 A predictive model alone is not a twin. MadhuTwin implements the three defining properties:
 
-| Property | Implementation |
-|---|---|
+| Property                                                       | Implementation                                                                                                                                                                                                                                                                                                                                                               |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Model**: a virtual replica of the patient's physiology | Extended Bergman minimal model: endogenous insulin secretion, incretin effect, meal absorption by GI/fat/fibre, exercise, sleep-driven insulin sensitivity, dawn phenomenon, counter-regulation, and Indian prescribing (metformin, sulfonylureas, DPP-4i, SGLT2i, premixed 30/70 and basal insulin). Personalised by MAP fitting of 5 parameters, with priors from the EHR. |
-| **Sync**: continuously updated from real-time data | An Unscented Kalman Filter updates hidden state (plasma glucose, insulin, insulin action) and a drifting insulin-sensitivity factor from every CGM reading. |
-| **Simulate**: run forward to predict and explore | Strictly causal 2-hour forecasts; counterfactual what-ifs (meals from an Indian food table, walks, insulin, sleep, illness); and a 24-hour **therapy simulator** (insulin and sulfonylurea doses and timing, DPP-4 and SGLT2 inhibitors) with a built-in trust check: the twin replays the last 24 h against the CGM before its simulation is shown. |
+| **Sync**: continuously updated from real-time data       | An Unscented Kalman Filter updates hidden state (plasma glucose, insulin, insulin action) and a drifting insulin-sensitivity factor from every CGM reading.                                                                                                                                                                                                                  |
+| **Simulate**: run forward to predict and explore         | Strictly causal 2-hour forecasts; counterfactual what-ifs (meals from an Indian food table, walks, insulin, sleep, illness); and a 24-hour**therapy simulator** (insulin and sulfonylurea doses and timing, DPP-4 and SGLT2 inhibitors) with a built-in trust check: the twin replays the last 24 h against the CGM before its simulation is shown.                    |
 
 **TwinNet** sits on top: a physics-gated fusion network that combines both data streams with the twin's own forecast and learns *how much to trust physics at each horizon*. Then the twin learns the individual: TwinNet is fine-tuned for a few seconds on each person's own earlier days and averaged with a LightGBM fusion model. This **MadhuTwin ensemble** is what the dashboard shows.
 
 ## 5. Two data streams, fused
 
-| Stream | Content | Sources |
-|---|---|---|
-| **Static / historical (EHR)** | Demographics, diagnoses (SNOMED CT), labs (LOINC: HbA1c, FPG, fasting insulin, lipids, eGFR, uACR, B12, TSH), medications with timing (WHO ATC), 2-year lab history, family history, **genetic markers** (TCF7L2 rs7903146, T2D polygenic risk score) | Synthetic India cohort (FHIR R4), CGMacros labs, BIG IDEAs HbA1c and demographics, ShanghaiT2DM clinical records |
-| **Dynamic (wearables / IoT)** | CGM (5- or 15-min), heart rate, HRV (RMSSD), steps, METs, sleep stages, logged meals and doses | Synthetic device models (Apple Health / Libre-style), CGMacros (Dexcom, Libre, Fitbit), BIG IDEAs (Dexcom G6 + Empatica E4: real heart rate and HRV), ShanghaiT2DM (CGM only) |
+| Stream                              | Content                                                                                                                                                                                                                                                    | Sources                                                                                                                                                                       |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Static / historical (EHR)** | Demographics, diagnoses (SNOMED CT), labs (LOINC: HbA1c, FPG, fasting insulin, lipids, eGFR, uACR, B12, TSH), medications with timing (WHO ATC), 2-year lab history, family history,**genetic markers** (TCF7L2 rs7903146, T2D polygenic risk score) | Synthetic India cohort (FHIR R4), CGMacros labs, BIG IDEAs HbA1c and demographics, ShanghaiT2DM clinical records                                                              |
+| **Dynamic (wearables / IoT)** | CGM (5- or 15-min), heart rate, HRV (RMSSD), steps, METs, sleep stages, logged meals and doses                                                                                                                                                             | Synthetic device models (Apple Health / Libre-style), CGMacros (Dexcom, Libre, Fitbit), BIG IDEAs (Dexcom G6 + Empatica E4: real heart rate and HRV), ShanghaiT2DM (CGM only) |
 
 **Data used (sandbox rules respected: synthetic and open data only)**
 
@@ -78,62 +80,63 @@ A predictive model alone is not a twin. MadhuTwin implements the three defining 
 
 ## 6. Technical stack, AI/ML models and frameworks
 
-| Layer | Stack |
-|---|---|
-| Physiology and sync | Python 3.12, NumPy, SciPy (Powell MAP fit), Numba-compiled ODE integrator (verified equal to the NumPy reference; 12× faster end-to-end per patient), custom vectorised UKF |
-| ML | PyTorch (TwinNet: causal dilated TCN + FiLM EHR conditioning + physics-gated residual + quantile and event heads + modality dropout), conformalised quantile intervals; LightGBM (quantile regressors, event classifiers) + TreeSHAP for explanations |
-| Health standards | HL7 FHIR R4 (validated with `fhir.resources`), SNOMED CT, LOINC, UCUM, WHO ATC, dbSNP |
-| Serving | FastAPI, WebSocket live replay, purpose-tagged audit trail; optional grounded LLM assistant (Claude via the Anthropic SDK, tool use over the twin; off by default) |
-| Dashboard | React 18 + TypeScript + Vite, Tailwind CSS 4, Apache ECharts (palette validated for colour-vision deficiency; light and dark themes) |
-| Ops | Docker (multi-stage), docker-compose, GitHub Actions CI (pytest + ruff + dashboard build) |
+| Layer               | Stack                                                                                                                                                                                                                                                 |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Physiology and sync | Python 3.12, NumPy, SciPy (Powell MAP fit), Numba-compiled ODE integrator (verified equal to the NumPy reference; 12× faster end-to-end per patient), custom vectorised UKF                                                                          |
+| ML                  | PyTorch (TwinNet: causal dilated TCN + FiLM EHR conditioning + physics-gated residual + quantile and event heads + modality dropout), conformalised quantile intervals; LightGBM (quantile regressors, event classifiers) + TreeSHAP for explanations |
+| Health standards    | HL7 FHIR R4 (validated with`fhir.resources`), SNOMED CT, LOINC, UCUM, WHO ATC, dbSNP                                                                                                                                                                |
+| Serving             | FastAPI, WebSocket live replay, purpose-tagged audit trail; optional grounded LLM assistant (Claude via the Anthropic SDK, tool use over the twin; off by default)                                                                                    |
+| Dashboard           | React 18 + TypeScript + Vite, Tailwind CSS 4, Apache ECharts (palette validated for colour-vision deficiency; light and dark themes)                                                                                                                  |
+| Ops                 | Docker (multi-stage), docker-compose, GitHub Actions CI (pytest + ruff + dashboard build)                                                                                                                                                             |
 
 **Evaluation protocol.** Patient-level splits throughout. Synthetic: 70/10/20 by patient, scored only on days 8–14 after personalisation. Real data: 5-fold CV grouped by patient. Metrics: RMSE / MAE / MARD per horizon, Clarke Error Grid, 80% interval coverage, AUROC / AUPRC with patient-bootstrap CIs, excursions caught, lead time and false alerts per day, and the share of excursions caught with at most one false alert per patient-day (alert thresholds chosen on training folds only). Clinical utility: calibration, decision curves and a subgroup audit (sex, age, BMI by Asian cut-offs, status, therapy, region). Stream-by-stream ablations and a learning curve of error against days of personal data are included.
 
 <!-- RESULTS_TABLE -->
+
 ### Results
 
 MadhuTwin = the mechanistic twin fitted to each person's own earlier data, TwinNet fine-tuned on the same data and averaged with LightGBM; risks are recalibrated on held-out patients (validation patients, or other folds' patients for real data). Real-data models are pretrained on the synthetic cohort and fine-tuned on the training folds only (sim-to-real).
 
-| Evaluation | Metric | MadhuTwin | Persistence baseline |
-|---|---|---:|---:|
-| Synthetic India cohort, 199 unseen patients | RMSE 30 / 60 / 120 min (mg/dL) | 13.0 / 18.0 / 23.3 | 22.9 / 35.8 / 50.4 |
-| | Clarke A+B at 60 min | 99.5% | 98.2% |
-| | Spike >180 within 2 h: AUROC · caught at <=1 false alert/day · median lead | 0.961 · 90% · 110 min | – |
-| | Hypo <70 within 2 h: AUROC | 0.968 | – |
-| | Illness detected from CGM by the synced twin (AUROC) | 0.89 | – |
-| The twin learns you (50 T2D patients) | 60 / 120-min RMSE with 0 vs 7 days of personal data | 23.8 / 31.4 → 21.0 / 27.2 | – |
-| CGMacros, real people, 5-fold patient CV (45) | RMSE 30 / 60 / 120 · Clarke A+B 60 · spike AUROC · spikes caught at <=1 false alert/day | 15.9 / 22.4 / 27.6 · 99.5% · 0.822 · 82% | 19.6 / 28.3 / 37.8 · 99.1% · – · – |
-| BIG IDEAs, real wristband HR/HRV, 5-fold CV (16) | RMSE 30 / 60 / 120 · Clarke A+B 60 · spike AUROC · spikes caught at <=1 false alert/day | 13.9 / 19.0 / 21.8 · 99.3% · 0.765 · 58% | 16.6 / 23.0 / 28.2 · 99.5% · – · – |
-| ShanghaiT2DM, external, no wearables (109) | RMSE 30 / 60 / 120 · Clarke A+B 60 · spike AUROC · spikes caught at <=1 false alert/day | 12.2 / 21.1 / 30.1 · 98.9% · 0.893 · 89% | 16.5 / 27.5 / 40.9 · 98.8% · – · – |
-| CGM-light, synthetic patients (1 week CGM, then 4 fingersticks/day; upper bound) | MARD of continuous estimate · time-in-range error | 6.4% · ±3.8 pp | carry-forward 23.8% · ±6.7 pp |
-| 24-hour twin replay (every post-calibration day, open loop) | median error in daily mean glucose (mg/dL) / time in range | synthetic 5.5 / 4.9 pp · CGMacros 7.0 / 2.8 pp · BIG IDEAs 5.1 / 0.7 pp · Shanghai 11.7 / 7.3 pp | – |
-| Speed on one laptop CPU (8 threads) | forecast · personalise twin + TwinNet · 24-h therapy simulation | 2.2 ms · 1.8 s · 0.2 ms per plan | – |
+| Evaluation                                                                       | Metric                                                                                     |                                                                                           MadhuTwin |                    Persistence baseline |
+| -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------: | --------------------------------------: |
+| Synthetic India cohort, 199 unseen patients                                      | RMSE 30 / 60 / 120 min (mg/dL)                                                             |                                                                                  13.0 / 18.0 / 23.3 |                      22.9 / 35.8 / 50.4 |
+|                                                                                  | Clarke A+B at 60 min                                                                       |                                                                                               99.5% |                                   98.2% |
+|                                                                                  | Spike >180 within 2 h: AUROC · caught at <=1 false alert/day · median lead               |                                                                             0.961 · 90% · 110 min |                                      – |
+|                                                                                  | Hypo <70 within 2 h: AUROC                                                                 |                                                                                               0.968 |                                      – |
+|                                                                                  | Illness detected from CGM by the synced twin (AUROC)                                       |                                                                                                0.89 |                                      – |
+| The twin learns you (50 T2D patients)                                            | 60 / 120-min RMSE with 0 vs 7 days of personal data                                        |                                                                          23.8 / 31.4 → 21.0 / 27.2 |                                      – |
+| CGMacros, real people, 5-fold patient CV (45)                                    | RMSE 30 / 60 / 120 · Clarke A+B 60 · spike AUROC · spikes caught at <=1 false alert/day |                                                         15.9 / 22.4 / 27.6 · 99.5% · 0.822 · 82% | 19.6 / 28.3 / 37.8 · 99.1% · – · – |
+| BIG IDEAs, real wristband HR/HRV, 5-fold CV (16)                                 | RMSE 30 / 60 / 120 · Clarke A+B 60 · spike AUROC · spikes caught at <=1 false alert/day |                                                         13.9 / 19.0 / 21.8 · 99.3% · 0.765 · 58% | 16.6 / 23.0 / 28.2 · 99.5% · – · – |
+| ShanghaiT2DM, external, no wearables (109)                                       | RMSE 30 / 60 / 120 · Clarke A+B 60 · spike AUROC · spikes caught at <=1 false alert/day |                                                         12.2 / 21.1 / 30.1 · 98.9% · 0.893 · 89% | 16.5 / 27.5 / 40.9 · 98.8% · – · – |
+| CGM-light, synthetic patients (1 week CGM, then 4 fingersticks/day; upper bound) | MARD of continuous estimate · time-in-range error                                         |                                                                                    6.4% · ±3.8 pp |         carry-forward 23.8% · ±6.7 pp |
+| 24-hour twin replay (every post-calibration day, open loop)                      | median error in daily mean glucose (mg/dL) / time in range                                 | synthetic 5.5 / 4.9 pp · CGMacros 7.0 / 2.8 pp · BIG IDEAs 5.1 / 0.7 pp · Shanghai 11.7 / 7.3 pp |                                      – |
+| Speed on one laptop CPU (8 threads)                                              | forecast · personalise twin + TwinNet · 24-h therapy simulation                          |                                                                  2.2 ms · 1.8 s · 0.2 ms per plan |                                      – |
 
 Does fusing the two streams help? (LightGBM retrained per combination, synthetic test patients)
 
-| Streams | RMSE 60 min | Spike AUROC |
-|---|---:|---:|
-| CGM only | 24.87 | 0.923 |
-| CGM + EHR | 23.82 | 0.931 |
-| CGM + wearables | 23.99 | 0.930 |
-| CGM + meals/meds | 21.38 | 0.937 |
-| CGM + wearables + meals/meds | 21.12 | 0.941 |
-| Both streams (dynamic + EHR) | 20.12 | 0.949 |
-| Both streams + physics twin | 18.44 | 0.955 |
+| Streams                      | RMSE 60 min | Spike AUROC |
+| ---------------------------- | ----------: | ----------: |
+| CGM only                     |       24.87 |       0.923 |
+| CGM + EHR                    |       23.82 |       0.931 |
+| CGM + wearables              |       23.99 |       0.930 |
+| CGM + meals/meds             |       21.38 |       0.937 |
+| CGM + wearables + meals/meds |       21.12 |       0.941 |
+| Both streams (dynamic + EHR) |       20.12 |       0.949 |
+| Both streams + physics twin  |       18.44 |       0.955 |
 
 Robust to missing data (one deployed model, data removed at inference, synthetic test patients)
 
-| Missing at inference | RMSE 60 min | RMSE 120 min | Spike AUROC |
-|---|---:|---:|---:|
-| All data | 19.04 | 24.95 | 0.956 |
-| No smartwatch (wearables missing) | 19.51 | 26.05 | 0.950 |
-| No EHR | 19.40 | 25.33 | 0.953 |
-| No meal or dose logs | 19.09 | 25.13 | 0.955 |
-| No physics twin | 21.21 | 27.41 | 0.946 |
-| Only CGM (no smartwatch, EHR, logs or twin) | 27.25 | 31.97 | 0.916 |
-| 10% of past CGM readings lost | 19.08 | 24.98 | 0.955 |
-| 25% of past CGM readings lost | 19.12 | 25.08 | 0.954 |
-| 50% of past CGM readings lost | 19.29 | 25.44 | 0.951 |
+| Missing at inference                        | RMSE 60 min | RMSE 120 min | Spike AUROC |
+| ------------------------------------------- | ----------: | -----------: | ----------: |
+| All data                                    |       19.04 |        24.95 |       0.956 |
+| No smartwatch (wearables missing)           |       19.51 |        26.05 |       0.950 |
+| No EHR                                      |       19.40 |        25.33 |       0.953 |
+| No meal or dose logs                        |       19.09 |        25.13 |       0.955 |
+| No physics twin                             |       21.21 |        27.41 |       0.946 |
+| Only CGM (no smartwatch, EHR, logs or twin) |       27.25 |        31.97 |       0.916 |
+| 10% of past CGM readings lost               |       19.08 |        24.98 |       0.955 |
+| 25% of past CGM readings lost               |       19.12 |        25.08 |       0.954 |
+| 50% of past CGM readings lost               |       19.29 |        25.44 |       0.951 |
 
 Full tables, confidence intervals and figures: [`docs/evaluation_report.md`](docs/evaluation_report.md).
 
@@ -143,40 +146,61 @@ Full tables, confidence intervals and figures: [`docs/evaluation_report.md`](doc
 
 **Option A: Docker** (dashboard + API with the prebuilt demo cohort)
 
-```bash
-docker compose up --build
-# open http://localhost:8000
 ```
+docker compose up --build
+```
+
+Then open http://localhost:8000.
 
 **Option B: local development**
 
-```bash
-python -m venv .venv && .venv/Scripts/activate          # Windows (use source .venv/bin/activate on Linux/macOS)
-pip install -r requirements.txt && pip install -e . --no-deps
-uvicorn twin.service.app:app --port 8000                 # API, serving artifacts/demo
-cd dashboard && npm install && npm run dev                # http://localhost:5173
+Use two terminals. Commands are shown without inline comments so they paste cleanly into Windows `cmd`, PowerShell and bash.
+
+Terminal 1, the API (serves the demo cohort in `artifacts/demo`):
+
 ```
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+pip install -e . --no-deps
+uvicorn twin.service.app:app --port 8000
+```
+
+On Linux/macOS activate with `source .venv/bin/activate`.
+
+Terminal 2, the dashboard, then open http://localhost:5173:
+
+```
+cd dashboard
+npm install
+npm run dev
+```
+
+If Vite reports "Port 5173 is in use" and starts on 5174, an older dev server is still running; close it, or use the URL Vite prints.
+Alternatively, after `npm run build` in `dashboard/`, the API alone serves the built dashboard at http://localhost:8000.
 
 **Reproduce everything from scratch** (about 2–3 hours on a 16-core CPU): `python scripts/run_all.py`, or step by step:
 
-```bash
-python scripts/download_data.py        # CGMacros (CSV members only, via HTTP range requests) + ShanghaiT2DM + BIG IDEAs
-python scripts/fit_twins.py            # personal twins for the 45 CGMacros participants
-python scripts/generate_cohort.py      # synthetic India cohort: 1,000 patients x 14 days + FHIR bundles
-python scripts/build_dataset.py        # fused datasets + twin features for all four sources
-python scripts/exp_synthetic.py --twinnet-ablations   # benchmark, ablations, illness detection
-python scripts/exp_real.py             # CGMacros, BIG IDEAs and Shanghai CV (incl. personalised ensemble), production models
-python scripts/exp_extra.py            # personalisation, ensemble, calibration, subgroups
-python scripts/exp_learning.py         # "the twin learns you": whole twin personalised on 0-7 days
-python scripts/exp_cgm_light.py        # CGM-light affordability mode
-python scripts/exp_fidelity.py         # 24-hour twin replay against the CGM (trust check)
-python scripts/exp_robustness.py       # missing smartwatch / EHR / logs / CGM readings at inference
-python scripts/bench.py                # CPU latency and throughput
-python scripts/build_demo.py           # dashboard demo cohort
-python scripts/make_report.py          # figures + docs/evaluation_report.md
-python scripts/make_techreport.py      # docs/technical_report.pdf (headless Edge or Chrome)
-pytest -q
-```
+| Step | Command                                                 | What it does                                                                         |
+| ---: | ------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+|    1 | `python scripts/download_data.py`                     | CGMacros (CSV members only, via HTTP range requests) + ShanghaiT2DM + BIG IDEAs      |
+|    2 | `python scripts/fit_twins.py`                         | personal twins for the 45 CGMacros participants                                      |
+|    3 | `python scripts/generate_cohort.py`                   | synthetic India cohort: 1,000 patients x 14 days + FHIR bundles                      |
+|    4 | `python scripts/build_dataset.py`                     | fused datasets + twin features for all four sources                                  |
+|    5 | `python scripts/exp_synthetic.py --twinnet-ablations` | benchmark, ablations, illness detection                                              |
+|    6 | `python scripts/exp_real.py`                          | CGMacros, BIG IDEAs and Shanghai CV (incl. personalised ensemble), production models |
+|    7 | `python scripts/exp_extra.py`                         | personalisation, ensemble, calibration, subgroups                                    |
+|    8 | `python scripts/exp_learning.py`                      | "the twin learns you": whole twin personalised on 0-7 days                           |
+|    9 | `python scripts/exp_cgm_light.py`                     | CGM-light affordability mode                                                         |
+|   10 | `python scripts/exp_fidelity.py`                      | 24-hour twin replay against the CGM (trust check)                                    |
+|   11 | `python scripts/exp_robustness.py`                    | missing smartwatch / EHR / logs / CGM readings at inference                          |
+|   12 | `python scripts/bench.py`                             | CPU latency and throughput                                                           |
+|   13 | `python scripts/build_demo.py`                        | dashboard demo cohort                                                                |
+|   14 | `python scripts/build_body_model.py`                  | 3D body (MakeHuman, CC0) -> dashboard/src/assets (already committed)                 |
+|   15 | `python scripts/build_organ_models.py`                | 3D organs (BodyParts3D); needs: pip install trimesh fast-simplification              |
+|   16 | `python scripts/make_report.py`                       | figures + docs/evaluation_report.md                                                  |
+|   17 | `python scripts/make_techreport.py`                   | docs/technical_report.pdf (headless Edge or Chrome)                                  |
+|   18 | `pytest -q`                                           | unit and integration tests                                                           |
 
 Optional "Ask the twin" LLM layer: set `MADHUTWIN_LLM=on` and `ANTHROPIC_API_KEY`. Without them, a grounded offline engine answers.
 
@@ -212,6 +236,7 @@ tests/             physiology, pipeline, API tests
 ## 10. Licence
 
 - **Code:** Apache License 2.0, see [`LICENSE`](LICENSE).
+- **3D virtual patient:** body mesh from MakeHuman (CC0); organ meshes from BodyParts3D (© 2008 Life Science Integrated Database Center, CC BY-SA 2.1 JP), see [`NOTICE.md`](NOTICE.md).
 - **Data:** CGMacros (CC BY-NC-SA 4.0), BIG IDEAs (ODC-By 1.0) and ShanghaiT2DM (CC BY 4.0) are downloaded by script and never committed raw. Demo bundles derived from them carry their licences. See [`NOTICE.md`](NOTICE.md). Synthetic patients are generated by this project; all names are fictitious.
 
 ## 11. Acknowledgements

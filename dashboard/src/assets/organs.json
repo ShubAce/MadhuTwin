@@ -1,0 +1,52 @@
+{
+ "source": "BodyParts3D 3.0 (CC BY-SA 2.1 JP), mirror commit f0eeb6e843380cfe6b83797cf8c3e1af74de5e61",
+ "units": "metres",
+ "frame": "body: +y up, +z front, +x patient's left; apply scale then offset per body shape",
+ "fit": {
+  "male": {
+   "scale": 0.99834,
+   "offset": [
+    0.00033,
+    0.07691,
+    -0.10222
+   ],
+   "landmark_error_m": 0.0206
+  },
+  "female": {
+   "scale": 0.93474,
+   "offset": [
+    0.00031,
+    0.02764,
+    -0.08344
+   ],
+   "landmark_error_m": 0.0214
+  }
+ },
+ "parts": {
+  "heart": "FMA7274",
+  "liver": "FMA7197",
+  "liver_gallbladder": "FMA7202",
+  "pancreas": "FMA7198nsn",
+  "gut_stomach": "FMA7148",
+  "gut_duodenum": "FMA7206",
+  "gut_jejunum": "FMA7207",
+  "gut_ileum": "FMA7208",
+  "gut_colon": "FMA14543nsn",
+  "kidney_right": "FMA7204",
+  "kidney_left": "FMA7205",
+  "muscle_right_rectus_femoris": "FMA38928",
+  "muscle_left_rectus_femoris": "FMA38929",
+  "muscle_right_vastus_lateralis": "FMA38930",
+  "muscle_left_vastus_lateralis": "FMA38931",
+  "muscle_right_vastus_medialis": "FMA38932",
+  "muscle_left_vastus_medialis": "FMA38933",
+  "ctx_lung_right_upper": "FMA7333",
+  "ctx_lung_right_middle": "FMA7383",
+  "ctx_lung_right_lower": "FMA7337",
+  "ctx_lung_left_upper": "FMA7370",
+  "ctx_lung_left_lower": "FMA7371",
+  "ctx_aorta_ascending": "FMA3736",
+  "ctx_aorta_arch": "FMA3768",
+  "ctx_aorta_descending": "FMA3784"
+ }
+}

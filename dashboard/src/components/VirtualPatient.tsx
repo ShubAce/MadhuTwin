@@ -1,5 +1,18 @@
+import { Suspense, lazy, useState } from "react";
 import { PatientDetail, State } from "../api";
 import { LEVEL_COLOR, Level, Status } from "./ui";
+
+const Body3D = lazy(() => import("./Body3D"));
+
+function hasWebGL(): boolean {
+  try {
+    const c = document.createElement("canvas");
+    return !!(c.getContext("webgl2") || c.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
+const WEBGL = typeof document !== "undefined" && hasWebGL();
 
 interface Organ {
   key: string;
@@ -65,10 +78,15 @@ export function organs(p: PatientDetail, s: State | null): Organ[] {
   return out;
 }
 
-export default function VirtualPatient({ patient, state }: { patient: PatientDetail; state: State | null }) {
-  const list = organs(patient, state);
+function nightHeartRate(s: State | null): number | null {
+  if (!s) return null;
+  const asleep = s.series.sleep.map((v) => (v ?? 0) > 0);
+  return median(s.series.hr.filter((v, i): v is number => v != null && asleep[i]));
+}
+
+/** Flat silhouette: shown while the 3D twin loads, and on devices without WebGL. */
+function Silhouette({ list }: { list: Organ[] }) {
   return (
-    <div className="flex gap-4">
       <svg viewBox="0 0 184 380" className="h-[300px] w-[140px] shrink-0" aria-hidden>
         <g fill="var(--surface-2)" stroke="var(--axis)" strokeWidth={1.5}>
           <circle cx={92} cy={38} r={24} />
@@ -84,9 +102,27 @@ export default function VirtualPatient({ patient, state }: { patient: PatientDet
           </g>
         ))}
       </svg>
-      <ul className="flex-1 space-y-2.5">
+  );
+}
+
+export default function VirtualPatient({ patient, state }: { patient: PatientDetail; state: State | null }) {
+  const list = organs(patient, state);
+  const [active, setActive] = useState<string | null>(null);
+  return (
+    <div className="flex gap-4">
+      {WEBGL ? (
+        <div className="h-[380px] w-[230px] shrink-0">
+          <Suspense fallback={<div className="grid h-full place-items-center"><Silhouette list={list} /></div>}>
+            <Body3D organs={list} sex={patient.display.sex} bmi={patient.ehr.bmi} bpm={nightHeartRate(state)} active={active} onHover={setActive} />
+          </Suspense>
+        </div>
+      ) : <Silhouette list={list} />}
+      <div className="flex-1">
+      <ul className="space-y-2.5">
         {list.map((o) => (
-          <li key={o.key} className="text-[13px]">
+          <li key={o.key} className="rounded-md px-1 text-[13px]" onMouseEnter={() => setActive(o.key)} onMouseLeave={() => setActive(null)}
+            onFocus={() => setActive(o.key)} onBlur={() => setActive(null)} tabIndex={0}
+            style={active === o.key ? { background: "var(--surface-2)" } : undefined}>
             <div className="flex items-center justify-between gap-2">
               <span className="ink-2">{o.name}</span>
               <Status level={o.level}>{o.value}</Status>
@@ -95,6 +131,13 @@ export default function VirtualPatient({ patient, state }: { patient: PatientDet
           </li>
         ))}
       </ul>
+      {WEBGL && (
+        <p className="mt-3 text-[11px] muted">
+          Drag to rotate · hover an organ or a row. Body shaped from this patient's sex and BMI; organs coloured by the twin's estimates.
+          3D body: MakeHuman (CC0). Organs: BodyParts3D, © 2008 Life Science Integrated Database Center, CC BY-SA 2.1 JP.
+        </p>
+      )}
+      </div>
     </div>
   );
 }

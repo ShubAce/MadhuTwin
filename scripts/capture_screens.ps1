@@ -1,7 +1,7 @@
 # Capture dashboard screenshots for the README, presentation and video thumbnails.
-# Requires the API (port 8000) and the dashboard dev server (port 5173) to be running.
+# Requires the API (port 8000) serving the built dashboard (cd dashboard && npm run build).
 #   powershell -ExecutionPolicy Bypass -File scripts/capture_screens.ps1
-param([string]$Base = "http://localhost:5173")
+param([string]$Base = "http://localhost:8000")  # the production build served by the API
 $ErrorActionPreference = "Stop"
 $edge = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 $root = Split-Path -Parent $PSScriptRoot
@@ -23,7 +23,7 @@ $ic = $tok.ill_clock
 $shots = @(
   @{ name = "panel_light.png";     w = 1440; h = 1000; url = "/?theme=light#/" },
   @{ name = "panel_dark.png";      w = 1440; h = 1000; url = "/?theme=dark#/" },
-  @{ name = "patient_light.png";   w = 1440; h = 1240; url = "/?theme=light#/patient/$hypo" + "?clock=$hc" },
+  @{ name = "patient_light.png";   w = 1440; h = 1500; url = "/?theme=light#/patient/$hypo" + "?clock=$hc" },
   @{ name = "patient_full.png";    w = 1440; h = 2300; url = "/?theme=light#/patient/$ill" + "?clock=$ic" },
   @{ name = "whatif_light.png";    w = 1440; h = 2300; url = "/?theme=light#/patient/$hypo" + "?tab=whatif&food=rice_dal&walk=15&run=1&clock=780" },
   @{ name = "therapy_light.png";   w = 1440; h = 2300; url = "/?theme=light#/patient/$sglt" + "?tab=therapy&sglt2=0&clock=390" },
@@ -37,7 +37,17 @@ $shots = @(
 foreach ($s in $shots) {
   $file = Join-Path $out $s.name
   $ErrorActionPreference = "Continue"  # Edge reports progress on stderr, which PowerShell 5.1 would treat as fatal
-  & $edge --headless --disable-gpu --no-first-run --hide-scrollbars "--user-data-dir=$prof" "--window-size=$($s.w),$($s.h)" --virtual-time-budget=25000 "--screenshot=$file" ($Base + $s.url) 2>&1 | Out-Null
-  Start-Sleep -Milliseconds 800
+  # Patient pages hold the 3D virtual patient (WebGL via SwiftShader). Headless rendering of the
+  # canvas is racy, so those pages are shot up to 4 times and the most detailed image is kept.
+  $tries = if ($s.url -like "*#/patient/*") { 4 } else { 1 }
+  $best = 0
+  for ($t = 0; $t -lt $tries; $t++) {
+    $tmp = "$file.try.png"
+    & $edge --headless --no-first-run --hide-scrollbars --enable-unsafe-swiftshader --use-angle=swiftshader "--user-data-dir=$prof" "--window-size=$($s.w),$($s.h)" --virtual-time-budget=45000 "--screenshot=$tmp" ($Base + $s.url) 2>&1 | Out-Null
+    Start-Sleep -Milliseconds 800
+    $len = (Get-Item $tmp).Length
+    if ($len -gt $best) { Move-Item -Force $tmp $file; $best = $len }
+  }
+  if (Test-Path "$file.try.png") { [System.IO.File]::Delete("$file.try.png") }
   Write-Output ("{0,-22} {1,8:N0} bytes" -f $s.name, (Get-Item $file).Length)
 }

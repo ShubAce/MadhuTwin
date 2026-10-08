@@ -1,0 +1,13 @@
+# Render blueprint: free public deployment of the dashboard + API from the Dockerfile.
+# Render dashboard -> New -> Blueprint -> pick this repository. See deploy/render.md.
+services:
+  - type: web
+    name: madhutwin
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/meta
+    autoDeploy: true
+    envVars:
+      - key: MADHUTWIN_LLM
+        value: "off"

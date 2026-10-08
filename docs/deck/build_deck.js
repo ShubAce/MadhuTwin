@@ -385,6 +385,16 @@ async function main() {
   img(s, "patient_crop.png", 0.5, 1.3, 12.3, 5.6);
   s.addNotes("The glucose chart shows 24 hours of CGM, the 2-hour forecast cone and the physics twin's projection, with meals, medication and sleep lanes below. The risk card explains the alert. The virtual-patient panel turns fitted parameters into organ-level physiology a clinician recognises.");
   s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Dashboard" });
+  addTitle(s, "The virtual patient, in 3D", "A real human body shaped like the patient, with anatomical organs coloured by the twin");
+  img(s, "vp3d_crop.png", 0.5, 1.55, 8.4, 4.9);
+  bullets(s, [
+    "Body from the MakeHuman mesh (CC0), shaped from the patient's sex and BMI in the EHR",
+    "Anatomical organs from BodyParts3D, placed by skeletal landmarks (2 cm mean fit error)",
+    "Each organ coloured by the twin's estimate: beta-cell response, insulin sensitivity, fasting set-point, absorption, kidney function",
+    "The heart beats at the patient's own night heart rate; rotate, zoom, hover an organ",
+  ], { x: 9.2, y: 1.6, w: 3.6, h: 4.9, fontSize: 14 });
+  s.addNotes("The virtual patient is a real 3D human body, shaped from this patient's sex and BMI, with anatomical organs inside, each coloured by what the twin has learned about it. The heart beats at the patient's own night heart rate. Organ meshes: BodyParts3D, (c) 2008 Life Science Integrated Database Center, CC BY-SA 2.1 Japan.");
+  s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Dashboard" });
   addTitle(s, "What-if on their twin, nudges in their language");
   img(s, "whatif_crop.png", 0.5, 1.3, 8.9, 5.6);
   img(s, "companion_hi.png", 9.7, 1.3, 3.1, 5.6);
