@@ -10,14 +10,14 @@ MadhuTwin builds a living virtual replica of a person with type 2 diabetes. It f
 
 <!-- /RESULTS_HEADLINE -->
 
-|                                           |                                                                                                                          |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Demo video (15–20 min, unlisted YouTube) | **TODO(team): unlisted YouTube link**                                                                              |
-| Live demo | **[madhutwin.onrender.com](https://madhutwin.onrender.com/)** (free hosting: the first visit after a quiet spell can take about a minute to wake) |
-| Architecture diagram                      | [`docs/architecture.pdf`](docs/architecture.pdf) · [`docs/architecture.pptx`](docs/architecture.pptx)                 |
-| Presentation                              | [`docs/presentation.pdf`](docs/presentation.pdf) · [`docs/presentation.pptx`](docs/presentation.pptx)                 |
-| Technical report · Evaluation report     | [`docs/technical_report.pdf`](docs/technical_report.pdf) · [`docs/evaluation_report.md`](docs/evaluation_report.md)   |
-| Model card · Privacy (DPDP)              | [`docs/model_card.md`](docs/model_card.md) · [`docs/dpdp_compliance.md`](docs/dpdp_compliance.md)                     |
+|                                           |                                                                                                                                                        |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Demo video (15–20 min, unlisted YouTube) | [youtu.be/cutW7QPZSJ0](https://youtu.be/cutW7QPZSJ0)                                                                                                    |
+| Live demo                                 | **[madhutwin.onrender.com](https://madhutwin.onrender.com/)** (free hosting: the first visit after a quiet spell can take about a minute to wake) |
+| Architecture diagram                      | [`docs/architecture.pdf`](docs/architecture.pdf) · [`docs/architecture.pptx`](docs/architecture.pptx)                                               |
+| Presentation                              | [`docs/presentation.pdf`](docs/presentation.pdf) · [`docs/presentation.pptx`](docs/presentation.pptx)                                               |
+| Technical report · Evaluation report     | [`docs/technical_report.pdf`](docs/technical_report.pdf) · [`docs/evaluation_report.md`](docs/evaluation_report.md)                                 |
+| Model card · Privacy (DPDP)              | [`docs/model_card.md`](docs/model_card.md) · [`docs/dpdp_compliance.md`](docs/dpdp_compliance.md)                                                   |
 
 ![The doctor's view of a virtual patient: 24-hour CGM, 2-hour forecast cone, alert with reasons, twin insights](docs/screenshots/patient_crop.png)
 
@@ -44,19 +44,19 @@ MadhuTwin builds a living virtual replica of a person with type 2 diabetes. It f
 
 ## 1. Team details
 
-|                     |                                                       |
-| ------------------- | ----------------------------------------------------- |
-| Team name           | **ClockItTwin**                                            |
-| College / incubator | **IIT Kharagpur**                                         |
-| Team leader         | Shubham Suman                                         |
-| GitHub repository   | [https://github.com/ShubAce/MadhuTwin](https://github.com/ShubAce/MadhuTwin)                                      |
+|                     |                                                                             |
+| ------------------- | --------------------------------------------------------------------------- |
+| Team name           | **ClockItTwin**                                                       |
+| College / incubator | **IIT Kharagpur**                                                     |
+| Team leader         | Shubham Suman                                                               |
+| GitHub repository   | [https://github.com/ShubAce/MadhuTwin](https://github.com/ShubAce/MadhuTwin) |
 
-| Member | Role |
-| --- | --- |
-| Shubham Suman (team leader) | Digital-twin modelling and machine learning: TwinNet, personalisation, ensemble and evaluation design |
-| Krupal Thakre | Physiology modelling and data engineering: the mechanistic twin, open datasets, the synthetic India cohort |
-| Durgesh Kumar | Full-stack development: FastAPI service, doctor dashboard, 3D virtual patient, deployment |
-| Anurag Ranjan | Clinical evaluation and documentation: clinical-utility analyses, FHIR/ABDM interoperability, DPDP compliance, reports |
+| Member                      | Role                                                                                                                   |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Shubham Suman (team leader) | Digital-twin modelling and machine learning: TwinNet, personalisation, ensemble and evaluation design                  |
+| Krupal Thakre               | Physiology modelling and data engineering: the mechanistic twin, open datasets, the synthetic India cohort             |
+| Durgesh Kumar               | Full-stack development: FastAPI service, doctor dashboard, 3D virtual patient, deployment                              |
+| Anurag Ranjan               | Clinical evaluation and documentation: clinical-utility analyses, FHIR/ABDM interoperability, DPDP compliance, reports |
 
 ## 2. Project title
 
